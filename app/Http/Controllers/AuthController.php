@@ -19,10 +19,9 @@ class AuthController extends Controller
             // 'password' =>'required|string|confirmed'
         ]);
 
-        // Check email
+        // Check email and Check password
         $user = Employee::where('email', $fields['email'])->where('password', $fields['password'])->first();
 
-        // Check password
         if($user != null) {
             return response()->json(['message'=> Employee::where('email', $fields['email'],200)->first(), 
         ]);

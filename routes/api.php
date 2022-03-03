@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 // Public Routes Authantication
 
 
+
+
 Route::post('/login', [AuthController::class , 'login']);
-
-
 
 // Public Route Employee
 
@@ -32,6 +32,12 @@ Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
 Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    
+    
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
