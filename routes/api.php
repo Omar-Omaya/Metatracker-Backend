@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AuthController;
 use App\Models\Employee;
 
 use Illuminate\Http\Request;
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Public Routes Authantication
+
+
+Route::post('/login', [AuthController::class , 'login']);
+
+
 
 // Public Route Employee
 
