@@ -20,6 +20,8 @@ class CreateEmployeesTable extends Migration
             $table->string('password');
             $table->integer('phone');
             $table->string('gender');
+            $table->double('lat')->nullable();
+            $table->double('lng')->nullable();
             $table->timestamps();
         });
     }
