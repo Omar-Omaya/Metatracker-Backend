@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoryController;
 use App\Models\Employee;
 
 use Illuminate\Http\Request;
@@ -32,6 +33,16 @@ Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
 Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+
+// Public Route Histroy
+
+Route::get('/histories', [HistoryController::class , 'index']);
+Route::get('/histories/{id}', [HistoryController::class , 'show']);
+Route::post('/histories', [HistoryController::class , 'store']);
+Route::put('/histories/{id}', [HistoryController::class , 'update']);
+Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
+Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 

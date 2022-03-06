@@ -15,8 +15,18 @@ class Employee extends Model
         'password',
         'phone',
         'gender',
+        'check_in',
+        'check_out',
         'lat',
         'lng'
     
     ];
+
+    /**
+     * Get the histories for the blog post.
+     */
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
 }
