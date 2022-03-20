@@ -45,6 +45,14 @@ class EmployeeController extends Controller
     public function show($id)
     {
         return Employee::find($id);
+
+    }
+
+    public function getAbsenceDay($id)
+    {
+        $employee = Employee::select('absence_day')->where('id',$id)->first();
+        return $employee;
+        
     }
 
     /**

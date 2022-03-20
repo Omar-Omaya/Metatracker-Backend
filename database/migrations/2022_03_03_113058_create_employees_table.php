@@ -19,9 +19,11 @@ class CreateEmployeesTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->integer('phone');
-            $table->string('gender');
-            $table->string('check_in');
-            $table->string('check_out');
+            $table->integer('gender');
+            $table->integer('Arrival_time');
+            $table->integer('Leave_time');
+            $table->integer('absence_day')->nullable();
+            $table->string('position');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->timestamps();

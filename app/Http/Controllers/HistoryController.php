@@ -49,7 +49,7 @@ class HistoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $history = History::find($id);
+        $history = History::where('employee_id',$id)->get()->last();
         $history->update($request->all());
         return $history;
     }

@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // Public Routes Authantication
 
 
-
+Route::post('/register', [AuthController::class , 'register']);
 
 Route::post('/login', [AuthController::class , 'login']);
 
@@ -29,6 +29,8 @@ Route::post('/login', [AuthController::class , 'login']);
 
 Route::get('/employees', [EmployeeController::class , 'index']);
 Route::get('/employees/{id}', [EmployeeController::class , 'show']);
+Route::get('/employee/absence/{id}', [EmployeeController::class , 'getAbsenceDay']);
+
 Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
 Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);

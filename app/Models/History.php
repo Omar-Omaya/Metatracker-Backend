@@ -14,6 +14,7 @@ class History extends Model
         'Start_time',
         'End_time',
         'Out_of_zone',
+        'Out_of_zone_time',
         'lat',
         'lng'
         

@@ -15,8 +15,10 @@ class Employee extends Model
         'password',
         'phone',
         'gender',
-        'check_in',
-        'check_out',
+        'Arrival_time',
+        'Leave_time',
+        'absence_day',
+        'position',
         'lat',
         'lng'
     

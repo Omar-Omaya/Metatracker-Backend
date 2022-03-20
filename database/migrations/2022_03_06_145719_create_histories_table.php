@@ -16,16 +16,16 @@ class CreateHistoriesTable extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->bigincrements('id');
             $table->unsignedBigInteger('employee_id');
-            $table->string('Start_time');
-            $table->string('End_time');
-            $table->string('Out_of_zone');
+            $table->string('Start_time')->nullable();
+            $table->string('End_time')->nullable();
+            $table->boolean('Out_of_zone')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->string('Out_of_zone_time')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')
             ->references('id')
             ->on('employees')
-            ->onUpdate('cascade')
             ->onDelete('cascade');
             
             
