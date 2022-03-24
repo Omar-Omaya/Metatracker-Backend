@@ -26,6 +26,7 @@ class CreateEmployeesTable extends Migration
             $table->string('position');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->string('api_token')->default('');
             $table->timestamps();
         });
     }

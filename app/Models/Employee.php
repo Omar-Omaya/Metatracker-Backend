@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class Employee extends Model
 {
     use HasFactory;
+    use HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -20,7 +22,8 @@ class Employee extends Model
         'absence_day',
         'position',
         'lat',
-        'lng'
+        'lng',
+        'api_token'
     
     ];
 
