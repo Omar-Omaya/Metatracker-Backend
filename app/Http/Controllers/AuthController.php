@@ -39,7 +39,6 @@ class AuthController extends Controller
             'Leave_time' => $fields['Leave_time'],
             'position' => $fields['position'],
 
-
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
