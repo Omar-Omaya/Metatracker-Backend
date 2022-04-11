@@ -21,22 +21,27 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string',
+            'path_image' => 'required|string',
             'phone' => ' required|integer',
-            'gender' =>'required|integer',
+            'gender' =>'required|string',
             'Arrival_time' =>'required|integer',
             'Leave_time' =>'required|integer',
+            'absence_day' =>'required|integer',
             'position' =>'required|string'
-
+            
         ]);
+       
 
         $user = Employee::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
+            'path_image' => $fields['path_image'],
             'phone' => $fields['phone'],
             'gender' => $fields['gender'],
             'Arrival_time' => $fields['Arrival_time'],
             'Leave_time' => $fields['Leave_time'],
+            'absence_day' => $fields['absence_day'],
             'position' => $fields['position'],
 
         ]);

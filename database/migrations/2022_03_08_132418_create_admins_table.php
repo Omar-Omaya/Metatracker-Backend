@@ -18,10 +18,13 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->string('phone');
             $table->boolean('is_Admin');
             $table->boolean('is_Analyst');
             $table->boolean('is_IT');
+            $table->boolean('is_HR');
             $table->timestamps();
+            $table->string('api_admin_token')->default('');
         });
     }
 

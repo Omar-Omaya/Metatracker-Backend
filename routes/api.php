@@ -2,6 +2,8 @@
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\AdminController;
+
 use App\Models\Employee;
 
 use Illuminate\Http\Request;
@@ -24,6 +26,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class , 'register']);
 
 Route::post('/login', [AuthController::class , 'login']);
+
+// Public Routes Admin Authantication
+
+
+Route::post('/admin/register', [AdminController::class , 'register']);
+
+Route::post('/admin/login', [AdminController::class , 'login']);
 
 // Public Route Employee
 

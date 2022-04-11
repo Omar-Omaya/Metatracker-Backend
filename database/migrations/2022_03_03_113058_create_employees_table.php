@@ -18,8 +18,9 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->string('path_image')->nullable();
             $table->integer('phone');
-            $table->integer('gender');
+            $table->string('gender');
             $table->integer('Arrival_time');
             $table->integer('Leave_time');
             $table->integer('absence_day')->nullable();

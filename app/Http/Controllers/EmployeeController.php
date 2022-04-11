@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -16,7 +17,15 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::all();
+        $counter = DB::select("SELECT COUNT(id) FROM employees");
+        
+        // return (Employee::all() , compact($counter));
+        $list = [
+            "Counter" => $counter, 
+            "Data" => Employee::all()
+        ];
+        return $list;
+        
     }
 
     /**
@@ -79,4 +88,17 @@ class EmployeeController extends Controller
     {
         return Employee::destroy($id);
     }
+
+    /**
+     * Search for a name or email
+     *
+     * @param  str  $name
+     * @return \Illuminate\Http\Response
+     */
+
+    public function search($name)
+    {
+        return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
+    }
 }
+

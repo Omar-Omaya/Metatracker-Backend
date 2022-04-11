@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class Employee extends Model
 {
     use HasFactory;
@@ -15,6 +16,7 @@ class Employee extends Model
         'name',
         'email',
         'password',
+        'path_image',
         'phone',
         'gender',
         'Arrival_time',
@@ -24,9 +26,21 @@ class Employee extends Model
         'lat',
         'lng',
         'api_token'
-    
+        
     ];
 
+      /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    
+    protected $hidden = [
+        'password',
+        
+
+    ];
+    
     /**
      * Get the histories for the blog post.
      */
