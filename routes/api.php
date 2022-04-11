@@ -36,7 +36,8 @@ Route::post('/admin/login', [AdminController::class , 'login']);
 
 // Public Route Employee
 
-Route::get('/employees', [EmployeeController::class , 'index']);
+Route::get('/number-of-employees', [EmployeeController::class , 'index']);
+Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/employees/{id}', [EmployeeController::class , 'show']);
 Route::get('/employee/absence/{id}', [EmployeeController::class , 'getAbsenceDay']);
 

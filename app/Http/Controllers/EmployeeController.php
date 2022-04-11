@@ -17,15 +17,16 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $counter = DB::select("SELECT COUNT(id) FROM employees");
+        $counter = DB::select("SELECT id FROM employees");
+        // $counter = Employee::select('id');
         
         // return (Employee::all() , compact($counter));
-        $list = [
-            "Counter" => $counter, 
-            "Data" => Employee::all()
-        ];
-        return $list;
+        return $counter;
         
+    }
+
+    public function getAllEmployees(){
+        return Employee::all();
     }
 
     /**
