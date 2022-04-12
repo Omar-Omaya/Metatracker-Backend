@@ -29,6 +29,12 @@ class HistoryController extends Controller
         return History::create($request->all());
     }
 
+    public function getLastLocation(Request $request)
+    {
+        $location = History::select('lat','lng')->whereDate('created_at',Carbon::today())->get();
+        return $location;
+    }
+
     /**
      * Display the specified resource.
      *
