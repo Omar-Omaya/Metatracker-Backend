@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Models\History;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -32,7 +33,9 @@ class HistoryController extends Controller
 
     public function getLastLocation(Request $request)
     {
-        $location = History::select('lat','lng')->whereDate('created_at',Carbon::today())->get();
+        $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+        // $employee = Employee::select('name')->get();
+        // $location = History::with('Employee')->get();
         return $location;
     }
 
