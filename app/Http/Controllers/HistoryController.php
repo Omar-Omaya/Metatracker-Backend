@@ -32,7 +32,7 @@ class HistoryController extends Controller
 
     public function getLastLocation(Request $request)
     {
-        $location = History::select('lat','lng')->whereDate('created_at',Carbon::today())->get();
+        $location = History::select('id','lat','lng')->whereDate('created_at',Carbon::today())->get();
         return $location;
     }
 
@@ -45,6 +45,12 @@ class HistoryController extends Controller
     public function show($id)
     {
         return History::find($id);
+    }
+
+    public function countAttendance($employee_id)
+    {
+         $history = History::where('employee_id','=', $employee_id)->count();
+        return $history;
     }
 
     /**
