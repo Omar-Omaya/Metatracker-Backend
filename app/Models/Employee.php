@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
 
 class Employee extends Model
 {
     use HasFactory;
     use HasApiTokens;
+    use Notifiable;
 
     protected $fillable = [
         'name',
@@ -47,5 +49,10 @@ class Employee extends Model
     public function histories()
     {
         return $this->hasMany(History::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
     }
 }
