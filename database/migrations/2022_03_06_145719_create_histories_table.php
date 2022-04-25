@@ -18,7 +18,7 @@ class CreateHistoriesTable extends Migration
             $table->unsignedBigInteger('employee_id');
             $table->string('Start_time')->nullable();
             $table->string('End_time')->nullable();
-            $table->boolean('Out_of_zone')->nullable();
+            $table->boolean('Out_of_zone');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->string('Out_of_zone_time')->nullable();

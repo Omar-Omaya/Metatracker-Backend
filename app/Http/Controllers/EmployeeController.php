@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Hospital;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -64,6 +65,17 @@ class EmployeeController extends Controller
         return $employee;
         
     }
+
+    // public function stime($id)
+    // {
+    //     $item = Hospital::select('Start_time');
+    //     if($item>2){
+
+    //         $emp= Employee::select('absence_day')->where($employee_id, $id))->get();
+
+
+    //     }
+    // }
 
     /**
      * Update the specified resource in storage.
