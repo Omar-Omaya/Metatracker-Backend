@@ -9,6 +9,7 @@ use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request as IlluminateRequest;
 use Laravel\Sanctum\HasApiTokens;
 
 class AuthController extends Controller
@@ -42,8 +43,10 @@ class AuthController extends Controller
             'Leave_time' => $fields['Leave_time'],
             'absence_day' => $fields['absence_day'],
             'position' => $fields['position'],
+            
 
         ]);
+
 
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
@@ -59,6 +62,82 @@ class AuthController extends Controller
 
         // return response(['feilds addded'], 201);
     }
+
+    public function excel(Request $request){
+
+        $response = [];
+        
+        for($i = 0; $i<count($request['emp']); $i++){
+            $data = new IlluminateRequest($request['emp'][$i]);
+            
+            $fields = $data->validate([
+                'name' => 'required|string',
+                'email' => 'required|string|unique:users,email',
+                'password' => 'required|string',
+                'path_image' => 'string',
+                'phone' => ' required|integer',
+                'gender' =>'required|string',
+                'Arrival_time' =>'required|integer',
+                'Leave_time' =>'required|integer',
+                'absence_day' =>'required|integer',
+                'position' =>'required|string'
+            ]);
+
+            $user = Employee::create([
+                'name' => $fields['name'],
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password']),
+                'phone' => $fields['phone'],
+                'gender' => $fields['gender'],
+                'Arrival_time' => $fields['Arrival_time'],
+                'Leave_time' => $fields['Leave_time'],
+                'absence_day' => $fields['absence_day'],
+                'position' => $fields['position'],
+            ]);
+
+            $token = $user->createToken('myapptoken')->plainTextToken;
+            $token= substr($token , -40,40);
+            Employee::where('id', $user->id)->update(['api_token' => $token]);
+    
+            array_push($response, $data['email']);
+        }
+
+        return $response;
+
+
+        
+    }
+            // $var = json_decode($input_data);
+        // $fields = $request->validate([
+
+        //     'name' => 'required|string',
+        //     'email' => 'required|string|unique:users,email',
+        //     'password' => 'required|string',
+        //     'path_image' => 'string',
+        //     'phone' => ' required|integer',
+        //     'gender' =>'required|string',
+        //     'Arrival_time' =>'required|integer',
+        //     'Leave_time' =>'required|integer',
+        //     'absence_day' =>'required|integer',
+        //     'position' =>'required|string'
+            
+        // ]);
+        // foreach($input_data["data"] as $data){
+        //     $emp = Employee::create([
+        //         'name' => $data['name'],
+        //         'email' => $data['email'],
+        //         'password' => bcrypt($data['password']),
+        //         'phone' => $data['phone'],
+        //         'gender' => $data['gender'],
+        //         'Arrival_time' => $data['Arrival_time'],
+        //         'Leave_time' => $data['Leave_time'],
+        //         'absence_day' => $data['absence_day'],
+        //         'position' => $data['position'],
+                
+    
+        //     ]);
+
+        // }
 
     public function login(Request $request){
 

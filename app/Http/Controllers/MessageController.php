@@ -17,6 +17,10 @@ class MessageController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'msg_text' =>'required',
+        ]);
       
         return Message::create($request->all());
     }
