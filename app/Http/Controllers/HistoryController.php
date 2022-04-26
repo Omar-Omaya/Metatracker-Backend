@@ -56,6 +56,8 @@ class HistoryController extends Controller
         return History::find($id);
     }
 
+
+
     /**
      * Update the specified resource in storage.
      *
