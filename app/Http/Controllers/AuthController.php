@@ -29,6 +29,7 @@ class AuthController extends Controller
             'Leave_time' =>'required|integer',
             'absence_day' =>'required|integer',
             'position' =>'required|string'
+        
             
         ]);
        
@@ -66,7 +67,7 @@ class AuthController extends Controller
     public function excel(Request $request){
 
         $response = [];
-        
+
         for($i = 0; $i<count($request['emp']); $i++){
             $data = new IlluminateRequest($request['emp'][$i]);
             
@@ -95,14 +96,16 @@ class AuthController extends Controller
                 'position' => $fields['position'],
             ]);
 
+            //TODO check whether there is dublication or not 
+
             $token = $user->createToken('myapptoken')->plainTextToken;
             $token= substr($token , -40,40);
             Employee::where('id', $user->id)->update(['api_token' => $token]);
-    
-            array_push($response, $data['email']);
+
+            // array_push($response, $data['email']);
         }
 
-        return $response;
+        return $user;
 
 
         
@@ -154,12 +157,15 @@ class AuthController extends Controller
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
         $user = Employee::where('email', $fields['email'])->first();
 
-        // $response = [
-        //     'user' => $user,
-        //     'token' => $token
-        // ];
+        
 
+     
         if(!$user||Hash::check($fields['password'], $user->password)) {
+            if(Employee::where('Is_Here','=',true)->where('id',$user->id)->exists()){
+                return response([ "Unauthorized"], 401);
+            }
+            Employee::where('id', $user->id)->update(['Is_Here' => true]);
+
             $response = [
                 'user' => $user,
                 'token' => $token

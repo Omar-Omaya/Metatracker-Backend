@@ -27,7 +27,9 @@ class Employee extends Model
         'position',
         'lat',
         'lng',
-        'api_token'
+        'api_token',
+        'Is_Here'
+
         
     ];
 

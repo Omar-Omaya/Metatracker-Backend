@@ -31,6 +31,12 @@ class HistoryController extends Controller
         return History::create($request->all());
     }
 
+    public function countAttendance($employee_id)
+    {
+         $history = History::where('employee_id','=', $employee_id)->count();
+          return $history;
+    }
+
     public function getLastLocation(Request $request)
     {
         $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
