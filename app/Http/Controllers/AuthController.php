@@ -32,6 +32,9 @@ class AuthController extends Controller
         
             
         ]);
+
+        $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
+            if(!$duplicate){
        
 
         $user = Employee::create([
@@ -60,8 +63,9 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+    }
 
-        // return response(['feilds addded'], 201);
+        return response(['this email is already exist'], 200);
     }
 
     public function excel(Request $request){
@@ -83,6 +87,10 @@ class AuthController extends Controller
                 'absence_day' =>'required|integer',
                 'position' =>'required|string'
             ]);
+            $duplicate = Employee::select('email')->where('email',$fields['email'])->get();
+
+            if(!$duplicate){
+       
 
             $user = Employee::create([
                 'name' => $fields['name'],
@@ -102,12 +110,16 @@ class AuthController extends Controller
             $token= substr($token , -40,40);
             Employee::where('id', $user->id)->update(['api_token' => $token]);
 
-            // array_push($response, $data['email']);
+                array_push($response, $data['email']);
+            }else{
+                $stringAdd = $data['email']." => Email already exist";
+                array_push($response , $stringAdd);
+            }
         }
 
-        return $user;
+        return $response;
 
-
+    
         
     }
             // $var = json_decode($input_data);

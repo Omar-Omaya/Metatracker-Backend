@@ -25,7 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('Leave_time');
             $table->integer('absence_day')->nullable();
             $table->string('position');
-            $table->string('Is_Here')->default();
+            $table->boolean('Is_Here')->default(false);
 
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
