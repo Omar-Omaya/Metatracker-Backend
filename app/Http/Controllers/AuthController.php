@@ -87,7 +87,7 @@ class AuthController extends Controller
                 'absence_day' =>'required|integer',
                 'position' =>'required|string'
             ]);
-            $duplicate = Employee::select('email')->where('email',$fields['email'])->get();
+            $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
 
             if(!$duplicate){
        
