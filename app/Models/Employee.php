@@ -18,6 +18,7 @@ class Employee extends Model
         'name',
         'email',
         'password',
+        'department_id',
         'path_image',
         'phone',
         'gender',
@@ -48,6 +49,12 @@ class Employee extends Model
     /**
      * Get the histories for the blog post.
      */
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
     public function histories()
     {
         return $this->hasMany(History::class);
@@ -57,4 +64,9 @@ class Employee extends Model
     {
         return $this->hasMany(Notification::class);
     }
+
+
+    
+
+    
 }

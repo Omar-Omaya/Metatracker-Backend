@@ -14,7 +14,8 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->id();
+            $table->bigincrements('id');
+            $table->unsignedBigInteger('department_id');
             $table->string('name');
             $table->string('email');
             $table->string('password');
@@ -26,11 +27,11 @@ class CreateEmployeesTable extends Migration
             $table->integer('absence_day')->nullable();
             $table->string('position');
             $table->boolean('Is_Here')->default(false);
-
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->string('api_token')->default('');
             $table->timestamps();
+           
         });
     }
 
