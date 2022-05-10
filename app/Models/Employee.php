@@ -50,14 +50,14 @@ class Employee extends Model
      * Get the histories for the blog post.
      */
 
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
-
+    
     public function histories()
     {
         return $this->hasMany(History::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 
     public function notifications()

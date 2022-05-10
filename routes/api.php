@@ -32,7 +32,7 @@ Route::post('/list-of-employees', [AuthController::class , 'excel']);
 // Public Routes Admin Authantication
 
 
-Route::post('/admin/register', [AdminController::class , 'register']);
+Route::post('/admin-register', [AdminController::class , 'register']);
 
 Route::post('/admin/login', [AdminController::class , 'login']);
 

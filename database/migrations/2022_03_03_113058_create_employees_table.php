@@ -15,7 +15,7 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->bigincrements('id');
-            $table->unsignedBigInteger('department_id');
+            $table->bigInteger('department_id')->nullable();
             $table->string('name');
             $table->string('email');
             $table->string('password');
@@ -30,6 +30,9 @@ class CreateEmployeesTable extends Migration
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->string('api_token')->default('');
+            // $table->foreign('department_id')
+            //         ->references('id')
+            //         ->on('department');
             $table->timestamps();
            
         });
