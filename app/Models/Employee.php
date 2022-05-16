@@ -61,6 +61,10 @@ class Employee extends Model
     {
         return $this->hasMany(History::class);
     }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 
     public function notifications()
     {
