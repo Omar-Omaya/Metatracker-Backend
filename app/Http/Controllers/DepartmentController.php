@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // use App\Model\department;
 // use App\Model\Employee;
-use App\Models\department;
+use App\Models\Department;
 
 
 
@@ -22,7 +22,7 @@ class DepartmentController extends Controller
         //     'password' =>'required'
         // ]);
 
-         return department::create($request->all());
+         return Department::create($request->all());
         // return 'test';
     }
     //
