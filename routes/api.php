@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +33,7 @@ Route::post('/list-of-employees', [AuthController::class , 'excel']);
 // Public Routes Admin Authantication
 
 
-Route::post('/admin/register', [AdminController::class , 'register']);
+Route::post('/admin-register', [AdminController::class , 'register']);
 
 Route::post('/admin/login', [AdminController::class , 'login']);
 
@@ -65,6 +67,18 @@ Route::get('/msg/{id}', [MessageController::class , 'show']);
 Route::post('/msg', [MessageController::class , 'store']);
 Route::put('/msg/{id}', [MessageController::class , 'update']);
 Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
+
+
+// Public Route Department
+Route::get('/dep', [DepartmentController::class , 'index']);
+Route::get('/dep/{id}', [DepartmentController::class , 'show']);
+Route::post('/dep', [DepartmentController::class , 'store']);
+Route::put('/dep/{id}', [DepartmentController::class , 'update']);
+Route::delete('/dep/{id}', [DepartmentController::class , 'destroy']);
+
+//Public Route Notification 
+
+Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
 
 
