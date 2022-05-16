@@ -24,9 +24,6 @@ class AuthController extends Controller
             'password' => 'required|string',
             'path_image' => 'string',
             'phone' => ' required|integer',
-            'gender' =>'required|string',
-            'Arrival_time' =>'required|integer',
-            'Leave_time' =>'required|integer',
             'absence_day' =>'required|integer',
             'position' =>'required|string'
         
@@ -42,13 +39,10 @@ class AuthController extends Controller
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
-            'gender' => $fields['gender'],
-            'Arrival_time' => $fields['Arrival_time'],
-            'Leave_time' => $fields['Leave_time'],
-            'absence_day' => $fields['absence_day'],
-            'position' => $fields['position'],
+            'path_image' => $fields['path_image'],
             
-
+            'absence_day' => $fields['absence_day'],
+           
         ]);
 
 
@@ -81,11 +75,8 @@ class AuthController extends Controller
                 'password' => 'required|string',
                 'path_image' => 'string',
                 'phone' => ' required|integer',
-                'gender' =>'required|string',
-                'Arrival_time' =>'required|integer',
-                'Leave_time' =>'required|integer',
                 'absence_day' =>'required|integer',
-                'position' =>'required|string'
+                
             ]);
             $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
 

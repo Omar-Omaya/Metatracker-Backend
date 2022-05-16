@@ -18,19 +18,12 @@ class Employee extends Model
         'name',
         'email',
         'password',
+        'department_id',
         'path_image',
         'phone',
-        'gender',
-        'Arrival_time',
-        'Leave_time',
         'absence_day',
-        'position',
-        'lat',
-        'lng',
         'api_token',
-        'Is_Here'
-
-        
+        'Is_Here'  
     ];
 
       /**
@@ -41,13 +34,13 @@ class Employee extends Model
     
     protected $hidden = [
         'password',
-        
-
     ];
     
-    /**
-     * Get the histories for the blog post.
-     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
     public function histories()
     {
         return $this->hasMany(History::class);
