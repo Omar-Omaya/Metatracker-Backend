@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Model\department;
+use App\Model\Employee;
+
 
 class CreateEmployeesTable extends Migration
 {
@@ -31,8 +34,16 @@ class CreateEmployeesTable extends Migration
             $table->double('lng')->nullable();
             $table->string('api_token')->default('');
             $table->timestamps();
+
            
         });
+//         Schema::create('employees',function(Blueprint $table){
+
+//             $table->unsignedBigInteger('role_id');
+//             $table->foreign('role_id')->references('id')->on('departments');
+//             $table->string('permission');
+
+// });
     }
 
     /**

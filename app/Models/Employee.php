@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use App\Model\department;
+
 
 
 class Employee extends Model
@@ -49,11 +51,11 @@ class Employee extends Model
     /**
      * Get the histories for the blog post.
      */
-
-    public function department()
+    public function departments()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(department::class);
     }
+
 
     public function histories()
     {

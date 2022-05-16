@@ -4,21 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use App\Model\Employee;
 
-class Department extends Model
+class department extends Model
 {
-    use HasFactory;
+        use HasFactory;
+        // use HasApiTokens;
+        // use Notifiable;
 
-    protected $fillable = [
-        'D_name',
+        protected $fillable = [
+        'dep_name',
         'const_Arrival_time',
         'const_Leave_time',
+        'Position',
         'lat',
-        'lng',
-          
+        'lng'
     ];
 
-    public function employee()
+
+    public function employees()
     {
         return $this->hasMany(Employee::class);
     }
