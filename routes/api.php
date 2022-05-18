@@ -48,6 +48,8 @@ Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
 Route::post('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
+
 
 // Public Route Histroy
 

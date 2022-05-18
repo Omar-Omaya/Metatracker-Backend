@@ -29,6 +29,7 @@ class CreateEmployeesTable extends Migration
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->string('api_token')->default('');
+            $table->string('mobile_token')->default('');
             // $table->foreign('department_id')
             //         ->references('id')
             //         ->on('department');

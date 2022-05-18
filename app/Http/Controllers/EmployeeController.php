@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class EmployeeController extends Controller
 {
@@ -27,7 +28,7 @@ class EmployeeController extends Controller
     }
 
     public function getAllEmployees(){
-        return Employee::all();
+        return Employee::get();
     }
 
     /**
@@ -89,6 +90,21 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $employee->update($request->all());
         return $employee;
+    }
+
+    public function mobile_token(Request $request, $id)
+    {
+
+        $fields = $request->validate([
+            'mobile_token' => 'required|string', 
+        ]);
+
+        // $mob_token = Employee::where('id' , $id)->update(['mobile_token',$fields['mobile_token']]);
+        $mob_token = Employee::where('id' , $id)->first()->update(array('mobile_token'=>$fields['mobile_token']));
+        return $mob_token;
+        // $update_token=$mob_token->update([])
+        // $mob_token->update($request->all());
+        
     }
 
     /**

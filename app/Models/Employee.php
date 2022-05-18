@@ -21,11 +21,12 @@ class Employee extends Model
         'email',
         'password',
         'department_id',
-        'path_image',
         'phone',
         'absence_day',
         'api_token',
-        'Is_Here'  
+        'Is_Here',
+        'mobile_token'
+
     ];
 
       /**

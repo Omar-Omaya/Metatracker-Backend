@@ -22,12 +22,11 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string',
-            'path_image' => 'string',
             'phone' => ' required|integer',
             'absence_day' =>'required|integer',
-            'position' =>'required|string'
-        
-            
+            'department_id'=>'required|integer'
+           
+
         ]);
 
         $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
@@ -39,9 +38,9 @@ class AuthController extends Controller
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
-            'path_image' => $fields['path_image'],
-            
             'absence_day' => $fields['absence_day'],
+            'department_id' => $fields['department_id'],
+
            
         ]);
 
@@ -108,10 +107,7 @@ class AuthController extends Controller
             }
         }
 
-        return $response;
-
-    
-        
+        return $response;   
     }
             // $var = json_decode($input_data);
         // $fields = $request->validate([
@@ -161,7 +157,7 @@ class AuthController extends Controller
         $user = Employee::where('email', $fields['email'])->first();
 
         
-
+//  || &&
      
         if(!$user||Hash::check($fields['password'], $user->password)) {
             if(Employee::where('Is_Here','=',true)->where('id',$user->id)->exists()){
