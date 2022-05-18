@@ -18,7 +18,6 @@ class AuthController extends Controller
     // use HasApiTokens;
     public function register(Request $request) {
         $fields = $request->validate([
-
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string',
@@ -40,8 +39,6 @@ class AuthController extends Controller
             'phone' => $fields['phone'],
             'absence_day' => $fields['absence_day'],
             'department_id' => $fields['department_id'],
-
-           
         ]);
 
 
