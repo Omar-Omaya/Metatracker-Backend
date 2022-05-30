@@ -6,6 +6,12 @@ use App\Models\Employee;
 use App\Models\Hospital;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\History;
+use App\Models\Department;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Salman\GeoFence\Service\GeoFenceCalculator;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -94,17 +100,12 @@ class EmployeeController extends Controller
 
     public function mobile_token(Request $request, $id)
     {
-
         $fields = $request->validate([
             'mobile_token' => 'required|string', 
         ]);
 
-        // $mob_token = Employee::where('id' , $id)->update(['mobile_token',$fields['mobile_token']]);
         $mob_token = Employee::where('id' , $id)->first()->update(array('mobile_token'=>$fields['mobile_token']));
         return $mob_token;
-        // $update_token=$mob_token->update([])
-        // $mob_token->update($request->all());
-        
     }
 
     /**
@@ -128,6 +129,32 @@ class EmployeeController extends Controller
     public function search($name)
     {
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
+    }
+
+    public function distance()
+    {
+          $d_calculator = new GeoFenceCalculator();
+
+          $departments = Department::get();
+          $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+          foreach($departments as $department){
+              foreach($historiesOfEmployees as $historiesOfEmployee){
+                  if($department->id == $historiesOfEmployee->employee->department_id){
+                        $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
+                        if($distance < 0.5 ){
+                            History::where('employee_id', $historiesOfEmployees->id)->update(['Out_of_zone' => true]);
+                            return response([ "IN Zone"], 200);
+                            
+                        }else{
+                            return response([ "Out Of Zone "], 401);
+
+                        }
+
+                        // return response([''], 401);
+
+                  }
+              }
+          }
     }
 }
 

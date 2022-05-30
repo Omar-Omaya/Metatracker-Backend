@@ -49,6 +49,8 @@ Route::put('/employees/{id}', [EmployeeController::class , 'update']);
 Route::post('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
 Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
+Route::get('/dis', [EmployeeController::class, 'distance']);
+
 
 
 // Public Route Histroy

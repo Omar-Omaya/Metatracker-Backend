@@ -21,6 +21,7 @@ class Employee extends Model
         'email',
         'password',
         'department_id',
+        'path_image',
         'phone',
         'absence_day',
         'api_token',

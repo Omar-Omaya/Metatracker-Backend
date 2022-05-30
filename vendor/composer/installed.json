@@ -4519,6 +4519,85 @@
             "install-path": "../ramsey/uuid"
         },
         {
+            "name": "salmanzafar/laravel-geo-fence",
+            "version": "v1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/salmanzafar949/Laravel-Geo-Fence.git",
+                "reference": "a347c761b6ebc525e69acc8deee9a1e0713fb5b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/salmanzafar949/Laravel-Geo-Fence/zipball/a347c761b6ebc525e69acc8deee9a1e0713fb5b2",
+                "reference": "a347c761b6ebc525e69acc8deee9a1e0713fb5b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4.0 || ^7.0 || ^7.1 || ^7.2 || ^7.3 || ^7.4"
+            },
+            "require-dev": {
+                "laravel/framework": "^5.0 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "time": "2020-10-12T13:46:50+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Salman\\GeoFence\\GeoFenceServiceProvider"
+                    ],
+                    "aliases": {
+                        "Mqtt": "Salman\\GeoFence\\Facades\\GeoFence"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Salman\\GeoFence\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Salman Zafar",
+                    "email": "salmanzafar949@gmail.com"
+                }
+            ],
+            "description": "A Laravel Library to calculate distance between two longitude and latitudes",
+            "keywords": [
+                "Geo Fencing laravel",
+                "geo-fence-laravel",
+                "geofence-laravel",
+                "laravel",
+                "laravel geo-fence library",
+                "laravel geofence library",
+                "laravel-calculate-distance-between-two-points",
+                "laravel5",
+                "laravel6",
+                "laravel7",
+                "laravel8"
+            ],
+            "support": {
+                "issues": "https://github.com/salmanzafar949/Laravel-Geo-Fence/issues",
+                "source": "https://github.com/salmanzafar949/Laravel-Geo-Fence/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/salmanzafar949",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/salmanzafar949",
+                    "type": "patreon"
+                }
+            ],
+            "install-path": "../salmanzafar/laravel-geo-fence"
+        },
+        {
             "name": "sebastian/cli-parser",
             "version": "1.0.1",
             "version_normalized": "1.0.1.0",
