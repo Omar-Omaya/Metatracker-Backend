@@ -134,24 +134,20 @@ class EmployeeController extends Controller
     public function distance()
     {
           $d_calculator = new GeoFenceCalculator();
-
           $departments = Department::get();
-          $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+          $historiesOfEmployees = History::with('Employee')->get();
           foreach($departments as $department){
               foreach($historiesOfEmployees as $historiesOfEmployee){
-                  if($department->id == $historiesOfEmployee->employee->department_id){
+                  if($department->id == $historiesOfEmployee->Employee->department_id and $historiesOfEmployee->created_at <= Carbon::today()){
                         $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
                         if($distance < 0.5 ){
-                            History::where('employee_id', $historiesOfEmployees->id)->update(['Out_of_zone' => true]);
-                            return response([ "IN Zone"], 200);
-                            
+                            History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true]);
+                            $this->notification($historiesOfEmployee->Employee->mobile_token, 'Check your steps' , 'Your are currently out of zone');
+                            Log::info("Out of zone");
                         }else{
-                            return response([ "Out Of Zone "], 401);
-
+                            History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true]);
+                            Log::info("In zone");
                         }
-
-                        // return response([''], 401);
-
                   }
               }
           }
