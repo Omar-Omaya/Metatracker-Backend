@@ -27,9 +27,31 @@ class HistoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        return History::create($request->all());
+      {
+       
+        if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
+         return History::create($request->all());
+        }
+        else{
+            return response([ "is exists"], 401);
+            
+        }
     }
+
+
+        // return  History::where('employee_id',$fields['employee_id'])->get();
+        
+        // return History::create($request->all());
+            
+            
+        
+         
+        //  $history= History::get();
+        //  History::where('employee_id','=', $employee_id)->count();
+        // return $history;
+        // if($history->employee_id)
+        // return History::create($request->all());
+    
 
     public function countAttendance($employee_id)
     {
