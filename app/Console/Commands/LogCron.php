@@ -76,25 +76,17 @@ class LogCron extends Command
 
     $SERVER_API_KEY = 'AAAAIcuTN7M:APA91bE7BypbrcpQyq4Quxt8inZF4-yeOcpGQUU5I1cXd_5jEO7t2EfA-jNKUUbZlKarVOWAt5iVjTxM2Fubh85BA6qE3rCZY9Zwx1fmPJK1fza5xKZfpIJpPmEQ7v-10WMiBldCHl7a';
     $data = [
-
         "registration_ids" => [
             $token_1
         ],
-
         "notification" => [
-
             "title" => $title,
-
             "body" => $body,
-
             "sound"=> "default" // required for sound on ios
-
         ],
-
     ];
-    $dataString = json_encode($data);
-    Log::info($dataString);
 
+    $dataString = json_encode($data);
 
     $headers = [
 
@@ -103,7 +95,6 @@ class LogCron extends Command
         'Content-Type: application/json',
 
     ];
-
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
@@ -114,7 +105,6 @@ class LogCron extends Command
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
     $response = curl_exec($ch);
-
 
         Log::info($response);
     }
