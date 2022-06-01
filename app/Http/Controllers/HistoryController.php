@@ -28,30 +28,30 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
       {
-       
+
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
          return History::create($request->all());
         }
         else{
             return response([ "is exists"], 401);
-            
+
         }
     }
 
 
         // return  History::where('employee_id',$fields['employee_id'])->get();
-        
+
         // return History::create($request->all());
-            
-            
-        
-         
+
+
+
+
         //  $history= History::get();
         //  History::where('employee_id','=', $employee_id)->count();
         // return $history;
         // if($history->employee_id)
         // return History::create($request->all());
-    
+
 
     public function countAttendance($employee_id)
     {
@@ -91,7 +91,11 @@ class HistoryController extends Controller
     {
         $history = History::where('employee_id',$id)->get()->last();
         $history->update($request->all());
-        return $history;
+        if($history->Out_of_zone==true){
+            return response([ "Employee is in zone"], 201);
+        }else{
+            return response([ "Employee is out of zone"], 401);
+        }
     }
 
     /**
