@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Salman\GeoFence\Service\GeoFenceCalculator;
 use Illuminate\Support\Facades\DB;
-    
+
 class LogCron extends Command
 {
     /**
@@ -19,14 +19,14 @@ class LogCron extends Command
      * @var string
      */
     protected $signature = 'log:cron';
-     
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Command description';
-     
+
     /**
      * Create a new command instance.
      *
@@ -36,7 +36,7 @@ class LogCron extends Command
     {
         parent::__construct();
     }
-     
+
     /**
      * Execute the console command.
      *
@@ -47,32 +47,34 @@ class LogCron extends Command
     {
           $d_calculator = new GeoFenceCalculator();
           $departments = Department::get();
-          $historiesOfEmployees = History::with('Employee')->get();
+          $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+          if(!$historiesOfEmployees->isEmpty()){
           foreach($departments as $department){
               foreach($historiesOfEmployees as $historiesOfEmployee){
-                  if($department->id == $historiesOfEmployee->Employee->department_id and $historiesOfEmployee->created_at <= Carbon::today()){
+                  if($department->id == $historiesOfEmployee->Employee->department_id){
                         $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
                         if($distance > 0.1 ){
-                            History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true]);
+                            History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true], ['Out_of_zone_time' => Carbon::now()->toDateTimeString()]);
                             $this->notification($historiesOfEmployee->Employee->mobile_token, 'Check your steps' , 'Your are currently out of zone');
                             Log::info("Out of zone");
                         }else{
-                            History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true]);
+                            History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                             $this->notification($historiesOfEmployee->Employee->mobile_token, 'Normal' , 'Have a nice day');
                             Log::info("In zone");
                         }
                   }
               }
           }
+        }else{
+                Log::info("Empty Array");
+
+        }
     }
 
 
     public function notification($token_1 , $title , $body){
-        
+
     $SERVER_API_KEY = 'AAAAIcuTN7M:APA91bE7BypbrcpQyq4Quxt8inZF4-yeOcpGQUU5I1cXd_5jEO7t2EfA-jNKUUbZlKarVOWAt5iVjTxM2Fubh85BA6qE3rCZY9Zwx1fmPJK1fza5xKZfpIJpPmEQ7v-10WMiBldCHl7a';
-
-    // $token_1 = 'd3erNeJxTTOsSoBRI3EHfi:APA91bFQBQjZIk0WOcNxCsepIyKv7U2VEJgL9m9Les32lpkp22dXKiyiEYhUekRkln9PD4-n0vuXEQtpKJB1Y8xl6CmrAMmNvlDYCLAt08gCDZwRsvRuCcKfh0yG-v_Z0likMCbXBk5T';
-
     $data = [
 
         "registration_ids" => [
@@ -90,8 +92,6 @@ class LogCron extends Command
         ],
 
     ];
-
-
     $dataString = json_encode($data);
     Log::info($dataString);
 
@@ -104,39 +104,27 @@ class LogCron extends Command
 
     ];
 
+
     $ch = curl_init();
-
     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-
     curl_setopt($ch, CURLOPT_POST, true);
-
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
     $response = curl_exec($ch);
 
-    // return $response;
-        
+
         Log::info($response);
     }
 
-    
+
     public function handle()
     {
-
-        $token = 'ecejVaaXQ9uEcnvJUG1Wyg:APA91bEd1jXmyuNjunuFX7QYsu39FOeo1WTLJ0T-n72_xbr2rwZtcrut1LfuvCWEHeaSQYiaahokb9GGwffjnkN6CFA8Pqh_zI4MDEVZISuIQWEE0Hi4XSsmFtGGWlfaNWIXgJA0o_UE';
-
-
         // $this->notification($token, "test", "test");
-
         $this->distance();
 
     }
 }
 
-      
