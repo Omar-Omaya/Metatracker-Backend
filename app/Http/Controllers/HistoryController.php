@@ -33,7 +33,7 @@ class HistoryController extends Controller
          return History::create($request->all());
         }
         else{
-            return response([ "is exists"], 401);
+            return response([ "is exist"], 401);
 
         }
     }

@@ -84,11 +84,9 @@ class AuthController extends Controller
                 'email' => $fields['email'],
                 'password' => bcrypt($fields['password']),
                 'phone' => $fields['phone'],
-                'gender' => $fields['gender'],
-                'Arrival_time' => $fields['Arrival_time'],
-                'Leave_time' => $fields['Leave_time'],
+                
                 'absence_day' => $fields['absence_day'],
-                'position' => $fields['position'],
+                
             ]);
 
             //TODO check whether there is dublication or not 

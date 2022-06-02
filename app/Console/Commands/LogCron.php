@@ -48,12 +48,13 @@ class LogCron extends Command
           $d_calculator = new GeoFenceCalculator();
           $departments = Department::get();
           $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+
           if(!$historiesOfEmployees->isEmpty()){
           foreach($departments as $department){
               foreach($historiesOfEmployees as $historiesOfEmployee){
                   if($department->id == $historiesOfEmployee->Employee->department_id){
                         $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
-                        if($distance > 0.1 ){
+                        if($distance > 1000 ){
                             History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
                             $this->notification($historiesOfEmployee->Employee->mobile_token, 'Check your steps' , 'Your are currently out of zone');
                             Log::info("Out of zone");
@@ -79,7 +80,7 @@ class LogCron extends Command
         "registration_ids" => [
             $token_1
         ],
-        "notification" => [
+            "notification" => [
             "title" => $title,
             "body" => $body,
             "sound"=> "default" // required for sound on ios
