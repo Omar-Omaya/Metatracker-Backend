@@ -73,6 +73,7 @@ class AuthController extends Controller
                 'phone' => ' required|integer',
                 'absence_day' =>'required|integer',
                 
+                
             ]);
             $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
 
@@ -84,7 +85,6 @@ class AuthController extends Controller
                 'email' => $fields['email'],
                 'password' => bcrypt($fields['password']),
                 'phone' => $fields['phone'],
-                
                 'absence_day' => $fields['absence_day'],
                 
             ]);

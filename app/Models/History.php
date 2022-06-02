@@ -15,6 +15,7 @@ class History extends Model
         'End_time',
         'Out_of_zone',
         'Out_of_zone_time',
+        'is_absence',
         'lat',
         'lng'
         

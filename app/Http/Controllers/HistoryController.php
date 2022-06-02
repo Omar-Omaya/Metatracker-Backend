@@ -28,13 +28,11 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
       {
-
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
          return History::create($request->all());
         }
         else{
             return response([ "is exist"], 401);
-
         }
     }
 
