@@ -65,12 +65,7 @@ class EmployeeController extends Controller
         return Employee::find($id);
     }
 
-    public function getAbsenceDay($id)
-    {
-        $employee = Employee::select('absence_day')->where('id',$id)->first();
-        return $employee;
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Log;
          */
         protected $commands = [
             Commands\LogCron::class,
+            Commands\AbsenceDays::class,
+
         ];
           
         /**
@@ -27,6 +29,8 @@ use Illuminate\Support\Facades\Log;
         protected function schedule(Schedule $schedule)
         {
             $schedule->command('log:cron')
+                     ->everyMinute();
+            $schedule->command('abs:days')
                      ->everyMinute();
             // $schedule->call(function (){
             //     $history = DB::table('histories')->get();

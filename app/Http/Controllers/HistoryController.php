@@ -28,15 +28,13 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
       {
-
-        if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
+        // if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
          return History::create($request->all());
         }
-        else{
-            return response([ "is exist"], 401);
-
-        }
-    }
+        // else{
+            // return response([ "is exist"], 401);
+        // }
+    // }
 
 
         // return  History::where('employee_id',$fields['employee_id'])->get();
@@ -52,11 +50,14 @@ class HistoryController extends Controller
         // if($history->employee_id)
         // return History::create($request->all());
 
-
-    public function countAttendance($employee_id)
+    public function getAbsenceDay($id)
     {
-         $history = History::where('employee_id','=', $employee_id)->count();
-          return $history;
+        return History::where('is_absence','=',true)->where('employee_id',$id)->count();
+    }
+
+    public function countAttendanceDay($id)
+    {
+        return History::where('is_absence','=',false)->where('employee_id',$id)->count();
     }
 
     public function getLastLocation(Request $request)

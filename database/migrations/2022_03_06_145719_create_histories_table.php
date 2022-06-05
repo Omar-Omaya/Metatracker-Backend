@@ -22,6 +22,7 @@ class CreateHistoriesTable extends Migration
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->string('Out_of_zone_time')->nullable();
+            $table->boolean('is_absence');
             $table->timestamps();
             $table->foreign('employee_id')
             ->references('id')
