@@ -65,14 +65,7 @@ class EmployeeController extends Controller
         return Employee::find($id);
     }
 
-    public function getAbsenceDay($id)
-    {
-        $employee = Employee::get();
-        return Employee::select('absence_day')->where('id',$id)->first()->update(array('absence_day'=>$employee->absence_day))->count();
-        // $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
-       
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *

@@ -6,6 +6,8 @@ use App\Models\Employee;
 use Illuminate\Console\Command;
 use App\Models\History;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 
 
 
@@ -47,29 +49,30 @@ class AbsenceDays extends Command
         foreach($employees as $employee){
             if(!History::whereDate('created_at',Carbon::today())->where('employee_id',$employee->id)->exists()){
                 
-                 Employee::create([
+                History::create([
                     'lat' => 0,
                     'lng' => 0,
                     'employee_id' => $employee->id,
-                    'out_of_zone' => 0,
+                    'Out_of_zone' => 0,
                     'Start_time' => '0',
                     'End_time' => '0',
                     'Out_of_zone_time' => 0,
                     'is_absence' => 1,
-  
                 ]);
-                
-
-
+                Log::info("");
             }
+            
+            
+
+            
+
         }
-
-
 
         
     } 
     public function handle()
     {
+        $this->createAbsDay();
        
     }
 }

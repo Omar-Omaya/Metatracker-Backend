@@ -72,11 +72,11 @@ class LogCron extends Command
         }
     }
 
-    public function getAbsenceDay($id)
-    {
-        $employee = Employee::select('absence_day')->where('id',$id)->first();
-        return $employee;
-    }
+    // public function getAbsenceDay($id)
+    // {
+    //     $employee = Employee::select('absence_day')->where('id',$id)->first();
+    //     return $employee;
+    // }
 
 
 

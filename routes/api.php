@@ -42,7 +42,6 @@ Route::post('/admin/login', [AdminController::class , 'login']);
 Route::get('/number-of-employees', [EmployeeController::class , 'index']);
 Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/employees/{id}', [EmployeeController::class , 'show']);
-Route::get('/employee/absence/{id}', [EmployeeController::class , 'getAbsenceDay']);
 
 Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
@@ -62,7 +61,9 @@ Route::post('/histories', [HistoryController::class , 'store']);
 Route::put('/histories/{id}', [HistoryController::class , 'update']);
 Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
 Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
-Route::get('/histories-days/{id}', [HistoryController::class, 'countAttendance']);
+Route::get('/attend/{id}', [HistoryController::class, 'countAttendanceDay']);
+Route::get('/absence/{id}', [HistoryController::class , 'getAbsenceDay']);
+
 
 
 // Public Route Message 
