@@ -22,9 +22,9 @@ class AdminController extends Controller
             'is_Analyst' => 'string',
             'is_HR' =>'string',
             'is_IT' => 'string'
-              
+
         ]);
-       
+
 
         $admin = Admin::create([
 
@@ -36,13 +36,13 @@ class AdminController extends Controller
             'is_Analyst' => $fields['is_Analyst'],
             'is_HR' => $fields['is_HR'],
             'is_IT' => $fields['is_IT']
-            
+
         ]);
 
         $token = $admin->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Admin::where('id', $admin->id)->update(['api_admin_token' => $token]);
-    
+
 
         $response = [
             'admin' => $admin,
@@ -51,7 +51,6 @@ class AdminController extends Controller
 
         return response($response, 201);
 
-        // return response(['feilds addded'], 201);
     }
 
     public function login(Request $request){
@@ -59,7 +58,7 @@ class AdminController extends Controller
         $fields = $request->validate([
             'email' =>'required|string',
             'password' =>'required|string',
-          
+
         ]);
 
         // Check email and Check password
@@ -69,10 +68,6 @@ class AdminController extends Controller
         Admin::where('id', $admin->id)->update(['api_admin_token'=>$token]);
         $admin = Admin::where('email', $fields['email'])->first();
 
-        // $response = [
-        //     'admin' => $admin,
-        //     'token' => $token
-        // ];
 
         if(!$admin||Hash::check($fields['password'], $admin->password)) {
             $response = [
@@ -90,47 +85,23 @@ class AdminController extends Controller
     }
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function index()
     {
-    
+
     }
 
-    
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Admin $admin)
+    public function readAllAdmins(Admin $admin)
     {
-        //
+        return Admin::get();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Admin $admin)
     {
         //

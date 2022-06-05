@@ -17,7 +17,7 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         // $request->validate([
-            
+
         //     'email' =>'required',
         //     'password' =>'required'
         // ]);
@@ -25,5 +25,12 @@ class DepartmentController extends Controller
          return Department::create($request->all());
         // return 'test';
     }
-    //
+
+    public function readAllDepartment(Request $request){
+
+         return Department::get();
+    }
+
+
+
 }

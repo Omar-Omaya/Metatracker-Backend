@@ -27,10 +27,10 @@ class EmployeeController extends Controller
     {
         $counter = DB::select("SELECT id FROM employees");
         // $counter = Employee::select('id');
-        
+
         // return (Employee::all() , compact($counter));
         return $counter;
-        
+
     }
 
     public function getAllEmployees(){
@@ -46,7 +46,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            
+
             'email' =>'required',
             'password' =>'required'
         ]);
@@ -88,56 +88,30 @@ class EmployeeController extends Controller
     public function mobile_token(Request $request, $id)
     {
         $fields = $request->validate([
-            'mobile_token' => 'required|string', 
+            'mobile_token' => 'required|string',
         ]);
 
         $mob_token = Employee::where('id' , $id)->first()->update(array('mobile_token'=>$fields['mobile_token']));
         return $mob_token;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         return Employee::destroy($id);
     }
 
-    /**
-     * Search for a name or email
-     *
-     * @param  str  $name
-     * @return \Illuminate\Http\Response
-     */
 
     public function search($name)
     {
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
 
-    // public function distance()
-    // {
-    //       $d_calculator = new GeoFenceCalculator();
-    //       $departments = Department::get();
-    //       $historiesOfEmployees = History::with('Employee')->get();
-    //       foreach($departments as $department){
-    //           foreach($historiesOfEmployees as $historiesOfEmployee){
-    //               if($department->id == $historiesOfEmployee->Employee->department_id and $historiesOfEmployee->created_at <= Carbon::today()){
-    //                     $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
-    //                     if($distance < 0.5 ){
-    //                         History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true]);
-    //                         $this->notification($historiesOfEmployee->Employee->mobile_token, 'Check your steps' , 'Your are currently out of zone');
-    //                         Log::info("Out of zone");
-    //                     }else{
-    //                         History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => true]);
-    //                         Log::info("In zone");
-    //                     }
-    //               }
-    //           }
-    //       }
-    // }
+    public function countOutOfZone(){
+
+    }
+
+
+
+
 }
 
