@@ -42,10 +42,9 @@ Route::post('/admin/login', [AdminController::class , 'login']);
 Route::get('/number-of-employees', [EmployeeController::class , 'index']);
 Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/employees/{id}', [EmployeeController::class , 'show']);
-
 Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
-Route::post('/employees/search/{name}', [EmployeeController::class , 'search']);
+Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
 Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
@@ -63,10 +62,12 @@ Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
 Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
 Route::get('/attend/{id}', [HistoryController::class, 'countAttendanceDay']);
 Route::get('/absence/{id}', [HistoryController::class , 'getAbsenceDay']);
+Route::get('/count-out', [HistoryController::class , 'getOutOfZone']);
+Route::get('/count-in', [HistoryController::class , 'getInOfZone']);
 
 
 
-// Public Route Message 
+// Public Route Message
 Route::get('/msg', [MessageController::class , 'index']);
 Route::get('/msg/{id}', [MessageController::class , 'show']);
 Route::post('/msg', [MessageController::class , 'store']);
@@ -75,14 +76,11 @@ Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 
 
 // Public Route Department
-Route::get('/dep', [DepartmentController::class , 'index']);
-Route::get('/dep/{id}', [DepartmentController::class , 'show']);
+Route::get('/dep', [DepartmentController::class , 'readAllDepartment']);
 Route::post('/dep', [DepartmentController::class , 'store']);
-Route::put('/dep/{id}', [DepartmentController::class , 'update']);
-Route::delete('/dep/{id}', [DepartmentController::class , 'destroy']);
+Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
 
-//Public Route Notification 
-
+//Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
 
@@ -90,8 +88,8 @@ Route::get('/notification', [NotificationController::class, 'notificationTesting
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    
-    
+
+
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

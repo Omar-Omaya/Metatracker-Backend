@@ -63,9 +63,15 @@ class HistoryController extends Controller
     public function getLastLocation(Request $request)
     {
         $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
-        // $employee = Employee::select('name')->get();
-        // $location = History::with('Employee')->get();
         return $location;
+    }
+
+    public function getOutOfZone(){
+        return History::where('Out_of_zone', true)->whereDate('created_at',Carbon::today())->count();
+    }
+
+    public function getInOfZone(){
+        return History::where('Out_of_zone', false)->whereDate('created_at',Carbon::today())->count();
     }
 
     /**

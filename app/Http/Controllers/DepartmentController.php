@@ -16,19 +16,16 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-
-        //     'email' =>'required',
-        //     'password' =>'required'
-        // ]);
-
          return Department::create($request->all());
-        // return 'test';
     }
 
     public function readAllDepartment(Request $request){
 
          return Department::get();
+    }
+
+    public function countAllDepartment(Request $request){
+        return Department::count();
     }
 
 
