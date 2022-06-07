@@ -59,7 +59,7 @@ class AbsenceDays extends Command
                     'Out_of_zone_time' => 0,
                     'is_absence' => 1,
                 ]);
-                Log::info("");
+                Log::info("lolla");
             }
             
             

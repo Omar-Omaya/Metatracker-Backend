@@ -63,8 +63,7 @@ class HistoryController extends Controller
     public function getLastLocation(Request $request)
     {
         $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
-        // $employee = Employee::select('name')->get();
-        // $location = History::with('Employee')->get();
+       
         return $location;
     }
 

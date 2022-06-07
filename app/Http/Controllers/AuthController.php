@@ -22,7 +22,6 @@ class AuthController extends Controller
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string',
             'phone' => ' required|integer',
-            'absence_day' =>'required|integer',
             'department_id'=>'required|integer'
            
 
@@ -37,7 +36,6 @@ class AuthController extends Controller
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
-            'absence_day' => $fields['absence_day'],
             'department_id' => $fields['department_id'],
         ]);
 
@@ -71,7 +69,7 @@ class AuthController extends Controller
                 'password' => 'required|string',
                 'path_image' => 'string',
                 'phone' => ' required|integer',
-                'absence_day' =>'required|integer',
+               
                 
                 
             ]);
@@ -85,7 +83,7 @@ class AuthController extends Controller
                 'email' => $fields['email'],
                 'password' => bcrypt($fields['password']),
                 'phone' => $fields['phone'],
-                'absence_day' => $fields['absence_day'],
+               
                 
             ]);
 
@@ -149,9 +147,8 @@ class AuthController extends Controller
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
-        $user = Employee::where('email', $fields['email'])->first();
+        $user = Employee::with('Department')->where('email', $fields['email'])->first();
 
-        
 //  || &&
      
         if(!$user||Hash::check($fields['password'], $user->password)) {

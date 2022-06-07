@@ -23,7 +23,6 @@ class Employee extends Model
         'department_id',
         'path_image',
         'phone',
-        'absence_day',
         'api_token',
         'Is_Here',
         'mobile_token'
