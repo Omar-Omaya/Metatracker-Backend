@@ -15,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 class AuthController extends Controller
 {
     // use HasApiTokens;
-    // use HasApiTokens;
+    use HasApiTokens;
     public function register(Request $request) {
         $fields = $request->validate([
             'name' => 'required|string',
@@ -23,13 +23,13 @@ class AuthController extends Controller
             'password' => 'required|string',
             'phone' => ' required|integer',
             'department_id'=>'required|integer'
-           
+
 
         ]);
 
         $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
             if(!$duplicate){
-       
+
 
         $user = Employee::create([
             'name' => $fields['name'],
@@ -43,7 +43,7 @@ class AuthController extends Controller
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token' => $token]);
-    
+
 
         $response = [
             'user' => $user,
@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         for($i = 0; $i<count($request['emp']); $i++){
             $data = new IlluminateRequest($request['emp'][$i]);
-            
+
             $fields = $data->validate([
                 'name' => 'required|string',
                 'email' => 'required|string|unique:users,email',
@@ -76,7 +76,7 @@ class AuthController extends Controller
             $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
 
             if(!$duplicate){
-       
+
 
             $user = Employee::create([
                 'name' => $fields['name'],
@@ -87,7 +87,7 @@ class AuthController extends Controller
                 
             ]);
 
-            //TODO check whether there is dublication or not 
+            //TODO check whether there is dublication or not
 
             $token = $user->createToken('myapptoken')->plainTextToken;
             $token= substr($token , -40,40);
@@ -100,7 +100,7 @@ class AuthController extends Controller
             }
         }
 
-        return $response;   
+        return $response;
     }
             // $var = json_decode($input_data);
         // $fields = $request->validate([
@@ -115,7 +115,7 @@ class AuthController extends Controller
         //     'Leave_time' =>'required|integer',
         //     'absence_day' =>'required|integer',
         //     'position' =>'required|string'
-            
+
         // ]);
         // foreach($input_data["data"] as $data){
         //     $emp = Employee::create([
@@ -128,8 +128,8 @@ class AuthController extends Controller
         //         'Leave_time' => $data['Leave_time'],
         //         'absence_day' => $data['absence_day'],
         //         'position' => $data['position'],
-                
-    
+
+
         //     ]);
 
         // }
@@ -139,7 +139,7 @@ class AuthController extends Controller
         $fields = $request->validate([
             'email' =>'required|string',
             'password' =>'required|string',
-          
+
         ]);
 
         // Check email and Check password
@@ -150,7 +150,7 @@ class AuthController extends Controller
         $user = Employee::with('Department')->where('email', $fields['email'])->first();
 
 //  || &&
-     
+
         if(!$user||Hash::check($fields['password'], $user->password)) {
             if(Employee::where('Is_Here','=',true)->where('id',$user->id)->exists()){
                 return response([ "Unauthorized"], 401);
@@ -171,11 +171,11 @@ class AuthController extends Controller
         }
 
 
-        
+
 
     //     if(Hash::check($fields['password'], $user->password)) {
 
-    //         return response()->json(['message'=> Employee::where('email', $fields['email'],200)->first(), 
+    //         return response()->json(['message'=> Employee::where('email', $fields['email'],200)->first(),
     //     ]);
     // }else{
     //     return response([
@@ -186,20 +186,20 @@ class AuthController extends Controller
 }
 
 // if(Hash::check($fields['password'], $user->password)) {
-            
+
 //             if($order){
-                
+
 //             return response()->json(['message'=> $order,
 //         ]);
 //             }
 //             else{
 //                 $test = $request->bearerToken();
 //                 $condition = User::where("api_token", $test)->where("id", $user->id)->first();
-                
+
 //             // return response()->json(['message'=> $condition]);
 //             return response()->json(['message'=> "order not found"]);
-            
-//             }        
+
+//             }
 //     }else{
 //         return response([
 //             'error' => 'Invalid email or password'

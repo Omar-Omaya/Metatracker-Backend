@@ -67,6 +67,14 @@ class HistoryController extends Controller
         return $location;
     }
 
+    public function getOutOfZone(){
+        return History::where('Out_of_zone', true)->whereDate('created_at',Carbon::today())->count();
+    }
+
+    public function getInOfZone(){
+        return History::where('Out_of_zone', false)->whereDate('created_at',Carbon::today())->count();
+    }
+
     /**
      * Display the specified resource.
      *
