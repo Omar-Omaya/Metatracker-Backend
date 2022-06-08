@@ -145,11 +145,12 @@ class AuthController extends Controller
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
-        $raw_query = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id = departments.id WHERE employees.email =  ';
-        $user = $raw_query . '' . $fields['email'];
-        $user = DB::select($user);
-        $user = json_decode(json_encode($user));
-        // $user = Employee::with('Department')->where('email', $fields['email'])->first();
+        // $raw_query = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id = departments.id WHERE employees.email =  ';
+        // $user = $raw_query . '' . $fields['email'];
+        // $user = DB::select($user);
+        // $user = json_decode(json_encode($user));
+        $user = Employee::with('Department')->where('email', $fields['email'])->first();
+        return $user;
 
 //  || &&
 
