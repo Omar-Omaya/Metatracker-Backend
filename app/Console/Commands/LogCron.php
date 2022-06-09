@@ -54,7 +54,7 @@ class LogCron extends Command
               foreach($historiesOfEmployees as $historiesOfEmployee){
                   if($department->id == $historiesOfEmployee->Employee->department_id){
                         $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
-                        // if(is_null($historiesOfEmployee->End_time)){
+                        if(is_null($historiesOfEmployee->End_time)){
                             if($distance > 1000){
 
                                 History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
@@ -65,7 +65,7 @@ class LogCron extends Command
                                 $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
                                 Log::info("In zone");
                             }
-                    // }
+                    }
                   }
               }
           }
