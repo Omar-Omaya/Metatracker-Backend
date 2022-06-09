@@ -52,31 +52,11 @@ class HistoryController extends Controller
         // if($history->employee_id)
         // return History::create($request->all());
 
-    public function getAbsenceDay()
+    public function getAbsenceDay($id)
     {
-        
-          $histories=History::get();
-        //   foreach($histories as $history){
-            $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
-            foreach($historiesOfEmployees as $historiesOfEmployee){
-                if($historiesOfEmployee->End_time == "0"){
-                    
-                }
-                
-
-            //   $his=History::select('End_time')->where('employee_id',$history->employee_id)->whereDate('created_at',Carbon::today())->get();
-            //   if($history->End_time =0){
-              }
-            }
-              
-            //   return "7aga";
-
-          
-         
-        //   $historiesOfEmployees = History::whereDate('created_at',Carbon::today())->get();
-         
-
-        // return History::where('is_absence','=',true)->where('employee_id',$id)->count();
+    
+        return History::where('is_absence','=',true)->where('employee_id',$id)->count();
+    }
     
 
     public function countAttendanceDay($id)
