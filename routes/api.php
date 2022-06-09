@@ -61,7 +61,7 @@ Route::put('/histories/{id}', [HistoryController::class , 'update']);
 Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
 Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
 Route::get('/attend/{id}', [HistoryController::class, 'countAttendanceDay']);
-Route::get('/absence/{id}', [HistoryController::class , 'getAbsenceDay']);
+Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
 Route::get('/count-out', [HistoryController::class , 'getOutOfZone']);
 Route::get('/count-in', [HistoryController::class , 'getInOfZone']);
 

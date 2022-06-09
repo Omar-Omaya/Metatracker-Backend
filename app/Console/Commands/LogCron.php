@@ -49,12 +49,12 @@ class LogCron extends Command
           $departments = Department::get();
           $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
 
-          if(!$historiesOfEmployees->isEmpty()){
+          if(!$historiesOfEmployees->isEmpty() ){
           foreach($departments as $department){
               foreach($historiesOfEmployees as $historiesOfEmployee){
                   if($department->id == $historiesOfEmployee->Employee->department_id){
                         $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
-                        if($distance > 1000 and $historiesOfEmployees->End_time==null  ){
+                        if($distance > 1000 and $historiesOfEmployee->End_time == 0  ){
                             History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
                             $this->notification($historiesOfEmployee->Employee->mobile_token, 'Warning' , 'Your are currently out of zone');
                             Log::info("Out of zone");
