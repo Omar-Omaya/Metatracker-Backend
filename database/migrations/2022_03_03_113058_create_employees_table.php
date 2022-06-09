@@ -24,7 +24,8 @@ class CreateEmployeesTable extends Migration
             $table->string('password');
             $table->string('path_image')->nullable();
             $table->integer('phone');
-            $table->integer('absence_day')->nullable();
+            $table->string('position');
+            // $table->integer('absence_day')->nullable();
             $table->boolean('Is_Here')->default(false);
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();

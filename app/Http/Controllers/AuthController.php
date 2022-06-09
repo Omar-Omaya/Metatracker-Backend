@@ -21,7 +21,8 @@ class AuthController extends Controller
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string',
             'phone' => ' required|integer',
-            'department_id'=>'required|integer'
+            'department_id'=>'required|integer',
+            'position'=>'required|string'
 
         ]);
 
@@ -35,6 +36,7 @@ class AuthController extends Controller
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
             'department_id' => $fields['department_id'],
+            'position' => $fields['position'],
         ]);
 
 
@@ -67,6 +69,8 @@ class AuthController extends Controller
                 'password' => 'required|string',
                 'path_image' => 'string',
                 'phone' => ' required|integer',
+                'position' => ' required|string',
+
                
                 
                 
@@ -81,6 +85,7 @@ class AuthController extends Controller
                 'email' => $fields['email'],
                 'password' => bcrypt($fields['password']),
                 'phone' => $fields['phone'],
+                'position' => $fields['position']
                
                 
             ]);
@@ -149,8 +154,11 @@ class AuthController extends Controller
         // $user = $raw_query . '' . $fields['email'];
         // $user = DB::select($user);
         // $user = json_decode(json_encode($user));
-        $user = Employee::with('Department')->where('email', $fields['email'])->first();
-        return $user;
+        // $user = Employee::with('Department')->where('email', $fields['email'])->first();
+        $test = DB::table('departments')
+            ->join('employees', 'employees.id', '=', 'employees.department_id')// joining the contacts table , where user_id and contact_user_id are same
+            ->select('departments.*', 'employees.*')
+            ->get();
 
 //  || &&
 
@@ -161,8 +169,9 @@ class AuthController extends Controller
             Employee::where('id', $user->id)->update(['Is_Here' => true]);
 
             $response = [
-                'user' => $user,
-                'token' => $token
+               
+                'token' => $token,
+                'empofdepartment' =>$test
             ];
             return response()->json($response);
         }else{
