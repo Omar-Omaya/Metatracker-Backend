@@ -105,36 +105,9 @@ class AuthController extends Controller
 
         return $response;
     }
-            // $var = json_decode($input_data);
-        // $fields = $request->validate([
 
-        //     'name' => 'required|string',
-        //     'email' => 'required|string|unique:users,email',
-        //     'password' => 'required|string',
-        //     'path_image' => 'string',
-        //     'phone' => ' required|integer',
-        //     'gender' =>'required|string',
-        //     'Arrival_time' =>'required|integer',
-        //     'Leave_time' =>'required|integer',
-        //     'absence_day' =>'required|integer',
-        //     'position' =>'required|string'
 
-        // ]);
-        // foreach($input_data["data"] as $data){
-        //     $emp = Employee::create([
-        //         'name' => $data['name'],
-        //         'email' => $data['email'],
-        //         'password' => bcrypt($data['password']),
-        //         'phone' => $data['phone'],
-        //         'gender' => $data['gender'],
-        //         'Arrival_time' => $data['Arrival_time'],
-        //         'Leave_time' => $data['Leave_time'],
-        //         'absence_day' => $data['absence_day'],
-        //         'position' => $data['position'],
-
-     //     ]);
-
-        // }
+        
 
     public function login(Request $request){
 
@@ -155,10 +128,10 @@ class AuthController extends Controller
         // $user = DB::select($user);
         // $user = json_decode(json_encode($user));
         // $user = Employee::with('Department')->where('email', $fields['email'])->first();
-        $test = DB::table('departments')
-            ->join('employees', 'employees.id', '=', 'employees.department_id')// joining the contacts table , where user_id and contact_user_id are same
-            ->select('departments.*', 'employees.*')
-            ->get();
+        // $empofdepartment = DB::table('departments')
+        //     ->join('employees', 'employees.id', '=', 'employees.department_id')// joining the contacts table , where user_id and contact_user_id are same
+        //     ->select('departments.*', 'employees.*')
+        //     ->get();
 
 //  || &&
 
@@ -169,9 +142,9 @@ class AuthController extends Controller
             Employee::where('id', $user->id)->update(['Is_Here' => true]);
 
             $response = [
-               
+                'user' =>$user,
                 'token' => $token,
-                'empofdepartment' =>$test
+                // 'empofdepartment' =>$empofdepartment
             ];
             return response()->json($response);
         }else{

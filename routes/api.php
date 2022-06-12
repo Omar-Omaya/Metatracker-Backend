@@ -80,6 +80,8 @@ Route::get('/dep', [DepartmentController::class , 'readAllDepartment']);
 Route::post('/dep', [DepartmentController::class , 'store']);
 Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
 
+Route::get('/get-dep', [DepartmentController::class , 'getAllDepartment']);
+
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 

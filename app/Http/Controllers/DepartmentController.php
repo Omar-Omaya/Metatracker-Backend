@@ -28,6 +28,10 @@ class DepartmentController extends Controller
         return Department::count();
     }
 
+    public function getAllDepartment(){
+        return Department::get();
+    }
+
 
 
 }
