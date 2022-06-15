@@ -133,7 +133,7 @@ class AuthController extends Controller
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->where('email', $fields['email'])
             ->select('departments.*', 'employees.*')
-            ->get(); 
+            ->first(); 
 
    
 
