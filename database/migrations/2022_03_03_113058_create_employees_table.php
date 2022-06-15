@@ -27,7 +27,6 @@ class CreateEmployeesTable extends Migration
             $table->string('position');
             // $table->integer('absence_day')->nullable();
             $table->boolean('Is_Here')->default(false);
-           
             $table->string('api_token')->default('');
             $table->string('mobile_token')->default('');
             // $table->foreign('department_id')
