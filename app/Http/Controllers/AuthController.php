@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Employee;
-use App\Models\Department;
+use App\Models\department;
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -114,6 +115,8 @@ class AuthController extends Controller
         $fields = $request->validate([
             'email' =>'required|string',
             'password' =>'required|string',
+            'id' =>'integer',
+
 
         ]);
 
@@ -127,11 +130,14 @@ class AuthController extends Controller
         // $user = $raw_query . '' . $fields['email'];
         // $user = DB::select($user);
         // $user = json_decode(json_encode($user));
-        // $user = Employee::with('Department')->where('email', $fields['email'])->first();
-        // $empofdepartment = DB::table('departments')
-        //     ->join('employees', 'employees.id', '=', 'employees.department_id')// joining the contacts table , where user_id and contact_user_id are same
-        //     ->select('departments.*', 'employees.*')
-        //     ->get();
+        // $empofdepartment = Department::with('employee')->where('email', $fields['email'])->first();
+        $empofdepartment = DB::table('departments')
+            ->join('employees','employees.department_id', '=' ,'departments.id')
+            ->where('email', $fields['email'])
+            ->select('departments.*', 'employees.*')
+            ->get(); 
+
+   
 
 //  || &&
 
@@ -142,9 +148,9 @@ class AuthController extends Controller
             Employee::where('id', $user->id)->update(['Is_Here' => true]);
 
             $response = [
-                'user' =>$user,
+                // 'user' =>$user,
                 'token' => $token,
-                // 'empofdepartment' =>$empofdepartment
+                'empofdepartment' =>$empofdepartment
             ];
             return response()->json($response);
         }else{
@@ -154,9 +160,6 @@ class AuthController extends Controller
             ];
             return response($response,401);
         }
-
-
-
 
     //     if(Hash::check($fields['password'], $user->password)) {
 
