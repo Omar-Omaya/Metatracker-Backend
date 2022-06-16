@@ -57,11 +57,22 @@ class HistoryController extends Controller
     
         return History::where('is_absence','=',true)->where('employee_id',$id)->count();
     }
+
+    public function getAbsenceToday()
+    {
     
+        return History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count();
+    }
 
     public function countAttendanceDay($id)
     {
         return History::where('is_absence','=',false)->where('employee_id',$id)->count();
+    }
+
+    public function getAttendanceToday()
+    {
+    
+        return History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
     }
 
     public function getLastLocation(Request $request)
