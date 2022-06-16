@@ -63,7 +63,7 @@ class LogCron extends Command
                             }else{
                                 History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , $department->text);
+                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , $department->message);
 
                                 Log::info("In zone");
                             }

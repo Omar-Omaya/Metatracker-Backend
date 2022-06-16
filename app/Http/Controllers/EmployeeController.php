@@ -65,7 +65,7 @@ class EmployeeController extends Controller
         return Employee::find($id);
     }
 
-    public function
+    // public function
 
     
     /**
