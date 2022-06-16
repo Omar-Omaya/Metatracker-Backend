@@ -15,7 +15,7 @@ class Department extends Model
         'dep_name',
         'const_Arrival_time',
         'const_Leave_time',
-        // 'text',
+        'text',
         'lat',
         'lng',
 

@@ -65,6 +65,8 @@ class EmployeeController extends Controller
         return Employee::find($id);
     }
 
+    public function
+
     
     /**
      * Update the specified resource in storage.

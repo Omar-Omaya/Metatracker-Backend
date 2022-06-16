@@ -132,7 +132,7 @@ class AuthController extends Controller
         $empofdepartment = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->where('email', $fields['email'])
-            ->select('departments.*', 'employees.*')
+            ->select('departments.*', 'employees.department_id','employees.id' ,'employees.name','employees.position')
             ->first(); 
 
    
