@@ -15,7 +15,6 @@ class Admin extends Model
     protected $fillable = [
         'name',
         'email',
-        'password',
         'phone',
         'is_Admin',
         'is_Analyst',
@@ -23,5 +22,9 @@ class Admin extends Model
         'is_IT',
         'api_admin_token'
 
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 }
