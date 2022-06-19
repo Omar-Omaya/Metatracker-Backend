@@ -19,9 +19,9 @@ class AdminController extends Controller
             'password' => 'required|string',
             'phone' => ' required|integer',
             'is_Admin' =>'required|string',
-            'is_Analyst' => 'string',
-            'is_HR' =>'string',
-            'is_IT' => 'string'
+            'is_Analyst' => 'boolean',
+            'is_HR' =>'boolean',
+            'is_IT' => 'boolean'
 
         ]);
 
