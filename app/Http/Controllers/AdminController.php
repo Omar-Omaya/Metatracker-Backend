@@ -33,9 +33,7 @@ class AdminController extends Controller
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
             'is_Admin' => $fields['is_Admin'],
-            'is_Analyst' => $fields['is_Analyst'],
-            'is_HR' => $fields['is_HR'],
-            'is_IT' => $fields['is_IT']
+            
 
         ]);
 
