@@ -77,7 +77,7 @@ class HistoryController extends Controller
 
     public function checkInToday(Request $request)
     {
-        $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+        $location = History::with('Employee')->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
        
         return $location;
     }
