@@ -75,7 +75,7 @@ class HistoryController extends Controller
         return History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
     }
 
-    public function getLastLocation(Request $request)
+    public function checkInToday(Request $request)
     {
         $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
        
@@ -89,6 +89,8 @@ class HistoryController extends Controller
     public function getInOfZone(){
         return History::where('Out_of_zone', false)->whereDate('created_at',Carbon::today())->count();
     }
+
+  
 
     /**
      * Display the specified resource.

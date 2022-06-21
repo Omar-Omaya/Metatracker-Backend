@@ -107,6 +107,21 @@ class AuthController extends Controller
         return $response;
     }
 
+    public function imageUploadPost(Request $request)
+    {
+        $request->validate([
+            'path_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $imageName = time().'.'.$request->image->extension();  
+     
+        $request->path_image->move(public_path('images'), $imageName);
+  
+        /* Store $imageName name in DATABASE from HERE */
+    
+        // return ('image',$imageName); 
+    }
+
 
         
 

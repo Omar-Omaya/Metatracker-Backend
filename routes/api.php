@@ -54,7 +54,8 @@ Route::get('/dis', [EmployeeController::class, 'distance']);
 // Public Route Histroy
 
 Route::get('/histories', [HistoryController::class , 'index']);
-Route::get('/marker-location', [HistoryController::class , 'getLastLocation']);
+Route::get('/check_in_today', [HistoryController::class , 'checkInToday']);
+
 Route::get('/histories/{id}', [HistoryController::class , 'show']);
 Route::post('/histories', [HistoryController::class , 'store']);
 Route::put('/histories/{id}', [HistoryController::class , 'update']);
