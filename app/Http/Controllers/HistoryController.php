@@ -91,9 +91,28 @@ class HistoryController extends Controller
     }
 
     public function totalHour($id){
-        $totalHour = History::select('Start_time')->where('employee_id', $id)->count();
-        return $totalHour;
+        $histories = History::where('employee_id',$id)->get();
+        $absence = History::where('is_absence','=',true)->where('employee_id',$id)->count();
+        $total = 0;
+        foreach($histories as $history){
+            $start= $history->created_at;
+            $end= $history->updated_at;
+            $diff= $start->diff($end)->format('%H');
+            $total += $diff;
+
+        }
+        $response = [
+            'totalHoure' => $total,
+            'absenceDay' => $absence
+        ];
+
+        return response($response, 201);
     }
+    
+
+        // $totalHour = History::select('Start_time')->where('employee_id', $id)->count();
+        // return $totalHour;
+    
 
   
 
