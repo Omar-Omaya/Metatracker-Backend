@@ -27,7 +27,6 @@ class Employee extends Model
         'api_token',
         'Is_Here',
         'mobile_token'
-
     ];
 
       /**

@@ -83,11 +83,16 @@ class HistoryController extends Controller
     }
 
     public function getOutOfZone(){
-        return History::where('Out_of_zone', true)->whereDate('created_at',Carbon::today())->count();
+        return History::where('Out_of_zone', true)->whereDate('created_at',Carbon::today())->get();
     }
 
     public function getInOfZone(){
-        return History::where('Out_of_zone', false)->whereDate('created_at',Carbon::today())->count();
+        return History::where('Out_of_zone', false)->whereDate('created_at',Carbon::today())->get();
+    }
+
+    public function totalHour($id){
+        $totalHour = History::select('Start_time')->where('employee_id', $id)->count();
+        return $totalHour;
     }
 
   

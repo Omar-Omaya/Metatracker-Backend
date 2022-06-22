@@ -67,6 +67,9 @@ Route::get('/count-out', [HistoryController::class , 'getOutOfZone']);
 Route::get('/count-in', [HistoryController::class , 'getInOfZone']);
 Route::get('/absence_today', [HistoryController::class , 'getAbsenceToday']);
 Route::get('/attend_today', [HistoryController::class , 'getAttendanceToday']);
+Route::get('/totalHour/{id}', [HistoryController::class , 'totalHour']);
+
+
 
 
 
