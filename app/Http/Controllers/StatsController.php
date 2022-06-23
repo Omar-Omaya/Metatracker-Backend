@@ -15,15 +15,19 @@ class StatsController extends Controller
         $histories = History::where('employee_id',$id)->whereMonth('created_at' , $month)->get();
         $absence = History::where('is_absence','=',true)->where('employee_id',$id)->whereMonth('created_at' , $month)->count();
         $total = 0;
+        $days = 0;
         foreach($histories as $history){
             $start= $history->created_at;
             $end= $history->updated_at;
             $diff= $start->diff($end)->format('%H');
             $total += $diff;
+            if($total>=8){
+                $days++;
+            }
 
         }
         $response = [
-            'totalHour'.$month => $total,
+            'totalDays'.$month => $days,
             'absenceDay'. $month => $absence
         ];
 
