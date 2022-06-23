@@ -34,7 +34,7 @@ class StatsController extends Controller
         $array2=[];
         for($i = 0; $i <=12 ;$i++){
             $array1 =$this->totalHour($id, $i);
-            $array2=array_push($array1, $array2);
+            $array2=array_push($array2, $array1);
             
         }
         return $array2;
