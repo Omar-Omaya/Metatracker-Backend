@@ -102,7 +102,7 @@ class HistoryController extends Controller
 
         }
         $response = [
-            'totalHoure' => $total,
+            'totalHour' => $total,
             'absenceDay' => $absence
         ];
 

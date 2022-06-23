@@ -17,10 +17,11 @@ class Employee extends Model
     use Notifiable;
 
     protected $fillable = [
+        'company_id',
+        'department_id',
         'name',
         'email',
         'password',
-        'department_id',
         'path_image',
         'phone',
         'position',
@@ -49,10 +50,14 @@ class Employee extends Model
         return $this->hasMany(History::class);
     }
 
-    public function notifications()
+    public function company()
     {
-        return $this->hasMany(Notification::class);
+        return $this->belongsTo(Company::class);
     }
+
+
+
+    
 
 
     

@@ -16,6 +16,7 @@ class CreateHistoriesTable extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->bigincrements('id');
             $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('company_id');
             $table->string('Start_time')->nullable();
             $table->string('End_time')->nullable();
             $table->boolean('Out_of_zone');
@@ -28,6 +29,11 @@ class CreateHistoriesTable extends Migration
             ->references('id')
             ->on('employees')
             ->onDelete('cascade');
+            $table->foreign('company_id')
+            ->references('id')
+            ->on('companies')
+            ->onDelete('cascade');
+            
             
             
         });

@@ -10,6 +10,7 @@ class History extends Model
     use HasFactory;
 
     protected $fillable = [
+        'company_id',
         'employee_id',
         'Start_time',
         'End_time',
@@ -27,5 +28,10 @@ class History extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }

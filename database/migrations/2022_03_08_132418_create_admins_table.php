@@ -15,6 +15,7 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
             $table->string('name');
             $table->string('email');
             $table->string('password');
@@ -25,6 +26,10 @@ class CreateAdminsTable extends Migration
             $table->boolean('is_HR')->default('');
             $table->timestamps();
             $table->string('api_admin_token')->default('');
+            $table->foreign('company_id')
+            ->references('id')
+            ->on('companies')
+            ->onDelete('cascade');
         });
     }
 

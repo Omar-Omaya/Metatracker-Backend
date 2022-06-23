@@ -13,6 +13,7 @@ class Admin extends Model
     use HasApiTokens;
 
     protected $fillable = [
+        'company_id',
         'name',
         'email',
         'phone',
@@ -27,4 +28,9 @@ class Admin extends Model
     protected $hidden = [
         'password',
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

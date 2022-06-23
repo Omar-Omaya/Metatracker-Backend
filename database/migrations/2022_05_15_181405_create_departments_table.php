@@ -15,6 +15,7 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('company_id');
             $table->string('dep_name');
             $table->integer('const_Arrival_time');
             $table->integer('const_Leave_time');
@@ -22,6 +23,10 @@ class CreateDepartmentsTable extends Migration
             $table->string('message');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->foreign('company_id')
+            ->references('id')
+            ->on('companies')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
