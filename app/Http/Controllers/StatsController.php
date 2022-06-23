@@ -11,6 +11,7 @@ class StatsController extends Controller
 {
 
     public function totalHour($id , $month){
+        // $month = 6;
         $histories = History::where('employee_id',$id)->whereMonth('created_at' , $month)->get();
         $absence = History::where('is_absence','=',true)->where('employee_id',$id)->whereMonth('created_at' , $month)->count();
         $total = 0;
@@ -34,10 +35,10 @@ class StatsController extends Controller
         $array2=[];
         for($i = 0; $i <=12 ;$i++){
             $array1 =$this->totalHour($id, $i);
-            $array2=array_push($array2, $array1);
-            
+            array_push($array2, $array1);
+
         }
         return $array2;
     }
-    
+
 }
