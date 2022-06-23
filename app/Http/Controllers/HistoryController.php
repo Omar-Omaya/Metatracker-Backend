@@ -108,6 +108,8 @@ class HistoryController extends Controller
 
         return response($response, 201);
     }
+
+  
     
 
         // $totalHour = History::select('Start_time')->where('employee_id', $id)->count();
