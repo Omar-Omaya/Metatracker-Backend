@@ -37,7 +37,7 @@ class StatsController extends Controller
 
     public function calculateYearly($id){
         $array2=[];
-        for($i = 0; $i <=12 ;$i++){
+        for($i = 1; $i <=12 ;$i++){
             $array1 =$this->totalHour($id, $i);
             array_push($array2, $array1);
 
