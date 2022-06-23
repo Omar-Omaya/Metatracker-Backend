@@ -36,11 +36,8 @@ class StatsController extends Controller
             $array1 =$this->totalHour($id, $i);
             $array2=array_push($array1, $array2);
             
-
-
-            
-
         }
+        return $array2;
     }
     
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\StatsController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +72,9 @@ Route::get('/count-in', [HistoryController::class , 'getInOfZone']);
 Route::get('/absence_today', [HistoryController::class , 'getAbsenceToday']);
 Route::get('/attend_today', [HistoryController::class , 'getAttendanceToday']);
 Route::get('/totalHour/{id}', [HistoryController::class , 'totalHour']);
+Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
+
+
 
 
 
