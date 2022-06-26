@@ -29,14 +29,16 @@ class HistoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-      {
-        // if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
+    {
+        if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
          return History::create($request->all());
         }
-        // else{
-            // return response([ "is exist"], 401);
-        // }
-    // }
+        else{
+            History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
+            History::create($request->all());
+            return response([ "is exist"], 401);
+        }
+    }
 
 
         // return  History::where('employee_id',$fields['employee_id'])->get();
@@ -54,13 +56,13 @@ class HistoryController extends Controller
 
     public function getAbsenceDay($id)
     {
-    
+
         return History::where('is_absence','=',true)->where('employee_id',$id)->count();
     }
 
     public function getAbsenceToday()
     {
-    
+
         return History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count();
     }
 
@@ -71,14 +73,14 @@ class HistoryController extends Controller
 
     public function getAttendanceToday()
     {
-    
+
         return History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
     }
 
     public function checkInToday(Request $request)
     {
         $location = History::with('Employee')->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
-       
+
         return $location;
     }
 
@@ -109,14 +111,14 @@ class HistoryController extends Controller
         return response($response, 201);
     }
 
-  
-    
+
+
 
         // $totalHour = History::select('Start_time')->where('employee_id', $id)->count();
         // return $totalHour;
-    
 
-  
+
+
 
     /**
      * Display the specified resource.
