@@ -20,16 +20,16 @@ class CreateAdminsTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('phone');
-            $table->boolean('is_Admin')->default('');
-            $table->boolean('is_Analyst')->default('');
-            $table->boolean('is_IT')->default('');
-            $table->boolean('is_HR')->default('');
+            $table->boolean('is_Admin')->default('0');
+            $table->boolean('is_Analyst')->default('0');
+            $table->boolean('is_IT')->default('0');
+            $table->boolean('is_HR')->default('0');
             $table->timestamps();
             $table->string('api_admin_token')->default('');
-            $table->foreign('company_id')
-            ->references('id')
-            ->on('companies')
-            ->onDelete('cascade');
+            // $table->foreign('company_id')
+            // ->references('id')
+            // ->on('companies')
+            // ->onDelete('cascade');
         });
     }
 
