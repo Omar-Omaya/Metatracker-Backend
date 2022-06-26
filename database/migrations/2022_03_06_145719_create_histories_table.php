@@ -29,10 +29,10 @@ class CreateHistoriesTable extends Migration
             ->references('id')
             ->on('employees')
             ->onDelete('cascade');
-            $table->foreign('company_id')
-            ->references('id')
-            ->on('companies')
-            ->onDelete('cascade');
+            // $table->foreign('company_id')
+            // ->references('id')
+            // ->on('companies')
+            // ->onDelete('cascade');
             
             
             

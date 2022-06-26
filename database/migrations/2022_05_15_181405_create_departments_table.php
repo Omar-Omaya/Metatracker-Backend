@@ -23,10 +23,10 @@ class CreateDepartmentsTable extends Migration
             $table->string('message');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
-            $table->foreign('company_id')
-            ->references('id')
-            ->on('companies')
-            ->onDelete('cascade');
+            // $table->foreign('company_id')
+            // ->references('id')
+            // ->on('companies')
+            // ->onDelete('cascade');
             $table->timestamps();
         });
     }
