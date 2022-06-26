@@ -27,7 +27,7 @@ class StatsController extends Controller
 
         }
         $response = [
-            $days // 'absenceDay'. $month => $absence
+            $total // 'absenceDay'. $month => $absence
         ];
 
         // return response($response, 201);
