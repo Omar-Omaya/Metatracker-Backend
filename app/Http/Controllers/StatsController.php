@@ -21,9 +21,9 @@ class StatsController extends Controller
             $end= $history->updated_at;
             $diff= $start->diff($end)->format('%H');
             $total += $diff;
-            // if($total>=8){
+            if($total>=8){
                 $days++;
-            // }
+            }
 
         }
         $response = [
