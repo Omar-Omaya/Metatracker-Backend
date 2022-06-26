@@ -13,7 +13,7 @@ class StatsController extends Controller
     public function totalHour($id , $month){
         // $month = 6;
         $histories = History::where('employee_id',$id)->whereMonth('created_at' , $month)->get();
-        $absence = History::where('is_absence','=',true)->where('employee_id',$id)->whereMonth('created_at' , $month)->count();
+        // $absence = History::where('is_absence','=',true)->where('employee_id',$id)->whereMonth('created_at' , $month)->count();
         $total = 0;
         $days = 0;
         foreach($histories as $history){
@@ -27,8 +27,7 @@ class StatsController extends Controller
 
         }
         $response = [
-            'totalDays'.$month => $days,
-            'absenceDay'. $month => $absence
+            $days // 'absenceDay'. $month => $absence
         ];
 
         // return response($response, 201);
