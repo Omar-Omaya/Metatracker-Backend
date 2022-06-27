@@ -75,7 +75,7 @@ Route::get('/totalHour/{id}', [HistoryController::class , 'totalHour']);
 
 
 Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
-Route::get('/calcOut/{id}', [StatsController::class , 'calcgetOutOfZoneMonth']);
+Route::get('/calcOut', [StatsController::class , 'calcgetOutOfZoneMonth']);
 
 
 
