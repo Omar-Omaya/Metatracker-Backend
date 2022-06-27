@@ -101,7 +101,7 @@ Route::post('/dep', [DepartmentController::class , 'store']);
 Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
 
 Route::get('/get-dep', [DepartmentController::class , 'getAllDepartment']);
-Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartment']);
+Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
 
 //Public Route Notification
