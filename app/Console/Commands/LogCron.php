@@ -58,7 +58,7 @@ class LogCron extends Command
                             if($distance > 1000){
 
                                 History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'Warning' , 'Your are currently out of zone');
+                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'Warning' , 'You are out of zone !');
                                 Log::info("Out of zone");
                             }else{
                                 History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
