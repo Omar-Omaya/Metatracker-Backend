@@ -17,6 +17,7 @@ class Admin extends Model
         'name',
         'email',
         'phone',
+        'password',
         'is_Admin',
         'is_Analyst',
         'is_HR',

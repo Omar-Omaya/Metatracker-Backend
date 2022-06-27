@@ -14,10 +14,11 @@ class AdminController extends Controller
     public function register(Request $request) {
         $fields = $request->validate([
 
+
+            'company_id' => 'required',
             'name' => 'required|string',
             'email' => 'required|string|unique:admins,email',
             'password' => 'required|string',
-            'company_id' => 'required',
             'phone' => ' required|string',
             'is_Admin' =>'required|boolean',
             'is_Analyst' => 'boolean',
@@ -34,6 +35,9 @@ class AdminController extends Controller
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
             'is_Admin' => $fields['is_Admin'],
+            'is_Analyst' => $fields['is_Analyst'],
+            'is_IT' => $fields['is_IT'],
+            'is_HR' => $fields['is_HR'],
             'company_id' => $fields['company_id'],
 
 
