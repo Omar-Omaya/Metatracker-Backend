@@ -59,6 +59,20 @@ class StatsController extends Controller
         return $array2;
     }
 
+    public function getOutOfZoneMonthPerEmp($month,$id){
+        return History::where('employee_id',$id)->where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+    }
+
+    public function calcgetOutOfZoneMonthPerEmp($id){
+        $array2 = [];
+        for($month=1; $month<=12; $month++){
+            $array1= $this->getOutOfZoneMonthPerEmp($month,$id);
+            array_push($array2, $array1);
+
+        }
+        return $array2;
+    }
+
     
     public function getInOfZoneMonth($month){
         return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
@@ -71,6 +85,20 @@ class StatsController extends Controller
             array_push($array2, $array1);
         }
 
+        return $array2;
+    }
+
+    public function getInOfZoneMonthPerEmp($month,$id){
+        return History::where('employee_id',$id)->where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+    }
+
+    public function calcgetInOfZoneMonthPerEmp($id){
+        $array2 = [];
+        for($month=1; $month<=12; $month++){
+            $array1= $this->getOutOfZoneMonthPerEmp($month,$id);
+            array_push($array2, $array1);
+
+        }
         return $array2;
     }
 
