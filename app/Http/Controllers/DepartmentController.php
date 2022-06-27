@@ -30,9 +30,9 @@ class DepartmentController extends Controller
         return Department::get();
     }
 
-    public function empOfDepartment(){
+    public function empOfDepartments(){
     $empofdepartment = DB::table('departments')
-            ->join('employees','employees.department_id', '=' ,'departments.id')
+            ->join('departments.id', '=', 'employees.department_id' )
             ->select('departments.*','employees.*')
             ->get();
 
