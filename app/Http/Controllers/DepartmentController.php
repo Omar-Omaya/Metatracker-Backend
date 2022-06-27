@@ -37,8 +37,7 @@ class DepartmentController extends Controller
             ->get();
 
             return $empofdepartment;
-
-        
+   
     }  
 
 

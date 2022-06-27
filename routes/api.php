@@ -87,6 +87,7 @@ Route::get('/calcIn', [StatsController::class , 'calcgetInOfZoneMonth']);
 
 
 
+
 // Public Route Message
 Route::get('/msg', [MessageController::class , 'index']);
 Route::get('/msg/{id}', [MessageController::class , 'show']);

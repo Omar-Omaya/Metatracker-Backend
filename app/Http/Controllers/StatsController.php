@@ -61,7 +61,7 @@ class StatsController extends Controller
 
     
     public function getInOfZoneMonth($month){
-        return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->get();
+        return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
     }
 
     public function calcgetInOfZoneMonth(){
@@ -69,8 +69,8 @@ class StatsController extends Controller
         for($month=1; $month<=12; $month++){
             $array1= $this->getInOfZoneMonth($month);
             array_push($array2, $array1);
-
         }
+
         return $array2;
     }
 
