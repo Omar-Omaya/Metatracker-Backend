@@ -46,7 +46,7 @@ class StatsController extends Controller
     }
 
     public function getOutOfZoneMonth($month){
-        return History::where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->get();
+        return History::where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
     }
 
     public function calcgetOutOfZoneMonth(){
