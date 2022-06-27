@@ -17,7 +17,7 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:admins,email',
             'password' => 'required|string',
-            'company_id' => 'required|integer',
+            'company_id' => 'required',
             'phone' => ' required|string',
             'is_Admin' =>'required|boolean',
             'is_Analyst' => 'boolean',
