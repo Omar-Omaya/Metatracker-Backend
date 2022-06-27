@@ -17,11 +17,12 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:admins,email',
             'password' => 'required|string',
+            'company_id' => 'required|integer',
             'phone' => ' required|string',
             'is_Admin' =>'required|boolean',
             'is_Analyst' => 'boolean',
             'is_HR' =>'boolean',
-            'is_IT' => 'boolean' 
+            'is_IT' => 'boolean'
 
         ]);
 
@@ -33,7 +34,7 @@ class AdminController extends Controller
             'password' => bcrypt($fields['password']),
             'phone' => $fields['phone'],
             'is_Admin' => $fields['is_Admin'],
-            
+
 
         ]);
 
