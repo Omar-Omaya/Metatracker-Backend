@@ -77,6 +77,9 @@ Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
 Route::get('/calcOut', [StatsController::class , 'calcgetOutOfZoneMonth']);
 Route::get('/calcIn', [StatsController::class , 'calcgetInOfZoneMonth']);
 
+Route::get('/calcOutEmp', [StatsController::class , 'calcgetOutOfZoneMonthPerEmp']);
+Route::get('/calcInEmp', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
+
 
 
 
