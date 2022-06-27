@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 // use App\Model\department;
 // use App\Model\Employee;
 use App\Models\Department;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -19,11 +21,7 @@ class DepartmentController extends Controller
          return Department::create($request->all());
     }
 
-    public function readAllDepartment(Request $request){
-
-         return Department::get();
-    }
-
+    
     public function countAllDepartment(Request $request){
         return Department::count();
     }
@@ -31,6 +29,17 @@ class DepartmentController extends Controller
     public function getAllDepartment(){
         return Department::get();
     }
+
+    public function empOfDepartment(){
+    $empofdepartment = DB::table('departments')
+            ->join('employees','employees.department_id', '=' ,'departments.id')
+            ->select('departments.*','employees.*')
+            ->first();
+
+            return $empofdepartment;
+
+        
+    }  
 
 
 

@@ -103,10 +103,6 @@ class EmployeeController extends Controller
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
 
-    public function countOutOfZone(){
-
-    }
-
 
 
 
