@@ -34,7 +34,7 @@ class DepartmentController extends Controller
     $empofdepartment = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->select('departments.*','employees.*')
-            ->first();
+            ->get();
 
             return $empofdepartment;
 
