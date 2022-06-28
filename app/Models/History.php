@@ -18,7 +18,8 @@ class History extends Model
         'Out_of_zone_time',
         'is_absence',
         'lat',
-        'lng'
+        'lng',
+        'radius'
         
     ];
 

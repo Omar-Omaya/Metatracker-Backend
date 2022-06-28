@@ -26,7 +26,7 @@ class DepartmentController extends Controller
         return Department::count();
     }
 
-    public function getAllDepartment(){
+    public function readAllDepartment(){
         return Department::get();
     }
 
