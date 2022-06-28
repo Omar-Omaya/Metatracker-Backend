@@ -36,7 +36,7 @@ class HistoryController extends Controller
         else{
             History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
             History::create($request->all());
-            return response([ "is exist"], 401);
+            return response([ "History exists previous row deleted"], 201);
         }
     }
 
