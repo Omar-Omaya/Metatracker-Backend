@@ -150,15 +150,13 @@ class HistoryController extends Controller
             return response([ "Employee is out of zone"], 401);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         return History::destroy($id);
+    }
+
+    public function getCurrentLocation(Request $request,$id){
+        $history = History::where('employee_id',$id)->whereDate('created_at',Carbon::today())->first();
+        return $history;
     }
 }
