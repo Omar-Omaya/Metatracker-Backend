@@ -22,6 +22,7 @@ class CreateHistoriesTable extends Migration
             $table->boolean('Out_of_zone');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->integer('radius')->nullable();
             $table->string('Out_of_zone_time')->nullable();
             $table->boolean('is_absence');
             $table->timestamps();

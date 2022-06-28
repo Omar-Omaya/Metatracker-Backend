@@ -104,7 +104,7 @@ Route::get('/dep', [DepartmentController::class , 'readAllDepartment']);
 Route::post('/dep', [DepartmentController::class , 'store']);
 Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
 
-Route::get('/get-dep', [DepartmentController::class , 'getAllDepartment']);
+
 Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
 
