@@ -95,7 +95,7 @@ class StatsController extends Controller
     public function calcgetInOfZoneMonthPerEmp($id){
         $array2 = [];
         for($month=1; $month<=12; $month++){
-            $array1= $this->getOutOfZoneMonthPerEmp($month,$id);
+            $array1= $this->getInOfZoneMonthPerEmp($month,$id);
             array_push($array2, $array1);
 
         }
