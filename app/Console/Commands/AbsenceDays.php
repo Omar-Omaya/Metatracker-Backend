@@ -61,10 +61,6 @@ class AbsenceDays extends Command
                 ]);
                 Log::info("");
             }
-            
-            
-
-            
 
         }
 
