@@ -23,7 +23,8 @@ class AuthController extends Controller
             'password' => 'required|string',
             'phone' => ' required|integer',
             'department_id'=>'required|integer',
-            'position'=>'required|string'
+            'position'=>'required|string',
+            'company_id' => 'required'
 
         ]);
 
@@ -38,6 +39,7 @@ class AuthController extends Controller
             'phone' => $fields['phone'],
             'department_id' => $fields['department_id'],
             'position' => $fields['position'],
+            'company_id' => $field['company_id']
         ]);
 
 
@@ -72,9 +74,9 @@ class AuthController extends Controller
                 'phone' => ' required|integer',
                 'position' => ' required|string',
 
-               
-                
-                
+
+
+
             ]);
             $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
 
@@ -87,8 +89,8 @@ class AuthController extends Controller
                 'password' => bcrypt($fields['password']),
                 'phone' => $fields['phone'],
                 'position' => $fields['position']
-               
-                
+
+
             ]);
 
             //TODO check whether there is dublication or not
@@ -112,25 +114,25 @@ class AuthController extends Controller
         $request->validate([
             'path_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
-        $imageName = time().'.'.$request->image->extension();  
-     
+
+        $imageName = time().'.'.$request->image->extension();
+
         $request->path_image->move(public_path('images'), $imageName);
-  
+
         /* Store $imageName name in DATABASE from HERE */
-    
-        // return ('image',$imageName); 
+
+        // return ('image',$imageName);
     }
 
 
-        
+
 
     public function login(Request $request){
 
         $fields = $request->validate([
             'email' =>'required|string',
             'password' =>'required|string',
-           
+
         ]);
 
 
@@ -148,9 +150,9 @@ class AuthController extends Controller
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->where('email', $fields['email'])
             ->select('departments.*', 'employees.department_id','employees.id' ,'employees.name','employees.position','employees.path_image')
-            ->first(); 
+            ->first();
 
-   
+
 
 //  || &&
 
