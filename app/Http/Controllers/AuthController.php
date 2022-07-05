@@ -39,7 +39,7 @@ class AuthController extends Controller
             'phone' => $fields['phone'],
             'department_id' => $fields['department_id'],
             'position' => $fields['position'],
-            'company_id' => $field['company_id']
+            'company_id' => $fields['company_id']
         ]);
 
 
