@@ -19,7 +19,7 @@ class History extends Model
         'is_absence',
         'lat',
         'lng',
-        'radius'
+        
         
     ];
 

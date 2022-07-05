@@ -23,6 +23,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('message');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->integer('radius')->nullable();
             // $table->foreign('company_id')
             // ->references('id')
             // ->on('companies')

@@ -19,6 +19,7 @@ class Department extends Model
         'message',
         'lat',
         'lng',
+        'radius'
 
         
 
