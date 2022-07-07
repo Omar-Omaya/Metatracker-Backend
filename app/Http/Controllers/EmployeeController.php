@@ -80,7 +80,7 @@ class EmployeeController extends Controller
         // $employee = Employee::find($id);
         $empofdepartment = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
-            ->select('departments.*','employees*')
+            ->select('departments.*','employees.*')
             ->get();
             return $empofdepartment->update(array($request->all()));
         // $employee->update($request->all());

@@ -35,7 +35,6 @@ class DepartmentController extends Controller
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->select('departments.*','employees.*')
             ->get();
-
             return $empofdepartment;
    
     }  
