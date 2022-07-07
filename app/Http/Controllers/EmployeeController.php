@@ -82,8 +82,12 @@ class EmployeeController extends Controller
 
             'dep_name' =>'string',
         ]);
-        $department_id = Department::where('dep_name',$fields['dep_name'])->first();
-        Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
+        if(isEmpty($fields['dep_name'])){
+            $department_id = Department::where('dep_name',$fields['dep_name'])->first();
+            Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
+
+        }
+
         $employee->update($request->all());
         return $employee;
     }
