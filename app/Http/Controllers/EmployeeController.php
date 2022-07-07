@@ -108,8 +108,7 @@ class EmployeeController extends Controller
         return Employee::where('id', $id)->update(array('is_Here' => '0'));
     }
 
-
-
-
 }
+
+
 
