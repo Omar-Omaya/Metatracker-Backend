@@ -41,9 +41,9 @@ class HistoryController extends Controller
             History::create($request->all());
             return response([ "History exists previous row deleted"], 201);
         }
-        $start = History::select
+        // $start = History::select
 
-        if(History::$Start_time)
+        // if(History::$Start_time)
     }
 
 
