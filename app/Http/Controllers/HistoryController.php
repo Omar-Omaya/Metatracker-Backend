@@ -28,6 +28,9 @@ class HistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /* check */
+
     public function store(Request $request)
     {
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
@@ -38,6 +41,9 @@ class HistoryController extends Controller
             History::create($request->all());
             return response([ "History exists previous row deleted"], 201);
         }
+        $start = History::select
+
+        if(History::$Start_time)
     }
 
 
