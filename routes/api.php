@@ -50,6 +50,8 @@ Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
 Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
+Route::get('/is_here', [EmployeeController::class, 'is_Here']);
+
 
 
 
@@ -106,6 +108,8 @@ Route::post('/dep', [DepartmentController::class , 'store']);
 Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
 
 Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
+
+
 
 
 //Public Route Notification
