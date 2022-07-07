@@ -77,6 +77,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $employee = Employee::find($id);
         $fields= $request->validate([
 
             'dep_name' =>'string',
@@ -108,12 +109,8 @@ class EmployeeController extends Controller
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
 
-    public function is_Here($id)
-    {
-        return Employee::where('id', $id)->update(array('is_Here' => '0'));
-    }
+
+
 
 }
-
-
 
