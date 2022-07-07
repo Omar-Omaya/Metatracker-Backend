@@ -77,9 +77,14 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $employee = Employee::find($id);
-        $employee->update($request->all());
-        return $employee;
+        // $employee = Employee::find($id);
+        $empofdepartment = DB::table('departments')
+            ->join('employees','employees.department_id', '=' ,'departments.id')
+            ->select('departments.*','employees.id*')
+            ->get();
+            return $empofdepartment->update(array($request->all()));
+        // $employee->update($request->all());
+        // return $employee;
     }
 
     public function mobile_token(Request $request, $id)
