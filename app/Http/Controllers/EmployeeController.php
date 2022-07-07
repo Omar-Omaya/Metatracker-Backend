@@ -103,9 +103,9 @@ class EmployeeController extends Controller
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
 
-    public function is_Here(Request $request)
+    public function is_Here($id)
     {
-        Employee::where('is_Here', $request->is_Here)->update(array('is_Here' => '0'));
+        Employee::where('id', $id)->update(array('is_Here' => '0'));
     }
 
 

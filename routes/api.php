@@ -50,7 +50,7 @@ Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
 Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
-Route::post('/is_here', [EmployeeController::class, 'is_Here']);
+Route::put('/is_here', [EmployeeController::class, 'is_Here']);
 
 
 
