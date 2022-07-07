@@ -67,7 +67,7 @@ class EmployeeController extends Controller
 
     // public function
 
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -77,14 +77,21 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $employee = Employee::find($id);
-        $empofdepartment = DB::table('departments')
-            ->join('employees','employees.department_id', '=' ,'departments.id')
-            ->select('departments.*','employees.*')
-            ->get();
-            return $empofdepartment->update(array($request->all()));
+        $fields= $request->validate([
+
+            'dep_name' =>'string',
+        ]);
+
+        $department_id = Department::where('dep_name',$fields['dep_name'])->first();
+
+        Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
+        // $empofdepartment = DB::table('departments')
+        //     ->join('employees','employees.department_id', '=' ,'departments.id')
+        //     ->select('departments.*','employees.*')
+        //     ->get();
+        //     return $empofdepartment->update(array($request->all()));
         // $employee->update($request->all());
-        // return $employee;
+        return $employee;
     }
 
     public function mobile_token(Request $request, $id)
