@@ -80,12 +80,11 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $fields= $request->validate([
 
-            'dep_name' =>'string',
+            'dep_name' =>'required',
         ]);
         if(isEmpty($fields['dep_name'])){
             $department_id = Department::where('dep_name',$fields['dep_name'])->first();
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
-
         }
 
         $employee->update($request->all());
