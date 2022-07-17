@@ -82,7 +82,7 @@ class EmployeeController extends Controller
 
             'dep_name' =>'required',
         ]);
-        if(isEmpty($fields['dep_name'])){
+        if(empty($fields['dep_name'])){
             $department_id = Department::where('dep_name',$fields['dep_name'])->first();
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
