@@ -126,9 +126,9 @@ class EmployeeController extends Controller
             return response()->json(['invalid_file_upload'], 400);
         }
 
-        $path = public_path() . '\images';
+        $path = public_path() . '/images';
         $file->move($path, $file->getClientOriginalName());
-        $imageUrl = $path . "\\" .$file->getClientOriginalName();
+        $imageUrl = $path . "/" .$file->getClientOriginalName();
         Employee::where('id',$id)->update(array('path_image'=> $imageUrl));
 
 
