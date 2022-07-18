@@ -51,6 +51,7 @@ Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
 Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
 Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
+Route::post('/storeimage/{id}', [EmployeeController::class, 'storeImage']);
 
 
 

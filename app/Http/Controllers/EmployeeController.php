@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\History;
 use App\Models\Department;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -111,6 +114,33 @@ class EmployeeController extends Controller
     {
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
+
+    public function storeImage(Request $request,$id){
+        // Employee::
+
+        if(!$request->hasFile('image')) {
+            return response()->json(['upload_file_not_found'], 400);
+        }
+        $file = $request->file('image');
+        if(!$file->isValid()) {
+            return response()->json(['invalid_file_upload'], 400);
+        }
+
+        $path = public_path() . '\images';
+        $file->move($path, $file->getClientOriginalName());
+        $imageUrl = $path . "\\" .$file->getClientOriginalName();
+        Employee::where('id',$id)->update(array('path_image'=> $imageUrl));
+
+
+
+
+
+
+        return response()->json($imageUrl);
+
+
+    }
+
 
 
 
