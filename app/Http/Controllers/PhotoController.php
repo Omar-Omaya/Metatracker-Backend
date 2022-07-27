@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Response;
 class PhotoController extends Controller
 {
 
-    public function image($fileName){
+    public function image(){
         $path = public_path().'/images/'.'IMG_5778.JPG';
         return Response::download($path);        
     }
