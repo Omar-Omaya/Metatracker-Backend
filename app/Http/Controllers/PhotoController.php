@@ -11,8 +11,8 @@ class PhotoController extends Controller
 {
 
     public function image($id){
-        // $path = public_path().'/images/'.'IMG_5778.JPG';
-         $path =Employee::select('path_image')->where('id',$id )->first();
+        $imageName =Employee::select('path_image')->where('id',$id)->first();
+        $path = public_path().'/images/'.$imageName;
         return Response::download($path);        
     }
     

@@ -130,7 +130,7 @@ class EmployeeController extends Controller
         $path = public_path() . '/images';
         $file->move($path, $file->getClientOriginalName());
         $imageUrl = $path . "/" .$file->getClientOriginalName();
-        Employee::where('id',$id)->update(array('path_image'=> $imageUrl));
+        Employee::where('id',$id)->update(array('path_image'=> $file->getClientOriginalName()));
 
         return response()->json($imageUrl);
 
