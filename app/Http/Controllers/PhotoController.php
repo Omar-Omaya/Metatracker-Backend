@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class PhotoController extends Controller
 {
 
-    public function image(){
-        $path = public_path().'/images/'.'IMG_5778.JPG';
+    public function image($id){
+        // $path = public_path().'/images/'.'IMG_5778.JPG';
+         $path =Employee::select('path_image')->where('id',$id )->first();
         return Response::download($path);        
     }
     

@@ -54,7 +54,7 @@ Route::get('/dis', [EmployeeController::class, 'distance']);
 Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
 Route::post('/storeimage/{id}', [EmployeeController::class, 'storeImage']);
 
-Route::get('/storeimage', [PhotoController::class, 'image']);
+Route::get('/storeimage/{id}', [PhotoController::class, 'image']);
 
 
 
