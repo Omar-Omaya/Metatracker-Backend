@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\StatsController;
 
 use Illuminate\Http\Request;
@@ -52,6 +53,9 @@ Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
 Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
 Route::post('/storeimage/{id}', [EmployeeController::class, 'storeImage']);
+
+Route::get('/storeimage', [PhotoController::class, 'image']);
+
 
 
 

@@ -121,6 +121,7 @@ class EmployeeController extends Controller
         if(!$request->hasFile('image')) {
             return response()->json(['upload_file_not_found'], 400);
         }
+
         $file = $request->file('image');
         if(!$file->isValid()) {
             return response()->json(['invalid_file_upload'], 400);
@@ -131,13 +132,7 @@ class EmployeeController extends Controller
         $imageUrl = $path . "/" .$file->getClientOriginalName();
         Employee::where('id',$id)->update(array('path_image'=> $imageUrl));
 
-
-
-
-
-
         return response()->json($imageUrl);
-
 
     }
 
