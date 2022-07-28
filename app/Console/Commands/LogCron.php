@@ -119,15 +119,58 @@ class LogCron extends Command
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
     $response = curl_exec($ch);
+    $response = json_decode($response, true);
 
         Log::info($response);
     }
+
+    public function time(){
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        
+
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+        $current_time = Carbon::parse($response['datetime']);
+        $current_time= $current_time->format('H:i');
+        // Log::info($current_time);
+
+        $dep= Department::first();
+        $const_Leave_time = Carbon::parse($dep->const_Leave_time);
+
+        $operation = $const_Leave_time->diffInHours($current_time);
+        // Log::info($operation);
+        
+        $histories= History::whereDate('created_at', '=', Carbon::today())->get();
+        foreach($histories as $history){
+            if(History::whereNull('End_time')->where('id',$history->id)->where('Out_of_zone', true)->exists()
+                && $operation <= 0 
+            ){
+                $update= History::where('id', $history->id)->update(array('End_time' => $current_time));
+
+                Log::info($update);
+            }
+            
+
+        }
+
+        // $Out_of_zone=$his->Out_of_zone;
+
+
+
+    }                                                                                                                                                                                                                                                                            
+
+
 
 
     public function handle()
     {
         // $this->notification($token, "test", "test");
-        $this->distance();
+        // $this->distance();
+        $this->time();
 
     }
 }

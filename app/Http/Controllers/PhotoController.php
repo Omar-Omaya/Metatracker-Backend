@@ -10,7 +10,27 @@ use Illuminate\Support\Facades\Response;
 class PhotoController extends Controller
 {
 
-    public function image($id){
+    public function storeImage(Request $request,$id){
+        // Employee::
+
+        if(!$request->hasFile('image')) {
+            return response()->json(['upload_file_not_found'], 400);
+        }
+
+        $file = $request->file('image');
+        if(!$file->isValid()) {
+            return response()->json(['invalid_file_upload'], 422);
+        }
+
+        $path = public_path() . '/images';
+        $file->move($path, $file->getClientOriginalName());
+        Employee::where('id',$id)->update(array('path_image'=> $file->getClientOriginalName()));
+
+        return response()->json("Image uploaded");
+
+    }
+
+    public function getImage($id){
         $imageName =Employee::where('id',$id)->first();
         $path = public_path().'/images/'.$imageName->path_image;
         return Response::download($path);        

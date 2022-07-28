@@ -115,26 +115,7 @@ class EmployeeController extends Controller
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
 
-    public function storeImage(Request $request,$id){
-        // Employee::
-
-        if(!$request->hasFile('image')) {
-            return response()->json(['upload_file_not_found'], 400);
-        }
-
-        $file = $request->file('image');
-        if(!$file->isValid()) {
-            return response()->json(['invalid_file_upload'], 400);
-        }
-
-        $path = public_path() . '/images';
-        $file->move($path, $file->getClientOriginalName());
-        $imageUrl = $path . "/" .$file->getClientOriginalName();
-        Employee::where('id',$id)->update(array('path_image'=> $file->getClientOriginalName()));
-
-        return response()->json($imageUrl);
-
-    }
+    
 
 
 

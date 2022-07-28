@@ -52,9 +52,10 @@ Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
 Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
 Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
-Route::post('/storeimage/{id}', [EmployeeController::class, 'storeImage']);
 
-Route::get('/storeimage/{id}', [PhotoController::class, 'image']);
+Route::post('/storeimage/{id}', [PhotoController::class, 'storeImage']);
+
+Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
 
 
 
