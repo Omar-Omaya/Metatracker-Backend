@@ -140,20 +140,23 @@ class LogCron extends Command
 
         $dep= Department::first();
         $const_Leave_time = Carbon::parse($dep->const_Leave_time);
+        // Log::info($current_time);
 
-        $operation = $const_Leave_time->diffInHours($current_time);
-        // Log::info($operation);
         
+        $operation = $const_Leave_time->diffInHours($current_time);
+        $time = $const_Leave_time->format('H:i');
+        // Log::info($operation);
+
         $histories= History::whereDate('created_at', '=', Carbon::today())->get();
         foreach($histories as $history){
             if(History::whereNull('End_time')->where('id',$history->id)->where('Out_of_zone', true)->exists()
                 && $operation <= 0 
             ){
-                $update= History::where('id', $history->id)->update(array('End_time' => $current_time));
+                $update= History::where('id', $history->id)->update(array('End_time' => $time));
 
                 Log::info($update);
             }
-            
+            Log::info($const_Leave_time." - ".$current_time . "=" . $operation);
 
         }
 
@@ -169,7 +172,7 @@ class LogCron extends Command
     public function handle()
     {
         // $this->notification($token, "test", "test");
-        // $this->distance();
+        $this->distance();
         $this->time();
 
     }
