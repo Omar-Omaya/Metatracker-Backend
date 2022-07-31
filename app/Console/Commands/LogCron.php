@@ -139,7 +139,9 @@ class LogCron extends Command
         // Log::info($current_time);
 
         $dep= Department::first();
-        $const_Leave_time = Carbon::parse($dep->const_Leave_time);
+        $const_Leave_time = $dep->const_Leave_time . ":00";
+        $const_Leave_time = Carbon::parse($const_Leave_time);
+
         // Log::info($current_time);
 
         
