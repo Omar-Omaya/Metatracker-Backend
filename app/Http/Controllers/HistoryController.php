@@ -90,11 +90,11 @@ class HistoryController extends Controller
         return $location;
     }
 
-    public function getOutOfZone(){
+    public function getOutOfZoneToday(){
         return History::where('Out_of_zone', true)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
     }
 
-    public function getInOfZone(){
+    public function getInOfZoneToday(){
         return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
     }
 
