@@ -73,6 +73,7 @@ Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
 Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
 Route::get('/attend/{id}', [HistoryController::class, 'countAttendanceDay']);
 Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
+
 Route::get('/count-out', [HistoryController::class , 'getOutOfZoneToday']);
 Route::get('/count-in', [HistoryController::class , 'getInOfZoneToday']);
 Route::get('/currentlocation/{id}', [HistoryController::class , 'getCurrentLocation']);

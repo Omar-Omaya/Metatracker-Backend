@@ -33,8 +33,30 @@ class HistoryController extends Controller
 
     public function store(Request $request)
     {
+        $fields = $request->validate([
+            'employee_id' => 'required|string',
+            'Start_time' => 'string',
+            'End_time' => 'string',
+            'Out_of_zone' => 'boolean',
+            'lat'=>'double',
+            'lng'=>'double',
+            'Out_of_zone_time' => 'string',
+            'is_absence' => 'boolean'
+
+        ]);
+        
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
-         return History::create($request->all());
+         return History::create([
+
+            'Start_time' => $fields['Start_time'],
+            'End_time' => $fields['End_time'],
+            'Out_of_zone' => bcrypt($fields['Out_of_zone']),
+            'lat' => $fields['lat'],
+            'lng' => $fields['lng'],
+            'Out_of_zone_time' => $fields['Out_of_zone_time'],
+            'is_absence' => $fields['is_absence']
+            
+         ]);
         }
         else{
             History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
