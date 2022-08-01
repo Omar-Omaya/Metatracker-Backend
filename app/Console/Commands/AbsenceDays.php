@@ -47,20 +47,22 @@ class AbsenceDays extends Command
         // $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
         $employees = Employee::get();
         foreach($employees as $employee){
-            if(!History::whereDate('created_at',Carbon::today())->where('employee_id',$employee->id)->exists()){
-                
-                History::create([
-                    'lat' => 0,
-                    'lng' => 0,
-                    'employee_id' => $employee->id,
-                    'Out_of_zone' => 0,
-                    'Start_time' => '0',
-                    'End_time' => '0',
-                    'Out_of_zone_time' => 0,
-                    'is_absence' => 1,
-                ]);
-                Log::info("");
-            }
+            if(History::whereNull('End_time')->where('employee_id', $employee->id)->last()->exists()){
+                if(!History::whereDate('created_at',Carbon::today())->where('employee_id',$employee->id)->exists()){
+                    
+                    History::create([
+                        'lat' => 0,
+                        'lng' => 0,
+                        'employee_id' => $employee->id,
+                        'Out_of_zone' => 0,
+                        'Start_time' => '0',
+                        'End_time' => '0',
+                        'Out_of_zone_time' => 0,
+                        'is_absence' => 1,
+                    ]);
+                    Log::info("");
+                }
+        }
 
         }
 
