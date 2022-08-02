@@ -64,20 +64,6 @@ class HistoryController extends Controller
         // if($start)
     }
 
-
-        // return  History::where('employee_id',$fields['employee_id'])->get();
-
-        // return History::create($request->all());
-
-
-
-
-        //  $history= History::get();
-        //  History::where('employee_id','=', $employee_id)->count();
-        // return $history;
-        // if($history->employee_id)
-        // return History::create($request->all());
-
     public function getAbsenceDay($id)
     {
 
@@ -97,7 +83,6 @@ class HistoryController extends Controller
 
     public function getAttendanceToday()
     {
-
         return History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
     }
 
@@ -135,15 +120,6 @@ class HistoryController extends Controller
         return response($response, 201);
     }
 
-
-
-
-        // $totalHour = History::select('Start_time')->where('employee_id', $id)->count();
-        // return $totalHour;
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -154,8 +130,6 @@ class HistoryController extends Controller
     {
         return History::find($id);
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -184,11 +158,15 @@ class HistoryController extends Controller
 
         $history->update($content);
 
-        if($history->Out_of_zone==true){
-            return response([ "Employee is in zone"], 201);
-        }else{
-            return response([ "Employee is out of zone"], 401);
-        }
+        return $content;
+
+
+
+        // if($history->Out_of_zone==true){
+        //     return response([ "Employee is in zone"], 201);
+        // }else{
+        //     return response([ "Employee is out of zone"], 401);
+        // }
     }
 
     public function destroy($id)

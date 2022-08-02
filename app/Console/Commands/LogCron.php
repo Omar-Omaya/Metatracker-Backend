@@ -135,7 +135,7 @@ class LogCron extends Command
         $response = curl_exec($ch);
         $response = json_decode($response, true);
         $current_time = Carbon::parse($response['datetime']);
-        $current_time= $current_time->format('H:i');
+        // $current_time= $current_time->format('H:i');
         // Log::info($current_time);
 
         $dep= Department::first();
@@ -145,7 +145,8 @@ class LogCron extends Command
         // Log::info($current_time);
 
         
-        $operation = $const_Leave_time->diffInHours($current_time);
+        // $operation = $const_Leave_time->diffInHours($current_time);
+        $operation = $current_time->diffInHours($const_Leave_time, false);
         $time = $const_Leave_time->format('H:i');
         // Log::info($operation);
 

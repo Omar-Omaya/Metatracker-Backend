@@ -44,10 +44,9 @@ class AbsenceDays extends Command
      */
 
     public function createAbsDay(){
-        // $historiesOfEmployees = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
         $employees = Employee::get();
         foreach($employees as $employee){
-            if(History::whereNull('End_time')->where('employee_id', $employee->id)->last()->exists()){
+            // if(History::whereNull('End_time')->where('employee_id', $employee->id)->get()->last()->exists()){
                 if(!History::whereDate('created_at',Carbon::today())->where('employee_id',$employee->id)->exists()){
                     
                     History::create([
@@ -62,7 +61,7 @@ class AbsenceDays extends Command
                     ]);
                     Log::info("");
                 }
-        }
+        // }
 
         }
 
