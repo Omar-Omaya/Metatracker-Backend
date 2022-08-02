@@ -33,35 +33,31 @@ class HistoryController extends Controller
 
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'employee_id' => 'required|string',
-            'Start_time' => 'string',
-            'End_time' => 'string',
-            'Out_of_zone' => 'boolean',
-            'lat'=>'double',
-            'lng'=>'double',
-            'Out_of_zone_time' => 'string',
-            'is_absence' => 'boolean'
 
-        ]);
+        $content = $request->all();
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         
-        if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
-         return History::create([
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+        $current_time = Carbon::parse($response['datetime']);
+        $current_time= $current_time->format('H:i');
 
-            'Start_time' => $fields['Start_time'],
-            'End_time' => $fields['End_time'],
-            'Out_of_zone' => bcrypt($fields['Out_of_zone']),
-            'lat' => $fields['lat'],
-            'lng' => $fields['lng'],
-            'Out_of_zone_time' => $fields['Out_of_zone_time'],
-            'is_absence' => $fields['is_absence']
-            
-         ]);
+        $content['Start_time'] = $current_time; 
+
+        if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
+         return History::create($content);
+            // return $test;
         }
         else{
             History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
-            History::create($request->all());
+            History::create($content);
             return response([ "History exists previous row deleted"], 201);
+            // return gettype($test);
+
+            // return $test;
         }
         // $start = History::select($Start_time)
 
@@ -170,14 +166,31 @@ class HistoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        $content = $request->all();
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+        $current_time = Carbon::parse($response['datetime']);
+        $current_time= $current_time->format('H:i');   
+
+        $content['End_time'] = $current_time; 
+
         $history = History::where('employee_id',$id)->get()->last();
-        $history->update($request->all());
+
+        $history->update($content);
+
         if($history->Out_of_zone==true){
             return response([ "Employee is in zone"], 201);
         }else{
             return response([ "Employee is out of zone"], 401);
         }
     }
+
     public function destroy($id)
     {
         return History::destroy($id);

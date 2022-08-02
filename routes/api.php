@@ -108,8 +108,8 @@ Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 
 
 // Public Route Department
-Route::get('/dep', [DepartmentController::class , 'readAllDepartment']);
-Route::post('/dep', [DepartmentController::class , 'store']);
+Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
+Route::post('/store-dep', [DepartmentController::class , 'store']);
 Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
 
 Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
