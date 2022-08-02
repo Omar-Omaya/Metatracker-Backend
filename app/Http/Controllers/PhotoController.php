@@ -33,9 +33,9 @@ class PhotoController extends Controller
     public function getImage($id){
         $imageName =Employee::where('id',$id)->first();
         $path = public_path().'/images/'.$imageName->path_image;
-        return Response::download($path);        
+        return response()->file(public_path('/images/'.$imageName->path_image));
     }
-    
+
     /**
      * Display a listing of the resource.
      *
