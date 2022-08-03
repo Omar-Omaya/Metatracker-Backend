@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 
 
-
 class AbsenceDays extends Command
 {
     /**

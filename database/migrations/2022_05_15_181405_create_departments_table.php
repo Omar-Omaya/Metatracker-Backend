@@ -21,6 +21,7 @@ class CreateDepartmentsTable extends Migration
             $table->integer('const_Leave_time');
             $table->string('position');
             $table->string('message');
+            $table->string('color');
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->integer('radius')->nullable();
