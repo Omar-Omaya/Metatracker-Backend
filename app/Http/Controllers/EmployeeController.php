@@ -28,7 +28,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $counter = DB::select("SELECT id FROM employees");
+        $admin_id =auth('sanctum')->user()->id;
+        $adminData = Admin::where('id', $admin_id)->first();
+        $counter = Employee::where('company_id',$adminData->company_id)->count();
         // $counter = Employee::select('id');
 
         // return (Employee::all() , compact($counter));
@@ -37,7 +39,9 @@ class EmployeeController extends Controller
     }
 
     public function getAllEmployees(){
-        return Employee::get();
+        $admin_id =auth('sanctum')->user()->id;
+        $adminData = Admin::where('id', $admin_id)->first();
+        return Employee::where('company_id',$adminData->company_id)->get();
     }
 
     /**
@@ -115,7 +119,7 @@ class EmployeeController extends Controller
         return Employee::where('name', 'like', '%'.$name.'%')->orWhere('email','like','%'.$name.'%')->get();
     }
 
-    
+
 
 
 

@@ -12,7 +12,9 @@ class MessageController extends Controller
 
     public function index()
     {
-        return Message::all();
+        $admin_id =auth('sanctum')->user()->id;
+        $adminData = Admin::where('id', $admin_id)->first();
+        return Message::where('company_id',$adminData->company_id)->get();
     }
 
     public function store(Request $request)
@@ -21,7 +23,7 @@ class MessageController extends Controller
         $request->validate([
             'msg_text' =>'required',
         ]);
-      
+
         return Message::create($request->all());
     }
 
