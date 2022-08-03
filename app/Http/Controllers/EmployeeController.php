@@ -7,6 +7,7 @@ use App\Models\Hospital;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\History;
+use App\Models\Admin;
 use App\Models\Department;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
