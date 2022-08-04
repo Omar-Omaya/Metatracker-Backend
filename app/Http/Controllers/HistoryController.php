@@ -155,12 +155,13 @@ class HistoryController extends Controller
         $content['End_time'] = $current_time; 
 
         $history = History::where('employee_id',$id)->get()->last();
+        if(!$request->Start_time=0){
 
         $history->update($content);
 
         return $content;
 
-
+        }
 
         // if($history->Out_of_zone==true){
         //     return response([ "Employee is in zone"], 201);

@@ -89,16 +89,6 @@ Route::get('/calcOutEmp/{id}', [StatsController::class , 'calcgetOutOfZoneMonthP
 Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
 
 
-
-
-
-
-
-
-
-
-
-
 // Public Route Message
 Route::get('/msg', [MessageController::class , 'index']);
 Route::get('/msg/{id}', [MessageController::class , 'show']);
@@ -111,16 +101,11 @@ Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);
 Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
-
 Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
-
-
 
 
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
-
-
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
