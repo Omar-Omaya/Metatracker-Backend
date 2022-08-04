@@ -10,17 +10,17 @@ class Message extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_id',
-        'overhead_name',
-        'overhead_role',
-        'msg_text',
-        'employee_id'
+        // 'company_id',
+        'admin_id',
+        'dep_id',
+        'employee_id',
+        'text'
         
     ];
 
-    public function message()
+    public function employees()
     {
-        return $this->belongsTo(Message::class);
+        return $this->belongsToMany(Employee::class);
     }
 
     public function company()

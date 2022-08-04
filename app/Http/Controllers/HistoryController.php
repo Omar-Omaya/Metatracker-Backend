@@ -34,6 +34,11 @@ class HistoryController extends Controller
     public function store(Request $request)
     {
 
+        $fields = $request->validate([
+            'employee_id' => 'required',
+        ]);
+       
+
         $content = $request->all();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
@@ -48,7 +53,14 @@ class HistoryController extends Controller
         $content['Start_time'] = $current_time; 
 
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
-         return History::create($content);
+        //  return History::create($content);
+
+        return History::create([
+            'employee_id' => $fields['employee_id'],
+            'Start_time' => $current_time
+           
+        ]);
+
             // return $test;
         }
         else{
@@ -140,7 +152,10 @@ class HistoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $fields = $request->validate([
+            'employee_id' => 'required',
+        ]);
+       
         $content = $request->all();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
@@ -155,13 +170,19 @@ class HistoryController extends Controller
         $content['End_time'] = $current_time; 
 
         $history = History::where('employee_id',$id)->get()->last();
-        if(!$request->Start_time=0){
 
-        $history->update($content);
+
+
+        $history->update([
+            'employee_id' => $fields['employee_id'],
+            'End_time' => $current_time
+            ]
+
+        );
 
         return $content;
 
-        }
+        
 
         // if($history->Out_of_zone==true){
         //     return response([ "Employee is in zone"], 201);

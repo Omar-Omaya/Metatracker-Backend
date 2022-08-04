@@ -22,8 +22,6 @@ class Department extends Model
         'lng',
         'radius'
 
-        
-
     ];
 
     public function employees()

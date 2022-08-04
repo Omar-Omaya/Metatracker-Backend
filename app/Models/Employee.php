@@ -40,15 +40,21 @@ class Employee extends Model
         'password',
     ];
     
-    public function department()
+    public function departments()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsToMany(Department::class);
     }
 
     public function histories()
     {
         return $this->hasMany(History::class);
     }
+
+    public function messages()
+    {
+        return $this->belongsToMany(Message::class);
+    }
+
 
     public function company()
     {

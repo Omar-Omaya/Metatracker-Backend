@@ -105,6 +105,8 @@ Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
+Route::post('/msg', [MessageController::class , 'store']);
+Route::get('/msg', [MessageController::class , 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
@@ -112,8 +114,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store-dep', [DepartmentController::class , 'store']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
-    Route::post('/msg', [MessageController::class , 'store']);
-    Route::get('/msg', [MessageController::class , 'index']);
 
 
 
