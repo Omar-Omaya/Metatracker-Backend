@@ -42,8 +42,6 @@ Route::post('/admin/login', [AdminController::class , 'login']);
 
 // Public Route Employee
 
-Route::get('/number-of-employees', [EmployeeController::class , 'index']);
-Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/employees/{id}', [EmployeeController::class , 'show']);
 Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
@@ -90,30 +88,44 @@ Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPer
 
 
 // Public Route Message
-Route::get('/msg', [MessageController::class , 'index']);
 Route::get('/msg/{id}', [MessageController::class , 'show']);
-Route::post('/msg', [MessageController::class , 'store']);
 Route::put('/msg/{id}', [MessageController::class , 'update']);
 Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 
 
 // Public Route Department
-Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
-Route::post('/store-dep', [DepartmentController::class , 'store']);
-Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
-Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
+// Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
+// Route::post('/store-dep', [DepartmentController::class , 'store']);
+// Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
+// Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
+
+    Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
+    Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
+    Route::post('/store-dep', [DepartmentController::class , 'store']);
+    Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
+    Route::get('/number-of-employees', [EmployeeController::class , 'index']);
+    Route::post('/msg', [MessageController::class , 'store']);
+    Route::get('/msg', [MessageController::class , 'index']);
+
+
+
+
+
+
 
 
 
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
     return $request->user();
 });
