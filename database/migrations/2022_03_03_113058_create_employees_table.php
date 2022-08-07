@@ -41,13 +41,6 @@ class CreateEmployeesTable extends Migration
 
            
         });
-//         Schema::create('employees',function(Blueprint $table){
-
-//             $table->unsignedBigInteger('role_id');
-//             $table->foreign('role_id')->references('id')->on('departments');
-//             $table->string('permission');
-
-// });
     }
 
     /**

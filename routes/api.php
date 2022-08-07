@@ -89,8 +89,11 @@ Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPer
 
 // Public Route Message
 Route::get('/msg/{id}', [MessageController::class , 'show']);
+Route::get('/msgs/{id}', [MessageController::class , 'getMessage']);
+
 Route::put('/msg/{id}', [MessageController::class , 'update']);
 Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
+
 
 
 // Public Route Department
