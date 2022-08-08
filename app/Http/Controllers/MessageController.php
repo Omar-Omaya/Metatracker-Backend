@@ -27,7 +27,9 @@ class MessageController extends Controller
             'text' =>'required',
         ]);
 
-        return Message::create($request->all());
+        $message =  Message::create($request->all());
+
+        return $message;
     }
 
     public function show($id)
@@ -47,11 +49,11 @@ class MessageController extends Controller
         return Message::destroy($id);
     }
 
-    public function getMessage($id){
-        $getmessage = DB::table('messages')
-            ->join('messages_employees','messages_employees.employee_id', '=' ,'employees.id')
-            ->select('messages_employees.*','employees.*')
-            ->get();
+    public function getMessage(){
+        // $category = Message::find([3, 4]);
+        // $product->categories()->attach($category);
+        $getmessage = MessageEmployee::with('message')->where('employee_id', '=', 1)->get();
+
             return $getmessage;
        
     }

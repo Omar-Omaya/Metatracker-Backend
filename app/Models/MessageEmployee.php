@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model\Message;
+
 
 class MessageEmployee extends Model
 {
     use HasFactory;
 
-    protected $table = 'messages_employees';
+    protected $table = 'employee_message';
 
     protected $guarded = [];
 

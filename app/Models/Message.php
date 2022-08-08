@@ -13,9 +13,9 @@ class Message extends Model
 
     protected $fillable = [
         // 'company_id',
-        'admin_id',
-        'department_id',
-        'employee_id',
+        // 'admin_id',
+        // 'department_id',
+        // 'employee_id',
         'text'
         
     ];
@@ -23,6 +23,11 @@ class Message extends Model
     public function employees()
     {
         return $this->belongsToMany(Employee::class);
+    }
+
+    public function messagesemployees()
+    {
+        return $this->belongsToMany(MessageEmployee::class);
     }
 
     public function company()
