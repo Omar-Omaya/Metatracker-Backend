@@ -33,7 +33,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class , 'register']);
 
 Route::post('/login', [AuthController::class , 'login']);
-Route::post('/list-of-employees', [AuthController::class , 'excel']);
 
 
 
@@ -125,6 +124,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store-dep', [DepartmentController::class , 'store']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
+    Route::post('/list-of-employees', [AuthController::class , 'excel']);
+
 
 
 

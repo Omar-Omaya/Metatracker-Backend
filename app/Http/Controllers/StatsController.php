@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\History;
+use App\Models\Admin;
 
 use Illuminate\Http\Request;
 
@@ -11,9 +12,11 @@ class StatsController extends Controller
 {
 
     public function totalHour($id , $month){
-        // $month = 6;
-        $histories = History::where('employee_id',$id)->whereMonth('created_at' , $month)->get();
-        $absence = History::where('is_absence','=',true)->where('employee_id',$id)->whereMonth('created_at' , $month)->count();
+        $admin_id =auth('sanctum')->user()->id;
+        $adminData = Admin::where('id', $admin_id)->first();
+
+        $histories = History::where('employee_id',$id)->whereMonth('created_at' , $month)->where('company_id', $admin_id->company_id)->get();
+        $absence = History::where('is_absence','=',true)->where('employee_id',$id)->where('company_id', $admin_id->company_id)->whereMonth('created_at' , $month)->count();
         $total = 0;
         $days = 0;
         foreach($histories as $history){
@@ -46,6 +49,8 @@ class StatsController extends Controller
     }
 
     public function getOutOfZoneMonth($month){
+        $admin_id =auth('sanctum')->user()->id;
+        $adminData = Admin::where('id', $admin_id)->first();
         return History::where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
     }
 
@@ -63,7 +68,7 @@ class StatsController extends Controller
         return History::where('employee_id',$id)->where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
     }
 
-    
+
 
     public function calcgetOutOfZoneMonthPerEmp($id){
         $array2 = [];
@@ -75,7 +80,7 @@ class StatsController extends Controller
         return $array2;
     }
 
-    
+
     public function getInOfZoneMonth($month){
         return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
     }
