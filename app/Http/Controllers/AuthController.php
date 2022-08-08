@@ -92,7 +92,6 @@ class AuthController extends Controller
 
             ]);
 
-            //TODO check whether there is dublication or not
 
             $token = $user->createToken('myapptoken')->plainTextToken;
             $token= substr($token , -40,40);
@@ -113,14 +112,8 @@ class AuthController extends Controller
         $request->validate([
             'path_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
         $imageName = time().'.'.$request->image->extension();
-
         $request->path_image->move(public_path('images'), $imageName);
-
-        /* Store $imageName name in DATABASE from HERE */
-
-        // return ('image',$imageName);
     }
 
 
@@ -135,25 +128,15 @@ class AuthController extends Controller
         ]);
 
 
-        // Check email and Check password
         $user = Employee::where('email', $fields['email'])->first();
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
-        // $raw_query = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id = departments.id WHERE employees.email =  ';
-        // $user = $raw_query . '' . $fields['email'];
-        // $user = DB::select($user);
-        // $user = json_decode(json_encode($user));
-        // $empofdepartment = Department::with('employee')->where('email', $fields['email'])->first();
         $empofdepartment = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->where('email', $fields['email'])
             ->select('departments.*', 'employees.department_id','employees.id' ,'employees.name','employees.position','employees.path_image')
             ->first();
-
-
-
-//  || &&
 
         if(!$user||Hash::check($fields['password'], $user->password)) {
             if(Employee::where('Is_Here','=',true)->where('id',$user->id)->exists()){
@@ -175,35 +158,6 @@ class AuthController extends Controller
             return response($response,401);
         }
 
-    //     if(Hash::check($fields['password'], $user->password)) {
-
-    //         return response()->json(['message'=> Employee::where('email', $fields['email'],200)->first(),
-    //     ]);
-    // }else{
-    //     return response([
-    //         'error' => 'Invalid email or password'
-    //     ], 401);
-    // }
 }
 }
 
-// if(Hash::check($fields['password'], $user->password)) {
-
-//             if($order){
-
-//             return response()->json(['message'=> $order,
-//         ]);
-//             }
-//             else{
-//                 $test = $request->bearerToken();
-//                 $condition = User::where("api_token", $test)->where("id", $user->id)->first();
-
-//             // return response()->json(['message'=> $condition]);
-//             return response()->json(['message'=> "order not found"]);
-
-//             }
-//     }else{
-//         return response([
-//             'error' => 'Invalid email or password'
-//         ], 401);
-//     }
