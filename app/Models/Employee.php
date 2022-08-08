@@ -16,6 +16,8 @@ class Employee extends Model
     use HasApiTokens;
     use Notifiable;
 
+    protected $guarded = [];
+
     protected $fillable = [
         'company_id',
         'department_id',

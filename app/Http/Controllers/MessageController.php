@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Employee;
 use App\Models\Admin;
+use App\Models\MessageEmployee;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -22,7 +24,7 @@ class MessageController extends Controller
     {
 
         $request->validate([
-            'msg_text' =>'required',
+            'text' =>'required',
         ]);
 
         return Message::create($request->all());
@@ -43,6 +45,15 @@ class MessageController extends Controller
     public function destroy($id)
     {
         return Message::destroy($id);
+    }
+
+    public function getMessage($id){
+        $getmessage = DB::table('messages')
+            ->join('messages_employees','messages_employees.employee_id', '=' ,'employees.id')
+            ->select('messages_employees.*','employees.*')
+            ->get();
+            return $getmessage;
+       
     }
 
 
