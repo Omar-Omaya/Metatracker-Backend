@@ -100,7 +100,12 @@ Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 Route::post('/msg', [MessageController::class , 'store']);
 Route::get('/msg', [MessageController::class , 'index']);
 
-Route::post('/msgemp/{id}', [MessageEmployeeController::class , 'store']);
+Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
+Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
+Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
+
+
+
 
 
 

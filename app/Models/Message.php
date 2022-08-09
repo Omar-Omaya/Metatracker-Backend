@@ -25,10 +25,23 @@ class Message extends Model
         return $this->belongsToMany(Employee::class);
     }
 
-    public function messagesemployees()
+    public function departments()
     {
-        return $this->belongsToMany(MessageEmployee::class);
+        return $this->belongsToMany(Department::class);
     }
+
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class);
+        
+    }
+
+
+
+    // public function messagesemployees()
+    // {
+    //     return $this->belongsToMany(MessageEmployee::class);
+    // }
 
     public function company()
     {

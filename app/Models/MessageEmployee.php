@@ -20,13 +20,13 @@ class MessageEmployee extends Model
         'employee_id'
     ];
 
-    public function messages()
-    {
-       return $this->belongsToMany(Message::class);
-    }
+    // public function messages()
+    // {
+    //    return $this->belongsToMany(Message::class);
+    // }
 
-    public function employees()
-    {
-       return $this->belongsToMany(Employee::class);
-    }
+    // public function employees()
+    // {
+    //    return $this->belongsToMany(Employee::class);
+    // }
 }
