@@ -122,6 +122,7 @@ Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
+Route::post('/list-of-employees', [AuthController::class , 'excel']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
@@ -129,7 +130,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store-dep', [DepartmentController::class , 'store']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
-    Route::post('/list-of-employees', [AuthController::class , 'excel']);
 
 
 
