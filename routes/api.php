@@ -123,11 +123,11 @@ Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
+Route::post('/store-dep', [DepartmentController::class , 'store']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
     Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
-    Route::post('/store-dep', [DepartmentController::class , 'store']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
 

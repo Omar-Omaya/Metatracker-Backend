@@ -17,9 +17,24 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        $admin_id =auth('sanctum')->user()->id;
-        $adminData = Admin::where('id', $admin_id)->first();
-        return Department::create($request->all());
+        // $department =  Department::create($request->all());
+        $department = $request->all();
+        $dp=
+        "
+        CREATE EVENT AddEventDep".$request->id."
+        ON SCHEDULE
+        EVERY 1 DAY
+        STARTS '2014-04-30 ".$request->startTime."' ON completion PRESERVE ENABLE
+        DO
+        INSERT INTO absences(employee_id,pending) SELECT 1,true FROM employees;
+";
+        
+    return DB::statement($dp);
+
+        // $admin_id =auth('sanctum')->user()->id;
+        // $adminData = Admin::where('id', $admin_id)->first();
+        // return Department::create($request->all());
+
     }
 
 

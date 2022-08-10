@@ -57,6 +57,13 @@ class Employee extends Model
         return $this->belongsToMany(Message::class);
     }
 
+    public function absences()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    
+
 
     public function company()
     {
