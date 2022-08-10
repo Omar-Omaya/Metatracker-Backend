@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessagesEmployeesTable extends Migration
+class CreateEmployeeMessageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMessagesEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages_employees', function (Blueprint $table) {
+        Schema::create('employee_message', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('employee_id')->unsigned();
             $table->foreign('employee_id')
@@ -35,6 +35,6 @@ class CreateMessagesEmployeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages_employees');
+        Schema::dropIfExists('employee_message');
     }
 }

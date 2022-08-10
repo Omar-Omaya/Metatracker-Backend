@@ -8,6 +8,10 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\MessageEmployeeController;
+
+
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,7 +57,7 @@ Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
 Route::post('/storeimage/{id}', [PhotoController::class, 'storeImage']);
 
 Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
-
+                                                 
 
 
 
@@ -88,10 +92,21 @@ Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPer
 
 // Public Route Message
 Route::get('/msg/{id}', [MessageController::class , 'show']);
-Route::get('/msgs/{id}', [MessageController::class , 'getMessage']);
+Route::get('/msgs', [MessageController::class , 'getMessage']);
 
 Route::put('/msg/{id}', [MessageController::class , 'update']);
 Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
+
+Route::post('/msg', [MessageController::class , 'store']);
+Route::get('/msg', [MessageController::class , 'index']);
+
+Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
+Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
+Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
+
+
+
+
 
 
 
@@ -107,8 +122,7 @@ Route::delete('/msg/{id}', [MessageController::class , 'destroy']);
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
 
-Route::post('/msg', [MessageController::class , 'store']);
-Route::get('/msg', [MessageController::class , 'index']);
+Route::post('/list-of-employees', [AuthController::class , 'excel']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
@@ -116,7 +130,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store-dep', [DepartmentController::class , 'store']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
-    Route::post('/list-of-employees', [AuthController::class , 'excel']);
 
 
 

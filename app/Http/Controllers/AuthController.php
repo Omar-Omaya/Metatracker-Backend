@@ -59,6 +59,8 @@ class AuthController extends Controller
         return response(['this email is already exist'], 200);
     }
 
+    // excel
+
     public function excel(Request $request){
 
         $response = [];
@@ -74,8 +76,8 @@ class AuthController extends Controller
                 'department_id'=>'required|integer',
                 'position'=>'required|string',
                 'company_id' => 'required'
-
             ]);
+            
             $duplicate = Employee::select('email')->where('email',$fields['email'])->exists();
 
             if(!$duplicate){
