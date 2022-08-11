@@ -17,19 +17,29 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        // $department =  Department::create($request->all());
-        $department = $request->all();
-        $dp=
-        "
-        CREATE EVENT AddEventDep".$request->id."
+        $department =  Department::create($request->all());
+       
+        
+        DB::statement("
+        CREATE EVENT AddEventDep".$department->id."
         ON SCHEDULE
         EVERY 1 DAY
-        STARTS '2014-04-30 ".$request->startTime."' ON completion PRESERVE ENABLE
+        STARTS '2014-04-30 ".$request->const_Arrival_time.":58:50' ON completion PRESERVE ENABLE
         DO
-        INSERT INTO absences(employee_id,pending) SELECT 1,true FROM employees;
-";
-        
-    return DB::statement($dp);
+        INSERT INTO absences(employee_id,Day,pending,created_at,updated_at) SELECT id,CURDATE(),true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP FROM employees where department_id = ".$department->id.";
+    ");
+        DB::statement("
+        CREATE EVENT SetPendFalse".$department->id."
+        ON SCHEDULE
+        EVERY 1 DAY
+        STARTS '2014-04-30 ".$request->const_Leave_time.":00:00' ON completion PRESERVE ENABLE
+        DO
+        UPDATE absences SET pending=false, updated_at=CURRENT_TIMESTAMP WHERE employee_id IN (SELECT id FROM employees WHERE department_id= ".$department->id.");
+        ");
+
+    return "success";
+
+
 
         // $admin_id =auth('sanctum')->user()->id;
         // $adminData = Admin::where('id', $admin_id)->first();

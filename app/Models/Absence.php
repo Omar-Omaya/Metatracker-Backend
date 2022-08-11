@@ -12,7 +12,8 @@ class Absence extends Model
     protected $fillable = [
     
         'employee_id',
-        'pending'
+        'pending',
+        'Day'
         
     ];
 

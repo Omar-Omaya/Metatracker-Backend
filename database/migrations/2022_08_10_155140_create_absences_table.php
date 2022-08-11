@@ -22,6 +22,8 @@ class CreateAbsencesTable extends Migration
             ->references('id')
             ->on('employees')
             ->onDelete('cascade');
+
+            $table->date('Day');
             $table->timestamps();
         });
     }
