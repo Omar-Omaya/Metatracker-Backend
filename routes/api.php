@@ -8,6 +8,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\HolidayController;
+
 use App\Http\Controllers\MessageEmployeeController;
 
 
@@ -124,11 +126,18 @@ Route::get('/notification', [NotificationController::class, 'notificationTesting
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);
+Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
+
+// public Route Holiday
+
+Route::post('/store-holi', [HolidayController::class , 'store']);
+
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
     Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
-    Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
+    // Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
 
 

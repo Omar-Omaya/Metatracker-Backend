@@ -19,12 +19,11 @@ class DepartmentController extends Controller
     {
         $department =  Department::create($request->all());
        
-        
         DB::statement("
         CREATE EVENT AddEventDep".$department->id."
         ON SCHEDULE
         EVERY 1 DAY
-        STARTS '2014-04-30 ".$request->const_Arrival_time.":58:50' ON completion PRESERVE ENABLE
+        STARTS '2014-04-30 ".$request->const_Arrival_time.":15:40' ON completion PRESERVE ENABLE
         DO
         INSERT INTO absences(employee_id,Day,pending,created_at,updated_at) SELECT id,CURDATE(),true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP FROM employees where department_id = ".$department->id.";
     ");

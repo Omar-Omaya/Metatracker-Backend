@@ -40,9 +40,15 @@ class EmployeeController extends Controller
     }
 
     public function getAllEmployees(){
-        $admin_id =auth('sanctum')->user()->id;
-        $adminData = Admin::where('id', $admin_id)->first();
-        return Employee::where('company_id',$adminData->company_id)->get();
+        // $admin_id =auth('sanctum')->user()->id;
+        // $adminData = Admin::where('id', $admin_id)->first();
+        // return Employee::where('company_id',$adminData->company_id)->get();
+        $empofdepartment = DB::table('employees')
+            ->join('departments','department_id', '=' ,'employees.department_id')
+          
+            ->select('employees.*', 'dep_name')
+            ->first();
+            return $empofdepartment;
     }
 
     /**

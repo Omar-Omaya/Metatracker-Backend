@@ -62,8 +62,10 @@ class Employee extends Model
         return $this->hasMany(Absence::class);
     }
 
-    
-
+    public function holidays()
+    {
+        return $this->hasMany(Holiday::class);
+    }
 
     public function company()
     {
