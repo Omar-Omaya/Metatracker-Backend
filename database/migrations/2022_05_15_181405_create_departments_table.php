@@ -19,7 +19,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('dep_name');
             $table->integer('const_Arrival_time');
             $table->integer('const_Leave_time');
-            $table->string('position');
+           
             $table->string('message');
             $table->string('color');
             $table->double('lat')->nullable();

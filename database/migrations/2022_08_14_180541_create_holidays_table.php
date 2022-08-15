@@ -19,12 +19,14 @@ class CreateHolidaysTable extends Migration
         
             $table->date('Day');
             $table->string('comment');
-            $table->timestamps();
+            $table->string('Is_paid');
 
             $table->foreign('employee_id')
             ->references('id')
             ->on('employees')
             ->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 

@@ -21,6 +21,7 @@ class Employee extends Model
     protected $fillable = [
         'company_id',
         'department_id',
+        'weekend_id',
         'name',
         'email',
         'password',
@@ -42,9 +43,9 @@ class Employee extends Model
         'password',
     ];
     
-    public function departments()
+    public function weekends()
     {
-        return $this->belongsToMany(Department::class);
+        return $this->hasMany(WeekEnd::class);
     }
 
     public function histories()
@@ -65,6 +66,11 @@ class Employee extends Model
     public function holidays()
     {
         return $this->hasMany(Holiday::class);
+    }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class);
     }
 
     public function company()

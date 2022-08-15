@@ -9,11 +9,12 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\WeekEndController;
+
+
+
 
 use App\Http\Controllers\MessageEmployeeController;
-
-
-
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -131,6 +132,11 @@ Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 // public Route Holiday
 
 Route::post('/store-holi', [HolidayController::class , 'store']);
+
+//public Route WeekEnd
+
+Route::post('/weekend', [WeekEndController::class , 'store']);
+Route::post('/week', [WeekEndController::class , 'setHolidayToEmployee']);
 
 
 

@@ -20,6 +20,8 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('weekend_id');
+
             $table->string('name');
             $table->string('email');
             $table->string('password');
