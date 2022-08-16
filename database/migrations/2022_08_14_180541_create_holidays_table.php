@@ -19,7 +19,7 @@ class CreateHolidaysTable extends Migration
         
             $table->date('Day');
             $table->string('comment');
-            $table->string('Is_paid');
+            $table->boolean('Is_paid');
 
             $table->foreign('employee_id')
             ->references('id')

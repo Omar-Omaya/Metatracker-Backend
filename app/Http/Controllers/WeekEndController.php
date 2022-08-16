@@ -24,11 +24,13 @@ class WeekEndController extends Controller
 
     public function index(Request $request){
         $week = WeekEnd::select('id')->where($request->day1,1)->where($request->day2,1)->get();
+
+        
         if($week-> isEmpty() ){
         $week = WeekEnd::create([
             $request->day1 => 1,
             $request->day2 => 1,               
-            ])->id;
+            ])->id ;
         }
         else{$week= $week[0]->id;}
         return $week;

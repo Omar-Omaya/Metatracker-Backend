@@ -44,10 +44,9 @@ class EmployeeController extends Controller
         // $adminData = Admin::where('id', $admin_id)->first();
         // return Employee::where('company_id',$adminData->company_id)->get();
         $empofdepartment = DB::table('employees')
-            ->join('departments','department_id', '=' ,'employees.department_id')
-          
+            ->join('departments','departments.id', '=' ,'employees.department_id')
             ->select('employees.*', 'dep_name')
-            ->first();
+            ->get();
             return $empofdepartment;
     }
 

@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Absence;
 use App\Models\Employee;
 use App\Models\History;
 use App\Models\Department;
+use App\Models\Holiday;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -82,6 +84,94 @@ class LogCron extends Command
     //     $employee = Employee::select('absence_day')->where('id',$id)->first();
     //     return $employee;
     // }
+
+    public function manageAbsence(){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        
+
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+        $current_time = Carbon::parse($response['datetime']);
+
+        $timeInMinutes= $current_time->format('i');
+        $timeInHour= $current_time->format('H');
+        // if($timeInMinutes ==59){
+
+            $nameToday = strtolower($current_time->format('l'));
+            $empofdepartments = DB::table('departments')
+            ->join('employees','employees.department_id', '=' ,'departments.id')
+            ->join('week_ends','employees.weekend_id', '=','week_ends.id' )
+            ->select('employees.*','employees.id as empID','week_ends.'.$nameToday." as day")
+            ->where('const_arrival_time',13)
+            ->get();
+
+            
+            $today="20".$current_time->format('y-m-d');
+
+            Log::info($empofdepartments);
+
+
+            foreach($empofdepartments as $empofdepartment){
+                if($empofdepartment->day == 1 ){
+                    $emp = Employee::where('id', $empofdepartment->empID)->first();
+                    $emp->paid++;
+                    $emp->update();
+                }
+
+                else{
+                    $holidays= Holiday::where('employee_id',$empofdepartment->empID )->orWhere('employee_id', null)->where('Day',$today)->get();
+                    if(! $holidays -> isEmpty()){
+                        foreach($holidays as $holiday){
+                            if($holiday->Is_paid == 1){
+                                $emp = Employee::where('id', $empofdepartment->empID)->first();
+                                $emp->paid++;
+                                $emp->update();
+                                break;
+
+                            }
+                        }
+                    }
+                    else{
+                        Absence::create([
+                            'employee_id'=> $empofdepartment->empID,
+                            'Day'=> $today,
+                            'pending'=> 1
+
+                        ]);
+
+                    }
+                    // Log::info($holidays);
+
+                };
+
+                
+
+            //     Log::info()
+            // );
+
+
+                // $emp = $empofdepartment->id->whereDate('created_at',Carbon::today())->get();
+                
+                
+            }
+            // Log::info($emp);
+                //Need to put time in hours
+                // for($i = 0 ; $i<count($deps); $i++){
+                //         $employees= Employee::where("department_id",$deps[i]->id);
+                //         for($e=0;$e<count($employees) ; $e++){
+                //                 //Get the day of today.
+                //                 $today=$current_time->format('yy-mm-dd');
+                                
+                //         }
+                }
+
+        
+
+
+
 
 
 
@@ -175,8 +265,9 @@ class LogCron extends Command
     public function handle()
     {
         // $this->notification($token, "test", "test");
-        $this->distance();
-        $this->time();
+        // $this->distance();
+        // $this->time();
+        $this->manageAbsence();
 
     }
 }

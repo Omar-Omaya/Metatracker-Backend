@@ -28,6 +28,7 @@ class CreateEmployeesTable extends Migration
             $table->string('path_image')->nullable();
             $table->integer('phone');
             $table->string('position');
+            $table->integer('paid')->default('0');
             // $table->integer('absence_day')->nullable();
             $table->boolean('Is_Here')->default(false);
             $table->string('api_token')->default('');

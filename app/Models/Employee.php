@@ -28,6 +28,7 @@ class Employee extends Model
         'path_image',
         'phone',
         'position',
+        'paid',
         'api_token',
         'Is_Here',
         'mobile_token'
