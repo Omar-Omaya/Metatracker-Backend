@@ -16,6 +16,8 @@ class CreateDepartmentMessageTable extends Migration
         Schema::create('department_message', function (Blueprint $table) {
           
             $table->increments('id');
+            $table->unsignedBigInteger('company_id');
+
             $table->bigInteger('department_id')->unsigned();
             $table->foreign('department_id')
                 ->references('id')

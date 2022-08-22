@@ -155,8 +155,8 @@ class AuthController extends Controller
         }else{
             $response = [
                 "message" => "invalid email or password"
-
             ];
+            
             return response($response,401);
         }
 

@@ -32,6 +32,9 @@ use Illuminate\Support\Facades\Log;
                      ->everyMinute();
             $schedule->command('abs:days')
                      ->everyMinute();
+            $schedule->command('manage:shift')
+            ->everyMinute();
+
             // $schedule->call(function (){
             //     $history = DB::table('histories')->get();
             //     Log::info($history);

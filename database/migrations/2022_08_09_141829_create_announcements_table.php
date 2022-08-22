@@ -17,6 +17,8 @@ class CreateAnnouncementsTable extends Migration
             $table->id();
             
             $table->unsignedBigInteger('message_id');
+            $table->unsignedBigInteger('company_id');
+
 
             $table->foreign('message_id')->references('id')->on('messages')
             ->onDelete('cascade');

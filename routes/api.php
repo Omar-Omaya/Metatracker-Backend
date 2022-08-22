@@ -10,6 +10,9 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\WeekEndController;
+use App\Http\Controllers\StatisticsHourController;
+
+
 
 
 
@@ -137,6 +140,21 @@ Route::post('/store-holi', [HolidayController::class , 'store']);
 
 Route::post('/weekend', [WeekEndController::class , 'store']);
 Route::post('/week', [WeekEndController::class , 'setHolidayToEmployee']);
+
+// public Rout Working Hour
+
+// Route::get('/hour/{id}', [StatisticsHourController::class , 'getTotalWorkingHours']);
+// Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHours']);
+// Route::get('/delay/{id}', [StatisticsHourController::class , 'delayHours']);
+Route::get('/pay', [StatisticsHourController::class , 'payroll']);
+
+
+
+
+
+
+
+
 
 
 

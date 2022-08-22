@@ -17,6 +17,8 @@ class CreateAbsencesTable extends Migration
             $table->id();
             $table->boolean('pending');
             $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('company_id');
+
            
             $table->foreign('employee_id')
             ->references('id')

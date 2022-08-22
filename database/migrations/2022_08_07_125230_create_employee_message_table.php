@@ -15,6 +15,8 @@ class CreateEmployeeMessageTable extends Migration
     {
         Schema::create('employee_message', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('company_id');
+
             $table->bigInteger('employee_id')->unsigned();
             $table->foreign('employee_id')
                 ->references('id')
