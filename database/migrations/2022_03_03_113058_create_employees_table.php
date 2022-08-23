@@ -29,7 +29,8 @@ class CreateEmployeesTable extends Migration
             $table->integer('phone');
             $table->string('position');
             $table->integer('paid')->default('0');
-            // $table->integer('absence_day')->nullable();
+            $table->integer('salary');
+            
             $table->boolean('Is_Here')->default(false);
             $table->string('api_token')->default('');
             $table->string('mobile_token')->default('');

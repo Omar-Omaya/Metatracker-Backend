@@ -131,6 +131,8 @@ Route::get('/notification', [NotificationController::class, 'notificationTesting
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);
 Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
+Route::get('/payroll', [StatisticsHourController::class , 'payroll']);
+
 
 // public Route Holiday
 
@@ -144,9 +146,9 @@ Route::post('/week', [WeekEndController::class , 'setHolidayToEmployee']);
 // public Rout Working Hour
 
 // Route::get('/hour/{id}', [StatisticsHourController::class , 'getTotalWorkingHours']);
-// Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHours']);
+Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHours']);
 // Route::get('/delay/{id}', [StatisticsHourController::class , 'delayHours']);
-Route::get('/pay', [StatisticsHourController::class , 'payroll']);
+// Route::get('/pay', [StatisticsHourController::class , 'payroll']);
 
 
 

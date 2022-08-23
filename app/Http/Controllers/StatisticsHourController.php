@@ -29,8 +29,6 @@ class StatisticsHourController extends Controller
 
         $totalWorkingHours = $countPaid + $countRowHistory + $countRowAbsence;
 
-      
-
         $depworkingHour = Department::where('id',$employee->department_id)->first();
         $arrival=$depworkingHour->const_Arrival_time;
         $leave=$depworkingHour->const_Leave_time;
@@ -50,89 +48,58 @@ class StatisticsHourController extends Controller
         $end = array();
 
         foreach($Historys as $History){
-           $list_start= array_push($start,$History->Start_time);
-           $History->End_time= $History->End_time<$History->Start_time ? $History->End_time+24 : $History->End_time;
-           $list_end = array_push($end,$History->End_time - $History->Start_time);
-           $sum = $sum +$History->End_time - $History->Start_time;
-       
+            $list_start= array_push($start,$History->Start_time);
+            $History->End_time= $History->End_time<$History->Start_time ? $History->End_time+24 : $History->End_time;
+            $list_end = array_push($end,$History->End_time - $History->Start_time);
+            $sum = $sum + $History->End_time - $History->Start_time;
+            
         }
-     
         return $sum;
+     
+        // return $sum;
     }
 
     public function payroll(Request $request){
 
-        $empofdepartments = DB::table('departments')
-            ->join('employees','employees.department_id', '=' ,'departments.id')
-            
-            ->select('departments.*','employees.*','employees.id as employee_id')->get();
+        $empOfDepartments = DB::table('departments')
+                ->join('employees','employees.department_id', '=' ,'departments.id')
+                ->select('departments.*','employees.*','employees.id as employee_id')
+                ->get();
 
-            foreach($empofdepartments as $empofdepartment){
+                foreach($empOfDepartments as $empOfDepartment){
 
-                $totalwork= $this->getTotalWorkingHours($empofdepartment->employee_id);
-                $actualwork = $this->getTotalActualHours($empofdepartment->employee_id);
+                        $totalwork= $this->getTotalWorkingHours($empOfDepartment->employee_id);
+                        $actualwork = $this->getTotalActualHours($empOfDepartment->employee_id);
 
-                $Histories= History::where('employee_id',$empofdepartment->employee_id)->get();
-                $overTime = 0;
-                $delay = 0;
-                $array_api = [];
+                        $Histories= History::where('employee_id',$empOfDepartment->employee_id)->get();
+                        $overTime = 0;
+                        $delay = 0;
+                        
 
-                $diffconstdep = $empofdepartment->const_Arrival_time < $empofdepartment->const_Leave_time ? $empofdepartment->const_Leave_time - $empofdepartment->const_Arrival_time: $empofdepartment->const_Leave_time - $empofdepartment->const_Arrival_time+24;
+                        $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time: $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time+24;
+                          
+                        foreach($Histories as $History){
+                                if($History->Start_time > $empOfDepartment->const_Arrival_time ) {
+                                        $delay = $delay + ($History->Start_time - $empOfDepartment->const_Arrival_time );
+                                }
+                                if($History->End_time < $empOfDepartment->const_Leave_time )
+                                $delay = $delay- ($History->End_time - $empOfDepartment->const_Leave_time);
 
-                foreach($Histories as $History){
-                    if($History->Start_time > $empofdepartment->const_Arrival_time ) {
-                        $delay = $delay + ($History->Start_time - $empofdepartment->const_Arrival_time );
-                    }
-                    if($History->End_time < $empofdepartment->const_Leave_time )
-                    $delay = $delay- ($History->End_time - $empofdepartment->const_Leave_time);
+                                $diffShift = $History->End_time <$History->Start_time ? $History->End_time+24 - $History->Start_time : $History->End_time - $History->Start_time ;
 
-                    $diffshift = $History->End_time <$History->Start_time ? $History->End_time+24 - $History->Start_time : $History->End_time - $History->Start_time ;
-    
-                    if($diffshift>$diffconstdep){
-                        $overTime+=$diffshift-$diffconstdep;
-                    }
+                                if($diffShift>$diffConstDep){
+                                        $overTime+=$diffShift-$diffConstDep;
+                                    }
+                                }
+                                
+                                $empOfDepartment->totalwork=$totalwork;
+                                $empOfDepartment->actualwork=$actualwork;
+                                $empOfDepartment->delay=$delay;
+                                $empOfDepartment->overTime=$overTime;
+                       
                 }
 
-                $api = (object)[
-                    'employee_id' => $empofdepartment->employee_id,
-                    'employee_name' =>  $empofdepartment->name,
-                    'dep_name' => $empofdepartment->dep_name,
-                    'position' =>$empofdepartment->position,
-                    'totalwork' => $totalwork,
-                    'actualwork' => $actualwork,
-                    'delay' => $delay,
-                    'overTime' => $overTime
-                    
-                ];
-
-                
-
-                $array_api[$empofdepartment->employee_id]=clone $api;
-
-
-               
-            }
-            return $array_api;
-
-
-    }
-
-    public function delayHours(Request $request,$id){
-
-        $Historys = History::where('employee_id',$id)->get();
-        // foreach($Historys as $History){
-        $empofdepartments = DB::table('departments')
-            ->join('employees','employees.department_id', '=' ,'departments.id')
-            ->join('histories','histories.employee_id', '=','employees.id' )
-            ->select('departments.*','histories.*','employees.*')
-            ->where('const_Arrival_time',13)
-            
-            ->get();
-
-
-
-            return $Historys;
-    
+                return $empOfDepartments;
 }
 
 

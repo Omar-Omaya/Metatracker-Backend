@@ -24,7 +24,8 @@ class AuthController extends Controller
             'phone' => ' required|integer',
             'department_id'=>'required|integer',
             'position'=>'required|string',
-            'company_id' => 'required'
+            'company_id' => 'required',
+            'salary' => 'required'
 
         ]);
 
@@ -39,7 +40,10 @@ class AuthController extends Controller
             'phone' => $fields['phone'],
             'department_id' => $fields['department_id'],
             'position' => $fields['position'],
-            'company_id' => $fields['company_id']
+            'company_id' => $fields['company_id'],
+            'salary' => $fields['salary'],
+
+            
         ]);
 
 
@@ -134,11 +138,19 @@ class AuthController extends Controller
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
-        $empofdepartment = DB::table('departments')
-            ->join('employees','employees.department_id', '=' ,'departments.id')
-            ->where('email', $fields['email'])
-            ->select('departments.*', 'employees.department_id','employees.id' ,'employees.name','employees.position','employees.path_image')
-            ->first();
+        $employee= Employee::where('email',$fields['email'])->first();
+        $department= Department::where('id',$employee->department_id)->first();
+        $object= [
+            'employee' =>$employee,
+            'department' =>$department
+        ];
+
+
+        // $empofdepartment = DB::table('departments')
+        //     ->join('employees','employees.department_id', '=' ,'departments.id')
+        //     ->where('email', $fields['email'])
+        //     ->select('departments.*', 'employees.department_id','employees.id' ,'employees.name','employees.position','employees.path_image')
+        //     ->first();
 
         if(!$user||Hash::check($fields['password'], $user->password)) {
             if(Employee::where('Is_Here','=',true)->where('id',$user->id)->exists()){
@@ -149,7 +161,8 @@ class AuthController extends Controller
             $response = [
                 // 'user' =>$user,
                 'token' => $token,
-                'empofdepartment' =>$empofdepartment
+                'employee'=> $employee,
+                'department'=> $department
             ];
             return response()->json($response);
         }else{

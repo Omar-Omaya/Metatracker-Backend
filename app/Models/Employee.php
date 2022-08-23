@@ -29,6 +29,7 @@ class Employee extends Model
         'phone',
         'position',
         'paid',
+        'salary',
         'api_token',
         'Is_Here',
         'mobile_token'
