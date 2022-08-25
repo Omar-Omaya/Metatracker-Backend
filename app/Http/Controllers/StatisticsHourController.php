@@ -11,6 +11,7 @@ use App\Models\History;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
 
 class StatisticsHourController extends Controller
 {
@@ -20,101 +21,129 @@ class StatisticsHourController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function getDiffHours($start , $end){
-         $start = new Carbon('2018-05-12 '.$start.':00');
-         $end = new Carbon('2018-05-12 '.$end.':00');
 
-         return $start->diff($end)->format('%H');
+    private function formatTimeString($time)
+    {
+        $time = explode(":", $time);
+        // echo $time[1];
+        $time= [
+            'hour' => (int)$time[0],
+            'min' => (int)$time[1]
+        ];
+        // print_r($time);
+        return $time;
+    }
 
-     }
+    private function getDiffHours($start, $end)
+    {
+        $start = new Carbon('2018-05-12 ' . $start['hour'] . ':' . $start['min'] . ':00');
+        $end = new Carbon('2018-05-12 ' . $end['hour'] . ':' . $end['min'] . ':00');
+        return $start->diff($end)->format('%H');
+    }
 
     public function getTotalWorkingHours($id)
     {
-        $employee =  Employee::where('id',$id)->first();
+        $employee =  Employee::where('id', $id)->first();
         $countPaid = $employee->paid;
-        $countRowHistory = History::where('employee_id',$id)->count();
-        $countRowAbsence = Absence::where('employee_id',$id)->count();
+        $countRowHistory = History::where('employee_id', $id)->count();
+        $countRowAbsence = Absence::where('employee_id', $id)->count();
 
         // $countRowAbsence = Absence::where('employee_id',$id)->where('pending',true)->count();
 
         $totalWorkingHours = $countPaid + $countRowHistory + $countRowAbsence;
 
-        $depworkingHour = Department::where('id',$employee->department_id)->first();
-        $arrival=$depworkingHour->const_Arrival_time;
-        $leave=$depworkingHour->const_Leave_time;
-        $leave= $leave<$arrival ? $leave+24 : $leave;
-        
-            // return $depworkingHour;
-        return ($leave-$arrival) * $totalWorkingHours ;
-       
+        $depworkingHour = Department::where('id', $employee->department_id)->first();
+        $arrival = $depworkingHour->const_Arrival_time;
+        $leave = $depworkingHour->const_Leave_time;
+        $leave = $leave < $arrival ? $leave + 24 : $leave;
+
+        // return $depworkingHour;
+        return ($leave - $arrival) * $totalWorkingHours;
     }
 
-    public function getTotalActualHours($id){
-
-        $Historys = History::where('employee_id',$id)->whereNotNull('End_time')->get();
+    public function getTotalActualHours($id)
+    {   
+        $Historys = History::where('employee_id', $id)->whereNotNull('End_time')->count();
+        if($Historys ==0){
+;            return 0;}
+        $Historys = History::where('employee_id', $id)->whereNotNull('End_time')->get();
 
         $sum = 0;
+
+        // if(isEmpty($Historys))
+        //     return 0;
         // $start = array();
         // $end = array();
 
-        
-        foreach($Historys as $History){
-            $diff= $this->getDiffHours($History->Start_time,$History->End_time);
-            // $list_start= array_push($start,$History->Start_time);
-            // $History->End_time= $History->End_time<$History->Start_time ? $History->End_time+24 : $History->End_time;
-            // $list_end = array_push($end,$History->End_time - $History->Start_time);
-            // $sum = $sum + $History->End_time - $History->Start_time;
-            $sum = $sum + (int)$diff;
 
-            
+        foreach ($Historys as $History) {
+
+            $start_time = $this->formatTimeString($History->Start_time);        
+            echo "Returbed";
+
+            $end_time = $this->formatTimeString($History->End_time);            echo "Returbed";
+
+            $diff = $this->getDiffHours($start_time, $end_time);
+            $sum = $sum + (int)$diff;
         }
         return $sum;
-     
+
         // return $sum;
     }
 
-    public function payroll(Request $request){
+    public function payroll(Request $request)
+    {
 
         $empOfDepartments = DB::table('departments')
-                ->join('employees','employees.department_id', '=' ,'departments.id')
-                ->select('departments.*','employees.*','employees.id as employee_id')
-                ->get();
 
-                foreach($empOfDepartments as $empOfDepartment){
+            ->join('employees', 'employees.department_id', '=', 'departments.id')
+            ->select('departments.*', 'employees.*', 'employees.id as employee_id')
+            ->get();
 
-                        $totalwork= $this->getTotalWorkingHours($empOfDepartment->employee_id);
-                        $actualwork = $this->getTotalActualHours($empOfDepartment->employee_id);
+        foreach ($empOfDepartments as $empOfDepartment) {
 
-                        $Histories= History::where('employee_id',$empOfDepartment->employee_id)->get();
-                        $overTime = 0;
-                        $delay = 0;
-                        
+            $totalwork = $this->getTotalWorkingHours($empOfDepartment->employee_id);
+            $actualwork = $this->getTotalActualHours($empOfDepartment->employee_id);
 
-                        $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time: $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time+24;
-                          
-                        foreach($Histories as $History){
-                                if($History->Start_time > $empOfDepartment->const_Arrival_time ) {
-                                        $delay = $delay + ($History->Start_time - $empOfDepartment->const_Arrival_time );
-                                }
-                                if($History->End_time < $empOfDepartment->const_Leave_time )
-                                $delay = $delay- ($History->End_time - $empOfDepartment->const_Leave_time);
+            $Histories = History::where('employee_id', $empOfDepartment->employee_id)->whereNotNull('End_time')->get();
+            $overTime = 0;
+            $delay = 0;
 
-                                $diffShift = $History->End_time <$History->Start_time ? $History->End_time+24 - $History->Start_time : $History->End_time - $History->Start_time ;
 
-                                if($diffShift>$diffConstDep){
-                                        $overTime+=$diffShift-$diffConstDep;
-                                    }
-                                }
-                                
-                                $empOfDepartment->totalwork=$totalwork;
-                                $empOfDepartment->actualwork=$actualwork;
-                                $empOfDepartment->delay=$delay;
-                                $empOfDepartment->overTime=$overTime;
-                       
+            $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time : $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time + 24;
+
+            foreach ($Histories as $History) {
+                echo "HERE";
+                echo $History->Start_time;
+
+                $start_time = $this->formatTimeString($History->Start_time);
+                echo "HERE";
+                echo $History->End_time;
+                $end_time = $this->formatTimeString($History->End_time);
+                echo "HERE";
+
+
+                if ($start_time['hour'] > $empOfDepartment->const_Arrival_time) {
+                    $delay = $delay + ($start_time['hour'] - $empOfDepartment->const_Arrival_time);
                 }
+                if ($end_time['hour'] < $empOfDepartment->const_Leave_time)
+                    $delay = $delay - ($end_time['hour'] - $empOfDepartment->const_Leave_time);
 
-                return $empOfDepartments;
-}
+                $diffShift = $end_time['hour'] < $start_time['hour'] ? $end_time['hour'] + 24 - $start_time['hour'] : $end_time['hour'] - $start_time['hour'];
+
+                if ($diffShift > $diffConstDep) {
+                    $overTime += $diffShift - $diffConstDep;
+                }
+            }
+
+            $empOfDepartment->totalwork = $totalwork;
+            $empOfDepartment->actualwork = $actualwork;
+            $empOfDepartment->delay = $delay;
+            $empOfDepartment->overTime = $overTime;
+        }
+
+        return $empOfDepartments;
+    }
 
 
 
