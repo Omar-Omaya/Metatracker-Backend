@@ -81,9 +81,8 @@ class StatisticsHourController extends Controller
         foreach ($Historys as $History) {
 
             $start_time = $this->formatTimeString($History->Start_time);        
-            echo "Returbed";
 
-            $end_time = $this->formatTimeString($History->End_time);            echo "Returbed";
+            $end_time = $this->formatTimeString($History->End_time);          
 
             $diff = $this->getDiffHours($start_time, $end_time);
             $sum = $sum + (int)$diff;
@@ -115,14 +114,9 @@ class StatisticsHourController extends Controller
             $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time : $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time + 24;
 
             foreach ($Histories as $History) {
-                echo "HERE";
-                echo $History->Start_time;
 
                 $start_time = $this->formatTimeString($History->Start_time);
-                echo "HERE";
-                echo $History->End_time;
                 $end_time = $this->formatTimeString($History->End_time);
-                echo "HERE";
 
 
                 if ($start_time['hour'] > $empOfDepartment->const_Arrival_time) {
