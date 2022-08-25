@@ -25,6 +25,8 @@ class StatisticsHourController extends Controller
     private function formatTimeString($time)
     {
         $time = explode(":", $time);
+        if(count($time) ==1)
+            $time[1]=0;
         // echo $time[1];
         $time= [
             'hour' => (int)$time[0],
