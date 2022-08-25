@@ -41,7 +41,7 @@ class StatisticsHourController extends Controller
 
     public function getTotalActualHours($id){
 
-        $Historys = History::where('employee_id',$id)->get();
+        $Historys = History::where('employee_id',$id)->whereNotNull('End_time')->get();
 
         $sum = 0;
         $start = array();
