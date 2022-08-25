@@ -16,6 +16,7 @@ class AuthController extends Controller
 {
     // use HasApiTokens;
     use HasApiTokens;
+    
     public function register(Request $request) {
         $fields = $request->validate([
             'name' => 'required|string',

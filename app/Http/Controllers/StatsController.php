@@ -19,6 +19,7 @@ class StatsController extends Controller
         $absence = History::where('is_absence','=',true)->where('employee_id',$id)->where('company_id', $admin_id->company_id)->whereMonth('created_at' , $month)->count();
         $total = 0;
         $days = 0;
+        
         foreach($histories as $history){
             $start= $history->created_at;
             $end= $history->updated_at;

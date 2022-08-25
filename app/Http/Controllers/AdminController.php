@@ -13,8 +13,6 @@ class AdminController extends Controller
 
     public function register(Request $request) {
         $fields = $request->validate([
-
-
             'company_id' => 'required',
             'name' => 'required|string',
             'email' => 'required|string|unique:admins,email',
