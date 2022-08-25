@@ -8,6 +8,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\History;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -18,6 +19,15 @@ class StatisticsHourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function getDiffHours($start , $end){
+         $start = new Carbon('2018-05-12 '.$start.':00');
+         $end = new Carbon('2018-05-12 '.$end.':00');
+
+         return $start->diff($end)->format('%H');
+
+     }
+
     public function getTotalWorkingHours($id)
     {
         $employee =  Employee::where('id',$id)->first();
@@ -44,14 +54,18 @@ class StatisticsHourController extends Controller
         $Historys = History::where('employee_id',$id)->whereNotNull('End_time')->get();
 
         $sum = 0;
-        $start = array();
-        $end = array();
+        // $start = array();
+        // $end = array();
 
+        
         foreach($Historys as $History){
-            $list_start= array_push($start,$History->Start_time);
-            $History->End_time= $History->End_time<$History->Start_time ? $History->End_time+24 : $History->End_time;
-            $list_end = array_push($end,$History->End_time - $History->Start_time);
-            $sum = $sum + $History->End_time - $History->Start_time;
+            $diff= $this->getDiffHours($History->Start_time,$History->End_time);
+            // $list_start= array_push($start,$History->Start_time);
+            // $History->End_time= $History->End_time<$History->Start_time ? $History->End_time+24 : $History->End_time;
+            // $list_end = array_push($end,$History->End_time - $History->Start_time);
+            // $sum = $sum + $History->End_time - $History->Start_time;
+            $sum = $sum + (int)$diff;
+
             
         }
         return $sum;
