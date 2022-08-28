@@ -104,7 +104,7 @@ class MessageController extends Controller
     }
 
     public function getMessages(){
-        $msgs = MessageDepartment::with('announcement')->where('employee_id', '=', 1)->get();
+        $msgs = MessageDepartment::with('announcement')->where('message_id', '=', 1)->get();
         return $msgs;
     }
 
