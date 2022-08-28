@@ -99,6 +99,15 @@ class MessageController extends Controller
 
     }
 
+    public function getMessages(Request $request, $id){
+        $msgemp = MessageEmployee::get();
+        return $msgemp;
+
+
+        
+
+    }
+
     
     // public function getMessage(){
     //     // $category = Message::find([3, 4]);
