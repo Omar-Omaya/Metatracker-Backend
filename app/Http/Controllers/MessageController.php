@@ -99,12 +99,21 @@ class MessageController extends Controller
     }
 
     public function getMessageEmp(Request $request, $id){
-        $msgemp = MessageEmployee::get();
+        $msgemp = DB::table('employee_message')
+        ->join('messages','messages.id', '=' ,'employee_message.message_id')
+        ->where('employee_message.employee_id' , $id)
+        ->get();
         return $msgemp;
     }
 
-    public function getMessages(){
-        $msgs = MessageDepartment::with('announcement')->where('message_id', '=', 1)->get();
+    public function getMessages(Request $request, $id){
+
+      
+        $msgs = DB::table('department_message')
+        ->join('messages','messages.id', '=' ,'department_message.message_id')
+        ->where('department_id', $id)
+        ->select('department_message.*','messages.*')
+        ->get();
         return $msgs;
     }
 
