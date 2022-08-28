@@ -107,13 +107,12 @@ Route::post('/msg', [MessageController::class , 'store']);
 Route::get('/msg', [MessageController::class , 'index']);
 
 Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
-Route::get('/getmsgemp/{id}', [MessageController::class , 'getMessages']);
+Route::get('/getmsgemp/{id}', [MessageController::class , 'getMessageEmp']);
 
-Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
 
 Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
-Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
+Route::get('/getmegs', [MessageController::class , 'getMessages']);
 
 
 

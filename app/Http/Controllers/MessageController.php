@@ -9,8 +9,7 @@ use App\Models\Employee;
 use App\Models\Admin;
 use App\Models\Department;
 use App\Models\Announcement;
-
-
+use App\Models\MessageDepartment;
 use App\Models\MessageEmployee;
 use Illuminate\Support\Facades\DB;
 
@@ -99,13 +98,14 @@ class MessageController extends Controller
 
     }
 
-    public function getMessages(Request $request, $id){
+    public function getMessageEmp(Request $request, $id){
         $msgemp = MessageEmployee::get();
         return $msgemp;
+    }
 
-
-        
-
+    public function getMessages(){
+        $msgs = MessageDepartment::with('announcement')->where('employee_id', '=', 1)->get();
+        return $msgs;
     }
 
     
