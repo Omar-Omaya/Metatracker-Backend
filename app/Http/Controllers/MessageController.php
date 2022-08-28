@@ -109,12 +109,22 @@ class MessageController extends Controller
     public function getMessages(Request $request, $id){
 
       
-        $msgs = DB::table('department_message')
+        $msgdep = DB::table('department_message')
         ->join('messages','messages.id', '=' ,'department_message.message_id')
-        ->where('department_id', $id)
-        ->select('department_message.*','messages.*')
+        ->where('department_message.department_id', $id)
         ->get();
-        return $msgs;
+
+        $announc = DB::table('announcements')
+        ->join('messages','messages.id', '=' ,'announcements.message_id')
+        ->select('announcements.*', 'messages.*')
+        ->get();
+
+        $response = [
+            'msgdep' => $msgdep,
+            'announc'=> $announc,
+        ];
+
+        return response()->json($response);
     }
 
     
