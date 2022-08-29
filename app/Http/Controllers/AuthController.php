@@ -140,8 +140,8 @@ class AuthController extends Controller
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
         $employee= Employee::where('email',$fields['email'])->first();
-        return $employee->department_id;
-        $department= Department::where('id',$employee->department_id)->first();
+        
+        $department= Department::where('id',$employee->department_id)->get();
         $object= [
             'employee' =>$employee,
             'department' =>$department
