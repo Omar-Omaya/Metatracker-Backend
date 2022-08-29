@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Employee;
-use App\Models\department;
+use App\Models\Department;
 
 
 use App\Http\Controllers\Controller;
@@ -140,6 +140,7 @@ class AuthController extends Controller
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
         $employee= Employee::where('email',$fields['email'])->first();
+        return $employee->department_id;
         $department= Department::where('id',$employee->department_id)->first();
         $object= [
             'employee' =>$employee,

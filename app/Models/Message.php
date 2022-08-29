@@ -13,7 +13,7 @@ class Message extends Model
 
     protected $fillable = [
         // 'company_id',
-        // 'admin_id',
+        'admin_id',
         // 'department_id',
         // 'employee_id',
         'text'
@@ -34,6 +34,11 @@ class Message extends Model
     {
         return $this->hasMany(Announcement::class);
         
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
     }
 
 

@@ -112,6 +112,8 @@ class MessageController extends Controller
         $msgdep = DB::table('department_message')
         ->join('messages','messages.id', '=' ,'department_message.message_id')
         ->where('department_message.department_id', $id)
+        ->join('admins','admins.id','=','messages.admin_id')
+        ->select('department_message.*','messages.*','admins.name')
         ->get();
 
         $announc = DB::table('announcements')
