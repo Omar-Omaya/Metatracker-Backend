@@ -45,7 +45,7 @@ Route::post('/login', [AuthController::class , 'login']);
 // Public Routes Admin Authantication
 
 
-Route::post('/admin-register', [AdminController::class , 'register']);
+Route::post('/admin/register', [AdminController::class , 'register']);
 
 Route::post('/admin/login', [AdminController::class , 'login']);
 
