@@ -79,7 +79,7 @@ class HistoryController extends Controller
     public function getAbsenceDay($id)
     {
 
-        return History::where('is_absence','=',true)->where('employee_id',$id)->count();
+        return ["count" => History::where('is_absence','=',true)->where('employee_id',$id)->count()];
     }
 
     public function getAbsenceToday()
@@ -96,7 +96,7 @@ class HistoryController extends Controller
 
     public function getAttendanceToday()
     {
-        return History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
+        return ["count" => History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count()];
     }
 
     public function checkInToday(Request $request)
