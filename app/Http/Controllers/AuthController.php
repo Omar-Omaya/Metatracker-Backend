@@ -141,7 +141,7 @@ class AuthController extends Controller
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
         $employee= Employee::where('email',$fields['email'])->first();
         
-        $department= Department::where('id',$employee->department_id)->get();
+        $department= Department::where('id',$employee->department_id)->first();
         $object= [
             'employee' =>$employee,
             'department' =>$department
