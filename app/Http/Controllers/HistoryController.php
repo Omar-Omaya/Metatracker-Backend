@@ -155,6 +155,8 @@ class HistoryController extends Controller
     {
         $fields = $request->validate([
             'employee_id' => 'required',
+            // 'lat' => 'required',
+            // 'lng' => 'required'
         ]);
 
         $content = $request->all();
@@ -176,6 +178,8 @@ class HistoryController extends Controller
 
         $history->update([
             'employee_id' => $fields['employee_id'],
+            // 'lat' => $fields['lat'],
+            // 'lng' => $fields['lng'],
             'End_time' => $current_time
             ]
 
@@ -190,6 +194,23 @@ class HistoryController extends Controller
         // }else{
         //     return response([ "Employee is out of zone"], 401);
         // }
+    }
+
+    public function updateLatLong(Request $request, $id){
+        $fields = $request->validate([
+            'employee_id' => 'required',
+            'lat' => 'required',
+            'lng' => 'required'
+        ]);
+
+        $history = History::where('employee_id',$id)->first();
+
+        return $history->update([
+            'employee_id' => $fields['employee_id'],
+            'lat' => $fields['lat'],
+            'lng' => $fields['lng']
+            ]
+        );
     }
 
     public function destroy($id)

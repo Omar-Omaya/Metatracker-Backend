@@ -108,9 +108,8 @@ class MessageController extends Controller
 
     public function getMessages(Request $request, $id){
 
-      
         $msgdep = DB::table('department_message')
-        ->join('messages','messages.id', '=' ,'department_message.message_id')
+        ->join('messages','messages.id', '=' ,'department_message.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ')
         ->where('department_message.department_id', $id)
         ->join('admins','admins.id','=','messages.admin_id')
         ->select('department_message.*','messages.*','admins.name')

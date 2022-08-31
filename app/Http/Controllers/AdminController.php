@@ -45,7 +45,6 @@ class AdminController extends Controller
         $token= substr($token , -40,40);
         Admin::where('id', $admin->id)->update(['api_admin_token' => $token]);
 
-
         $response = [
             'admin' => $admin,
             'token' => $token

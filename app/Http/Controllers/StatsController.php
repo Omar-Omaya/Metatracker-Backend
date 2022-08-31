@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\History;
 use App\Models\Admin;
+use App\Models\Employee;
+
 
 use Illuminate\Http\Request;
 
 class StatsController extends Controller
 {
+
+    public function inZoneLate(){
+        return History::where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+
+
+    }
 
     public function totalHour($id , $month){
         $admin_id =auth('sanctum')->user()->id;
