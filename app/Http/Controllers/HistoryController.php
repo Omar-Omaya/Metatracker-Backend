@@ -198,7 +198,7 @@ class HistoryController extends Controller
 
     public function updateLatLong(Request $request, $id){
         $fields = $request->validate([
-            'employee_id' => 'required',
+            // 'employee_id' => 'required',
             'lat' => 'required',
             'lng' => 'required'
         ]);
@@ -206,7 +206,7 @@ class HistoryController extends Controller
         $history = History::where('employee_id',$id)->first();
 
         return $history->update([
-            'employee_id' => $fields['employee_id'],
+            // 'employee_id' => $fields['employee_id'],
             'lat' => $fields['lat'],
             'lng' => $fields['lng']
             ]

@@ -76,7 +76,7 @@ Route::get('/check_in_today', [HistoryController::class , 'checkInToday']);
 Route::get('/histories/{id}', [HistoryController::class , 'show']);
 Route::post('/histories', [HistoryController::class , 'store']);
 Route::put('/histories/{id}', [HistoryController::class , 'update']);
-Route::put('/latlong/{id}', [HistoryController::class , 'updateLatLong']);
+Route::put('/latlng/{id}', [HistoryController::class , 'updateLatLong']);
 
 
 Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
