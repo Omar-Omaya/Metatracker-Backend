@@ -72,6 +72,9 @@ Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
 
 Route::get('/histories', [HistoryController::class , 'index']);
 Route::get('/check_in_today', [HistoryController::class , 'checkInToday']);
+Route::get('/latlngemp/{id}', [HistoryController::class , 'latlngEmp']);
+
+
 
 Route::get('/histories/{id}', [HistoryController::class , 'show']);
 Route::post('/histories', [HistoryController::class , 'store']);
