@@ -103,8 +103,16 @@ class MessageController extends Controller
         ->join('messages','messages.id', '=' ,'employee_message.message_id')
         ->where('employee_message.employee_id' , $id)
         ->get();
-        return $msgemp;
+
+        $response = [
+            'message'=>$msgemp
+            
+        ];
+
+        return response($response, 201);
     }
+
+      
 
     public function getMessages(Request $request, $id){
 

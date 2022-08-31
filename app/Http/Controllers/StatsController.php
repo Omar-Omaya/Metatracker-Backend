@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\History;
 use App\Models\Admin;
 use App\Models\Employee;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 
 use Illuminate\Http\Request;
@@ -14,7 +17,14 @@ class StatsController extends Controller
 {
 
     public function inZoneLate(Request $request, $id){
-        return History::where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+        // $empofdepartment = DB::table('departments')
+        //     ->join('employees','employees.department_id', '=' ,'departments.id')
+        //     ->where('employee_id', $id)
+        //     ->select('departments.const_Arrival_time*', 'employees.department_id','employees.id')
+        //     ->get();
+        //     return $empofdepartment;
+        $department
+        $history = History::where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
 
 
     }
