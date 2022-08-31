@@ -102,7 +102,7 @@ class MessageController extends Controller
         $msgemp = DB::table('employee_message')
         ->join('messages','messages.id', '=' ,'employee_message.message_id')
         ->where('employee_message.employee_id' , $id)
-        ->get();
+        ->first();
 
         $response = [
             'message'=>$msgemp
