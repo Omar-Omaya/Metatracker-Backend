@@ -203,7 +203,7 @@ class HistoryController extends Controller
             'lng' => 'required'
         ]);
 
-        $history = History::where('employee_id',$id)->first();
+        $history = History::where('employee_id',$id)->get()->last();
 
         return $history->update([
             // 'employee_id' => $fields['employee_id'],
