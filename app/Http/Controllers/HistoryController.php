@@ -198,19 +198,24 @@ class HistoryController extends Controller
 
     public function updateLatLong(Request $request, $id){
         $fields = $request->validate([
-            // 'employee_id' => 'required',
+        
             'lat' => 'required',
             'lng' => 'required'
         ]);
 
         $history = History::where('employee_id',$id)->get()->last();
 
-        return $history->update([
-            // 'employee_id' => $fields['employee_id'],
+        $update = $history->update([
+            
             'lat' => $fields['lat'],
             'lng' => $fields['lng']
-            ]
-        );
+        ]);
+
+        $response =[
+           'update' => $update
+        ];
+
+        return response($response,201);
     }
 
     public function destroy($id)

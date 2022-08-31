@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class StatsController extends Controller
 {
 
-    public function inZoneLate(){
+    public function inZoneLate(Request $request, $id){
         return History::where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
 
 
