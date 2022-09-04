@@ -27,8 +27,8 @@ class StatsController extends Controller
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('histories','histories.employee_id','=','employees.id')
             ->select('departments.const_Arrival_time')
-            ->select('histories.Start_time')
-            ->whereDate('created_at',Carbon::today())
+            ->select('histories.*')
+            ->whereDate('histories.created_at',Carbon::today())
             ->where('departments.const_Arrival_time','>','histories.Start_time')
             ->get();
 
