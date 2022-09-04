@@ -29,7 +29,7 @@ class StatsController extends Controller
             ->select('departments.const_Arrival_time')
             ->select('histories.*')
             ->whereDate('histories.created_at',Carbon::today())
-            ->where('departments.const_Arrival_time','>','histories.Start_time')
+            ->where('departments.const_Arrival_time','<','histories.Start_time')
             ->get();
 
             return $const_Arrival_time->count();
