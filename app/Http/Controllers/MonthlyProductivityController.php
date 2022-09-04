@@ -9,7 +9,7 @@ use App\Models\History;
 use App\Models\MonthlyProductivity;
 use Illuminate\Http\Request;
 
-class MonthlyProductivtyController extends Controller
+class MonthlyProductivityController extends Controller
 {
     public function transferSalary(Request $request){
 

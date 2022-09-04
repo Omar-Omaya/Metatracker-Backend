@@ -11,6 +11,9 @@ use App\Http\Controllers\StatsController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\WeekEndController;
 use App\Http\Controllers\StatisticsHourController;
+use App\Http\Controllers\MonthlyProductivityController;
+
+
 
 
 
@@ -149,7 +152,7 @@ Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/payroll', [StatisticsHourController::class , 'payroll']);
 
 
-Route::Post('/transfersalary', [MonthlyProductivtyController::class , 'transferSalary']);
+Route::Post('/transfersalary', [MonthlyProductivityController::class , 'transferSalary']);
 
 
 
