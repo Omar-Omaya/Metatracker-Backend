@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\History;
 use App\Models\Admin;
+use App\Models\Department;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +24,10 @@ class StatsController extends Controller
         //     ->select('departments.const_Arrival_time*', 'employees.department_id','employees.id')
         //     ->get();
         //     return $empofdepartment;
-        $department
-        $history = History::where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count();
+        // $department
+        $start_time = History::select('Start_time')->where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
+        $const_start_time = Department::select('const_Arrival_time')->where('employee_id',$id)->get();
+        return $const_start_time;
 
 
     }

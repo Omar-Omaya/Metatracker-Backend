@@ -106,7 +106,6 @@ class MessageController extends Controller
 
         $response = [
             'message'=>$msgemp
-            
         ];
 
         return response($response, 201);
