@@ -23,16 +23,24 @@ class StatsController extends Controller
         
       
         // $start_time = History::select('Start_time')->where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->first();
-        $const_Arrival_time = DB::table('departments')
+        $empofdepofhistories = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('histories','histories.employee_id','=','employees.id')
             ->select('departments.const_Arrival_time')
             ->select('histories.*')
             ->whereDate('histories.created_at',Carbon::today())
-            ->where('departments.const_Arrival_time','<','histories.Start_time')
+            // ->where('departments.const_Arrival_time','<','histories.Start_time')
             ->get();
+            $count= 0;
+            foreach($empofdepofhistories as $x){
+                $start_hours= intval(explode(":",$x->Start_time)[0]);
+                if($start_hours > $x->const_Arrival_time)
+                    $count++;
 
-            return $const_Arrival_time->count();
+            }
+            return $count;
+
+            return $empofdepofhis->count();
 
            
 
