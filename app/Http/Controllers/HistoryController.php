@@ -108,7 +108,7 @@ class HistoryController extends Controller
 
     public function latlngEmp(Request $request,$id)
     {
-        $location = History::select('lat','lng')->where('employee_id',$id)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
+        $location = History::select('lat','lng','Start_time','End_time')->where('employee_id',$id)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
 
         return $location;
     }

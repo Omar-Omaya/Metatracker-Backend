@@ -18,16 +18,24 @@ class StatsController extends Controller
 {
 
     public function inZoneLate(Request $request, $id){
-        // $empofdepartment = DB::table('departments')
-        //     ->join('employees','employees.department_id', '=' ,'departments.id')
-        //     ->where('employee_id', $id)
-        //     ->select('departments.const_Arrival_time*', 'employees.department_id','employees.id')
-        //     ->get();
-        //     return $empofdepartment;
+        
         // $department
-        $start_time = History::select('Start_time')->where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
-        $const_start_time = Department::select('const_Arrival_time')->where('employee_id',$id)->get();
-        return $const_start_time;
+        $start_time = History::select('Start_time')->where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->first();
+        // $const_start_time = Department::select('const_Arrival_time')->where('employee_id',$id)->get();
+        $const_Arrival_time = DB::table('departments')
+            ->join('employees','employees.department_id', '=' ,'departments.id')
+            ->where('employees.id', $id)
+            ->select('departments.const_Arrival_time')
+            ->first();
+
+            if(!$const_Arrival_time==$start_time){
+                return"alaa";
+            }else{
+                return "ahmed";
+            }
+
+            // return $empofdepartment;
+        // return $const_start_time;
 
 
     }
