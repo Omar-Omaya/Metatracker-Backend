@@ -149,6 +149,12 @@ Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/payroll', [StatisticsHourController::class , 'payroll']);
 
 
+Route::Post('/transfersalary', [MonthlyProductivtyController::class , 'transferSalary']);
+
+
+
+
+
 // public Route Holiday
 
 Route::post('/store-holi', [HolidayController::class , 'store']);

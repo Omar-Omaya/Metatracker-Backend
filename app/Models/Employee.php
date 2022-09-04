@@ -80,6 +80,11 @@ class Employee extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function productivity()
+    {
+        return $this->hasMany(MonthlyProductivity::class);
+    }
+
 
 
     
