@@ -106,7 +106,7 @@ Route::get('/calcOutEmp/{id}', [StatsController::class , 'calcgetOutOfZoneMonthP
 Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
 
 // dashboard
-Route::get('/inZoneLate/{id}', [StatsController::class , 'inZoneLate']);
+Route::get('/inZoneLate', [StatsController::class , 'inZoneLate']);
 Route::get('/countoutzone', [StatsController::class , 'countoutZone']);
 
 
