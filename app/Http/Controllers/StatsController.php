@@ -26,11 +26,9 @@ class StatsController extends Controller
         $empofdepofhistories = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('histories','histories.employee_id','=','employees.id')
-            ->select('departments.const_Arrival_time')
-            ->select('histories.*')
             ->whereDate('histories.created_at',Carbon::today())
-            // ->where('departments.const_Arrival_time','<','histories.Start_time')
             ->get();
+                        // ->where('departments.const_Arrival_time','<','histories.Start_time')
             $count= 0;
             foreach($empofdepofhistories as $x){
                 $start_hours= intval(explode(":",$x->Start_time)[0]);
@@ -40,7 +38,7 @@ class StatsController extends Controller
             }
             return $count;
 
-            return $empofdepofhis->count();
+            // return $empofdepofhis->count();
 
            
 
