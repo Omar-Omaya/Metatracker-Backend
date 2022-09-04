@@ -104,8 +104,8 @@ class StatisticsHourController extends Controller
             $actualwork = $this->getTotalActualHours($empOfDepartment->employee_id);
 
             $Histories = History::where('employee_id', $empOfDepartment->employee_id)->whereNotNull('End_time')->get();
-            $absence = Absence::get();
-            $conutabsence = Absence::where('employee_id',$absence->employee_id)->where('pending' ,0)->count();
+            // $absence = Absence::get();
+            $conutabsence = Absence::where('employee_id',$empOfDepartment->employee_id)->where('pending' ,0)->get();
             $overTime = 0;
 
             $delay = 0;
