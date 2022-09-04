@@ -7,6 +7,7 @@ use App\Models\History;
 use App\Models\Admin;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Holiday;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -16,26 +17,28 @@ use Illuminate\Http\Request;
 
 class StatsController extends Controller
 {
+// dashboard
 
     public function inZoneLate(Request $request, $id){
         
-        // $department
+      
         $start_time = History::select('Start_time')->where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->first();
-        // $const_start_time = Department::select('const_Arrival_time')->where('employee_id',$id)->get();
         $const_Arrival_time = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->where('employees.id', $id)
             ->select('departments.const_Arrival_time')
             ->first();
 
-            if(!$const_Arrival_time==$start_time){
-                return"alaa";
+            if($const_Arrival_time!=$start_time){
+                return History::
             }else{
-                return "ahmed";
+                return "";
             }
 
-            // return $empofdepartment;
-        // return $const_start_time;
+    }
+
+    public function countoutZone(Request $request){
+        return Holiday::whereDate('created_at',Carbon::today())->count();
 
 
     }
