@@ -172,7 +172,7 @@ class HistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $fields = $request->validate([
             'employee_id' => 'required',
@@ -193,7 +193,7 @@ class HistoryController extends Controller
 
         $content['End_time'] = $current_time;
 
-        $history = History::where('employee_id',$id)->get()->last();
+        $history = History::where('employee_id',$fields['employee_id'])->get()->last();
 
         $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
 
@@ -224,7 +224,7 @@ class HistoryController extends Controller
         // }
     }
 
-    public function updateLatLong(Request $request, $id){
+    public function updateLatLong(Request $request){
         $fields = $request->validate([
             'employee_id'=>'required',
             'lat' => 'required',
