@@ -57,10 +57,10 @@ class DepartmentController extends Controller
     }
 
     public function readAllDepartment(){
-
-        $admin_id =auth('sanctum')->user()->id;
-        $adminData = Admin::where('id', $admin_id)->first();
-        return Department::where('company_id',$adminData->company_id)->get();
+       
+        $company_id=auth('sanctum')->user()->company_id;
+       
+        return Department::where('company_id',$company_id)->get();
     }
 
     public function empOfDepartments(){
