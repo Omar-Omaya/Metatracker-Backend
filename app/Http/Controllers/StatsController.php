@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absence;
 use App\Models\History;
 use App\Models\Admin;
 use App\Models\Department;
@@ -39,14 +40,16 @@ class StatsController extends Controller
             return $count;
 
             // return $empofdepofhis->count();
+    }
 
-           
+    public function outZoneNoexcuse(Request $request){
+        $absence= Absence::where('pending', 1)->whereDate('created_at',Carbon::today())->get();
+        return $absence->count();
 
     }
 
-    public function countoutZone(Request $request){
+    public function outZoneholiday(Request $request){
         return Holiday::whereDate('created_at',Carbon::today())->count();
-
 
     }
 
