@@ -49,7 +49,8 @@ class StatsController extends Controller
     }
 
     public function outZoneholiday(Request $request){
-        return Holiday::whereDate('created_at',Carbon::today())->count();
+        $holiday =Holiday::whereDate('created_at',Carbon::today())->get();
+        return $holiday->count();
 
     }
 
