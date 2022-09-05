@@ -160,12 +160,11 @@ class AuthController extends Controller
             }
             Employee::where('id', $user->id)->update(['Is_Here' => true]);
 
-            $response = [ 'key'=>
-            [
+            $response= [
                 // 'user' =>$user,
                 'token' => $token,
                 'employee'=> $employee,
-                'department'=> $department]
+                'department'=> $department
             ];
             return response()->json($response);
         }else{

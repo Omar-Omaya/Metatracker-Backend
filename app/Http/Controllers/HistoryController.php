@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\History;
 use App\Models\Department;
+use Salman\GeoFence\Service\GeoFenceCalculator;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -56,15 +57,22 @@ class HistoryController extends Controller
 
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
         //  return History::create($content);
+        $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
 
-        return History::create([
-            'employee_id' => $fields['employee_id'],
-            'Start_time' => $current_time,
-            'Out_of_zone' => 0,
-            'lat' => $fields['lat'],
-            'lng' => $fields['lng']
+        if($is_inzone){
 
-        ]);
+            History::create([
+                'employee_id' => $fields['employee_id'],
+                'Start_time' => $current_time,
+                'Out_of_zone' => 0,
+                'lat' => $fields['lat'],
+                'lng' => $fields['lng']
+    
+            ]);
+        
+        }
+        return ["is_created" =>$is_inzone ? "true": "false"];
+
 
             // return $test;
         }
@@ -73,6 +81,12 @@ class HistoryController extends Controller
             History::create($content);
             return response([ "History exists previous row deleted"], 201);
         }
+
+        // if($history->Out_of_zone==true){
+        //     return response([ "Employee is in zone"], 201);
+        // }else{
+        //     return response([ "Employee is out of zone"], 401);
+        // }
 
     }
 
@@ -162,8 +176,8 @@ class HistoryController extends Controller
     {
         $fields = $request->validate([
             'employee_id' => 'required',
-            // 'lat' => 'required',
-            // 'lng' => 'required'
+            'lat' => 'required',
+            'lng' => 'required'
         ]);
 
         $content = $request->all();
@@ -181,18 +195,25 @@ class HistoryController extends Controller
 
         $history = History::where('employee_id',$id)->get()->last();
 
+        $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
+
+        
+
 
 
         $history->update([
             'employee_id' => $fields['employee_id'],
-            // 'lat' => $fields['lat'],
-            // 'lng' => $fields['lng'],
-            'End_time' => $current_time
+            'lat' => $fields['lat'],
+            'lng' => $fields['lng'],
+            'End_time' => $current_time,
+            'Out_of_zone' => $is_inzone
             ]
-
         );
 
-        return $content;
+        return ["is_inzone" =>$is_inzone ? "true": "false"];
+
+
+        // return $content;
 
 
 
@@ -205,21 +226,26 @@ class HistoryController extends Controller
 
     public function updateLatLong(Request $request, $id){
         $fields = $request->validate([
-        
+            'employee_id'=>'required',
             'lat' => 'required',
             'lng' => 'required'
         ]);
 
-        $history = History::where('employee_id',$id)->get()->last();
+        $history = History::where('employee_id',$fields['employee_id'])->get()->last();
 
+        $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
         $update = $history->update([
             
             'lat' => $fields['lat'],
-            'lng' => $fields['lng']
+            'lng' => $fields['lng'],
+            'Out_of_zone' =>$is_inzone
         ]);
 
+
+
         $response =[
-           'update' => $update
+           'update' => $is_inzone ? "true": "false"
+
         ];
 
         return response($response,201);
@@ -233,5 +259,14 @@ class HistoryController extends Controller
     public function getCurrentLocation(Request $request,$id){
         $history = History::where('employee_id',$id)->whereDate('created_at',Carbon::today())->first();
         return $history;
+    }
+
+    private function distance($employee_id, $lat, $lng)
+    {
+            $d_calculator = new GeoFenceCalculator();
+            $department = Department::find(Employee::find($employee_id)->department_id);
+
+            $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $lat, $lng);
+            return $distance <$department->radius;
     }
 }
