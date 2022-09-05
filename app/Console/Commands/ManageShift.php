@@ -68,19 +68,19 @@ class ManageShift extends Command
         $current_time= $this->getCurrentTime();
         $timeInMinutes= $current_time->format('i');
         $timeInHour= $current_time->format('H');
-
-        // if($timeInMinutes == 00){
+        // Log::info($timeInHour);
+        if($timeInMinutes == 0){
             $nameToday = strtolower($current_time->format('l'));
             
             $empofdepartments = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('week_ends','employees.weekend_id', '=','week_ends.id' )
             ->select('employees.*','employees.id as empID','week_ends.'.$nameToday." as day")
-            ->where('const_Arrival_time',13)
+            ->where('const_Arrival_time',$timeInHour)
             ->get();
 
             $today="20".$current_time->format('y-m-d');
-            Log::info($empofdepartments);
+            // Log::info($empofdepartments);
             foreach($empofdepartments as $empofdepartment){
                 if($empofdepartment->day == 1 ){
                     $this->updatePaidEmployee($empofdepartment->empID);
@@ -106,19 +106,19 @@ class ManageShift extends Command
                     ]);  
                 } 
             }
-    // }
+    }
 
     public function manageShiftEnd(){
         $current_time= $this->getCurrentTime();
         $timeInMinutes= $current_time->format('i');
         $timeInHour= $current_time->format('H');
 
-        // if($timeInMinutes == 0){
+        if($timeInMinutes == 0){
             $departmentabsents = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('absences','employees.id', '=','absences.employee_id' )
             ->select('absences.*')
-            ->where('const_Leave_time',12)
+            ->where('const_Leave_time',$timeInHour)
             ->where('pending',1)
             ->get();
 
@@ -130,7 +130,7 @@ class ManageShift extends Command
             }
         }
 
-    // }
+    }
 
 
     public function handle()

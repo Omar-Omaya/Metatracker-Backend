@@ -20,26 +20,24 @@ class StatsController extends Controller
 {
 // dashboard
 
-    public function inZoneLate(Request $request, $id){
+    public function inZoneLate(Request $request){
         
       
-        // $start_time = History::select('Start_time')->where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->first();
         $empofdepofhistories = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('histories','histories.employee_id','=','employees.id')
             ->whereDate('histories.created_at',Carbon::today())
             ->get();
-                        // ->where('departments.const_Arrival_time','<','histories.Start_time')
+
             $count= 0;
-            foreach($empofdepofhistories as $x){
-                $start_hours= intval(explode(":",$x->Start_time)[0]);
-                if($start_hours > $x->const_Arrival_time)
+            foreach($empofdepofhistories as $data){
+                $start_hours= intval(explode(":",$data->Start_time)[0]);
+                if($start_hours > $data->const_Arrival_time)
                     $count++;
 
             }
             return $count;
 
-            // return $empofdepofhis->count();
     }
 
     public function outZoneNoexcuse(Request $request){
