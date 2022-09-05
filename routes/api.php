@@ -82,8 +82,8 @@ Route::get('/latlngemp/{id}', [HistoryController::class , 'latlngEmp']);
 
 Route::get('/histories/{id}', [HistoryController::class , 'show']);
 Route::post('/histories', [HistoryController::class , 'store']);
-Route::put('/histories/{id}', [HistoryController::class , 'update']);
-Route::put('/latlng/{id}', [HistoryController::class , 'updateLatLong']);
+Route::put('/histories', [HistoryController::class , 'update']);
+Route::put('/latlng', [HistoryController::class , 'updateLatLong']);
 
 
 Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
