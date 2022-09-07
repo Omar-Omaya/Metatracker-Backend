@@ -95,7 +95,7 @@ class StatisticsHourController extends Controller
         $empOfDepartments = DB::table('departments')
 
             ->join('employees', 'employees.department_id', '=', 'departments.id')
-            ->where('departments.company_id','=', $company_id)
+            ->where('employees.company_id','=', $company_id)
             ->select('departments.*', 'employees.*', 'employees.id as employee_id')
             ->get();
 
