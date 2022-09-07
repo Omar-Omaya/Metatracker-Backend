@@ -94,13 +94,10 @@ class HistoryController extends Controller
     public function getAbsenceDay($id)
     {
         
-
-
         return ["count" => Absence::where('employee_id',$id)->count()];
     }
 
     public function getAbsenceToday()
-
     {
 
         return ["count" =>Absence::whereDate('created_at',Carbon::today())->count()];
@@ -210,7 +207,7 @@ class HistoryController extends Controller
             'lat' => $fields['lat'],
             'lng' => $fields['lng'],
             'End_time' => $current_time,
-            'Out_of_zone' => $is_inzone
+            'Out_of_zone' => !$is_inzone
             ]
         );
 
@@ -232,7 +229,7 @@ class HistoryController extends Controller
             
             'lat' => $fields['lat'],
             'lng' => $fields['lng'],
-            'Out_of_zone' =>$is_inzone
+            'Out_of_zone' =>!$is_inzone
         ]);
 
 
