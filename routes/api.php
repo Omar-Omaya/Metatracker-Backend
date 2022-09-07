@@ -157,7 +157,7 @@ Route::get('/notification', [NotificationController::class, 'notificationTesting
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);
-Route::get('/payroll', [StatisticsHourController::class , 'payroll']);
+Route::get('/payroll/{company_id}', [StatisticsHourController::class , 'payroll']);
 
 
 Route::Post('/transfersalary', [MonthlyProductivityController::class , 'transferSalary']);
