@@ -264,7 +264,7 @@ class HistoryController extends Controller
             $d_calculator = new GeoFenceCalculator();
             $department = Department::find(Employee::find($employee_id)->department_id);
 
-            $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $lat, $lng);
+            $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $lat, $lng)*1000;
             return $distance <$department->radius;
     }
 }
