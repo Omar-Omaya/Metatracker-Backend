@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absence;
 use App\Models\Employee;
 use App\Models\History;
 use App\Models\Department;
@@ -92,47 +93,53 @@ class HistoryController extends Controller
 
     public function getAbsenceDay($id)
     {
+        
 
-        return ["count" => History::where('is_absence','=',true)->where('employee_id',$id)->count()];
+
+        return ["count" => Absence::where('employee_id',$id)->count()];
     }
 
     public function getAbsenceToday()
+
     {
-        return ["count" =>History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count()];
+
+        return ["count" =>Absence::whereDate('created_at',Carbon::today())->count()];
+ 
+        // return ["count" =>History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count()];
         // return History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count();
     }
 
     public function countAttendanceDay($id)
     {
-        return ["count" => History::where('is_absence','=',false)->where('employee_id',$id)->count()];
+        return ["count" => Absence::where('employee_id',$id)->count()];
         // return History::where('is_absence','=',false)->where('employee_id',$id)->count();
     }
 
     public function getAttendanceToday()
     {
-        return ["count" => History::where('is_absence','=',false)->whereDate('created_at',Carbon::today())->count()];
+        return ["count" => History::whereDate('created_at',Carbon::today())->count()];
     }
 
     public function checkInToday(Request $request)
     {
-        $location = History::with('Employee')->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
+        $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
 
         return $location;
     }
 
     public function latlngEmp(Request $request,$id)
     {
-        $location = History::select('lat','lng','Start_time','End_time')->where('employee_id',$id)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
+        $location = History::select('lat','lng','Start_time','End_time')->where('employee_id',$id)->whereDate('created_at',Carbon::today())->get();
 
         return $location;
     }
 
     public function getOutOfZoneToday(){
-        return History::where('Out_of_zone', true)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
+        return History::where('Out_of_zone', true)->whereDate('created_at',Carbon::today())->get();
     }
 
     public function getInOfZoneToday(){
-        return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereDate('created_at',Carbon::today())->get();
+        return History::where('Out_of_zone', false)->whereDate('created_at',Carbon::today())->get();
     }
 
     public function totalHour($id){
@@ -197,9 +204,6 @@ class HistoryController extends Controller
 
         $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
 
-        
-
-
 
         $history->update([
             'employee_id' => $fields['employee_id'],
@@ -212,16 +216,6 @@ class HistoryController extends Controller
 
         return ["is_inzone" =>$is_inzone ? "true": "false"];
 
-
-        // return $content;
-
-
-
-        // if($history->Out_of_zone==true){
-        //     return response([ "Employee is in zone"], 201);
-        // }else{
-        //     return response([ "Employee is out of zone"], 401);
-        // }
     }
 
     public function updateLatLong(Request $request){

@@ -32,9 +32,7 @@ class EmployeeController extends Controller
         $admin_id =auth('sanctum')->user()->id;
         $adminData = Admin::where('id', $admin_id)->first();
         $counter = Employee::where('company_id',$adminData->company_id)->count();
-        // $counter = Employee::select('id');
-
-        // return (Employee::all() , compact($counter));
+       
         return $counter;
 
     }
