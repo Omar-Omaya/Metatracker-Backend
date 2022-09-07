@@ -15,16 +15,16 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigincrements('id');
-            // $table->unsignedBigInteger('company_id');
-
+            $table->unsignedBigInteger('company_id');
+            
             $table->unsignedBigInteger('admin_id');
+            $table->string('text');
             // $table->unsignedBigInteger('department_id');
             // $table->unsignedBigInteger('employee_id');
-            $table->string('text');
-            $table->foreign('admin_id')
-            ->references('id')
-            ->on('admins')
-            ->onDelete('cascade');
+            // $table->foreign('admin_id')
+            // ->references('id')
+            // ->on('admins')
+            // ->onDelete('cascade');
             // $table->foreign('company_id')
             // ->references('id')
             // ->on('companies')

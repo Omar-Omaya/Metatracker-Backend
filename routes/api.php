@@ -66,7 +66,7 @@ Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
 Route::post('/storeimage/{id}', [PhotoController::class, 'storeImage']);
 
 Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
-                                                 
+                             
 
 
 
@@ -157,7 +157,6 @@ Route::get('/notification', [NotificationController::class, 'notificationTesting
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);
-Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
 Route::get('/payroll', [StatisticsHourController::class , 'payroll']);
 
 
@@ -196,6 +195,7 @@ Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHou
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
     Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
+    Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     // Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
 

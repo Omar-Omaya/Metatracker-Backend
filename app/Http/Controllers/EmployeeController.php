@@ -40,12 +40,13 @@ class EmployeeController extends Controller
     }
 
     public function getAllEmployees(){
-        // $admin_id =auth('sanctum')->user()->id;
+        $company_id =auth('sanctum')->user()->company_id;
         // $adminData = Admin::where('id', $admin_id)->first();
-        // return Employee::where('company_id',$adminData->company_id)->get();
+        // Employee::where('company_id',$company_id)->get();
         $empofdepartment = DB::table('employees')
             ->join('departments','departments.id', '=' ,'employees.department_id')
             ->select('employees.*', 'dep_name')
+            ->where('employees.company_id', $company_id)
             ->get();
             return $empofdepartment;
     }
@@ -90,13 +91,17 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $company_id =auth('sanctum')->user()->company_id;
         $employee = Employee::find($id);
         $fields= $request->validate([
 
             'dep_name' =>'required',
         ]);
         if(empty($fields['dep_name'])){
-            $department_id = Department::where('dep_name',$fields['dep_name'])->first();
+            $department_id = Department::where('dep_name',$fields['dep_name'])->where('company_id',
+            $company_id)->first();
+            
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
 

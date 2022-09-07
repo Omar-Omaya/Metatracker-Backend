@@ -12,11 +12,11 @@ class Message extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        // 'company_id',
+        'company_id',
         'admin_id',
+        'text'
         // 'department_id',
         // 'employee_id',
-        'text'
         
     ];
 
@@ -42,14 +42,14 @@ class Message extends Model
     }
 
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 
     // public function messagesemployees()
     // {
     //     return $this->belongsToMany(MessageEmployee::class);
     // }
 
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 }
