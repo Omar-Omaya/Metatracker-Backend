@@ -91,9 +91,16 @@ class StatsController extends Controller
     }
 
     public function getOutOfZoneMonth($month){
-        $admin_id =auth('sanctum')->user()->id;
-        $adminData = Admin::where('id', $admin_id)->first();
-        return History::where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+        $company_id =auth('sanctum')->user()->compny_id;
+        // $adminData = Admin::where('id', $admin_id)->first();
+        $history= DB::table('histories')
+        ->join('employees','employees.id','=','histories.employee_id')
+        ->where('histories.Out_of_zone_time','>' ,0)
+        ->where('employees.company_id','=',$company_id)
+        ->whereMonth('histories.created_at' , $month)->count();
+
+        return $history;
+        // return History::where('Out_of_zone_time','>' ,0)->whereMonth('created_at' , $month)->count();
     }
 
     public function calcgetOutOfZoneMonth(){
@@ -107,7 +114,7 @@ class StatsController extends Controller
     }
 
     public function getOutOfZoneMonthPerEmp($month,$id){
-        return History::where('employee_id',$id)->where('Out_of_zone', true)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+        return History::where('employee_id',$id)->where('Out_of_zone_time','>' ,0)->whereMonth('created_at' , $month)->count();
     }
 
 
@@ -124,7 +131,14 @@ class StatsController extends Controller
 
 
     public function getInOfZoneMonth($month){
-        return History::where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+        $company_id =auth('sanctum')->user()->compny_id;
+
+        $history= DB::table('histories')
+        ->join('employees','employees.id','=','histories.employee_id')
+        ->where('histories.Out_of_zone_time','=' ,0)
+        ->where('employees.company_id','=',$company_id)
+        ->whereMonth('histories.created_at' , $month)->count();
+        // return History::where('Out_of_zone_time','=' ,0)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
     }
 
     public function calcgetInOfZoneMonth(){
@@ -138,7 +152,7 @@ class StatsController extends Controller
     }
 
     public function getInOfZoneMonthPerEmp($month,$id){
-        return History::where('employee_id',$id)->where('Out_of_zone', false)->where('is_absence','=',false)->whereMonth('created_at' , $month)->count();
+        return History::where('employee_id',$id)->where('Out_of_zone_time','=' ,0)->whereMonth('created_at' , $month)->count();
     }
 
     public function calcgetInOfZoneMonthPerEmp($id){

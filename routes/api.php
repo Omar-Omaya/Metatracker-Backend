@@ -99,11 +99,6 @@ Route::get('/attend_today', [HistoryController::class , 'getAttendanceToday']);
 Route::get('/totalHour/{id}', [HistoryController::class , 'totalHour']);
 Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
 
-Route::get('/calcOut', [StatsController::class , 'calcgetOutOfZoneMonth']);
-Route::get('/calcIn', [StatsController::class , 'calcgetInOfZoneMonth']);
-
-Route::get('/calcOutEmp/{id}', [StatsController::class , 'calcgetOutOfZoneMonthPerEmp']);
-Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
 
 // dashboard
 Route::get('/inZoneLate', [StatsController::class , 'inZoneLate']);
@@ -183,15 +178,6 @@ Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHou
 // Route::get('/pay', [StatisticsHourController::class , 'payroll']);
 
 
-
-
-
-
-
-
-
-
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
     Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
@@ -199,6 +185,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
 
+    Route::get('/calcOut', [StatsController::class , 'calcgetOutOfZoneMonth']);
+    Route::get('/calcIn', [StatsController::class , 'calcgetInOfZoneMonth']);
+    
+    Route::get('/calcOutEmp/{id}', [StatsController::class , 'calcgetOutOfZoneMonthPerEmp']);
+    Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
 
 
 

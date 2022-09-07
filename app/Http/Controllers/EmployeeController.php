@@ -58,7 +58,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
+            'company_id'=>'required',
             'email' =>'required',
             'password' =>'required'
         ]);

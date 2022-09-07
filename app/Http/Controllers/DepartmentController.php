@@ -38,7 +38,7 @@ class DepartmentController extends Controller
     //     UPDATE absences SET pending=false, updated_at=CURRENT_TIMESTAMP WHERE employee_id IN (SELECT id FROM employees WHERE department_id= ".$department->id.");
     //     ");
 
-    return "success";
+    // return "success";
 
 
 

@@ -28,6 +28,7 @@ class MessageController extends Controller
 
         $request->validate([
             'text' =>'required',
+            'admin_id'=> 'required'
         ]);
 
         $message =  Message::create($request->all());

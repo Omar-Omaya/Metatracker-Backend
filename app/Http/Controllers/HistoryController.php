@@ -35,6 +35,18 @@ class HistoryController extends Controller
 
     /* check */
 
+    private function getCurrentTime(){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+        $current_time = Carbon::parse($response['datetime']);
+        return $current_time;
+}
+
     public function store(Request $request)
     {
 
@@ -214,7 +226,8 @@ class HistoryController extends Controller
             'lat' => $fields['lat'],
             'lng' => $fields['lng'],
             'End_time' => $current_time,
-            'Out_of_zone' => !$is_inzone
+            'Out_of_zone' => !$is_inzone,
+            'Out_of_zone_time' => $this->compute_out_zone_time($history)
             ]
         );
 
@@ -236,7 +249,8 @@ class HistoryController extends Controller
             
             'lat' => $fields['lat'],
             'lng' => $fields['lng'],
-            'Out_of_zone' =>!$is_inzone
+            'Out_of_zone' =>!$is_inzone,
+            'Out_of_zone_time' => $this->compute_out_zone_time($history)
         ]);
 
 
@@ -267,4 +281,15 @@ class HistoryController extends Controller
             $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $lat, $lng)*1000;
             return $distance <$department->radius;
     }
+
+    private function compute_out_zone_time(History $history){
+        if(!$history->Out_of_zone)
+                return $history->Out_of_zone_time;
+        $current_time= $this->getCurrentTime();
+        $time_diff= $current_time->diffInMinutes($history->updated_at);
+        echo "Time Difference is : ";
+        print_r($history->Out_of_zone_time);
+        $outZone=$history->Out_of_zone_time+ $time_diff;
+        return $outZone;
+}
 }
