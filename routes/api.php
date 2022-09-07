@@ -74,7 +74,7 @@ Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
 // Public Route Histroy
 
 Route::get('/histories', [HistoryController::class , 'index']);
-Route::get('/check_in_today', [HistoryController::class , 'checkInToday']);
+Route::get('/check_in_today/{company_id}', [HistoryController::class , 'checkInToday']);
 
 Route::get('/latlngemp/{id}', [HistoryController::class , 'latlngEmp']);
 
