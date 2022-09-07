@@ -8,6 +8,8 @@ use App\Models\Employee;
 use App\Models\History;
 use App\Models\Department;
 use Salman\GeoFence\Service\GeoFenceCalculator;
+use Illuminate\Support\Facades\DB;
+
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -117,9 +119,14 @@ class HistoryController extends Controller
         return ["count" => History::whereDate('created_at',Carbon::today())->count()];
     }
 
-    public function checkInToday(Request $request)
+    public function checkInToday(Request $request,$company_id)
     {
-        $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
+
+        $location = DB::table('histories')
+        ->join('employees','employees.id', '=','histories.employee_id')
+        ->where('employees.company_id',$company_id )
+        ->whereDate('created_at',Carbon::today())->get();
+        // $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
 
         return $location;
     }
