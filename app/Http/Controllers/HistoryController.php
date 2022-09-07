@@ -125,7 +125,7 @@ class HistoryController extends Controller
         $location = DB::table('histories')
         ->join('employees','employees.id', '=','histories.employee_id')
         ->where('employees.company_id',$company_id )
-        ->whereDate('created_at',Carbon::today())->get();
+        ->whereDate('histories.created_at',Carbon::today())->get();
         // $location = History::with('Employee')->whereDate('created_at',Carbon::today())->get();
 
         return $location;
