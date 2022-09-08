@@ -286,9 +286,7 @@ class HistoryController extends Controller
         if(!$history->Out_of_zone)
                 return $history->Out_of_zone_time;
         $current_time= $this->getCurrentTime();
-        $time_diff= $current_time->diffInMinutes($history->updated_at);
-        echo "Time Difference is : ";
-        print_r($history->Out_of_zone_time);
+        $time_diff= $current_time->diffInMinutes($history->updated_at);  
         $outZone=$history->Out_of_zone_time+ $time_diff;
         return $outZone;
 }

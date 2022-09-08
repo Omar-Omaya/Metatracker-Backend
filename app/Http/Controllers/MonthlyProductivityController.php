@@ -26,4 +26,11 @@ class MonthlyProductivityController extends Controller
 
     }
 
+    public function getTransferSalary(Request $request){
+
+        return MonthlyProductivity::get();
+
+
+    }
+
 }
