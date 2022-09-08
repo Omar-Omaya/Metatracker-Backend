@@ -136,8 +136,8 @@ class StatisticsHourController extends Controller
 
                 $start_time = $this->formatTimeString($History->Start_time);
                 $end_time = $this->formatTimeString($History->End_time);
-                $firstDelay= $this->getDiffHours($dep_time_arrival,$start_time);
-                $secondDelay= $this->getDiffHours($end_time,$dep_time_leave);
+                $firstDelay= $start_time['hour']> $dep_time_arrival['hour'] ? $this->getDiffHours($dep_time_arrival,$start_time): 0;
+                $secondDelay= $end_time['hour'] < $dep_time_leave['hour'] ? $this->getDiffHours($end_time,$dep_time_leave): 0;
                 $delay += ($firstDelay> 0 ? $firstDelay: 0) + ($secondDelay> 0 ? $secondDelay: 0)  ;
 
                 // if ($start_time['hour'] > $empOfDepartment->const_Arrival_time) {
