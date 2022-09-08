@@ -25,6 +25,7 @@ class CreateMonthlyProductivtiesTable extends Migration
             $table->integer('delay_hours');
             $table->integer('overtime_hours');
             $table->integer('absent_days');
+            $table->integer('attend_days');
             $table->integer('salary');
             $table->timestamps();
            

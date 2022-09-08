@@ -98,7 +98,7 @@ class StatisticsHourController extends Controller
             ->where('employees.company_id','=', $company_id)
             ->select('departments.*', 'employees.*', 'employees.id as employee_id')
             ->get();
-
+               
         foreach ($empOfDepartments as $empOfDepartment) {
 
             $totalwork = $this->getTotalWorkingHours($empOfDepartment->employee_id);
@@ -108,6 +108,11 @@ class StatisticsHourController extends Controller
             // $absence = Absence::get();
             $absence = Absence::where('employee_id',$empOfDepartment->employee_id)->where('pending' ,0)->get();
             $countabsence= $absence->count();
+
+            $attendance = History::where('employee_id', $empOfDepartment->employee_id)->whereNotNull('Start_time')->get();
+            $countattend= $attendance->count();
+
+
 
             $overTime = 0;
 
@@ -140,6 +145,9 @@ class StatisticsHourController extends Controller
             $empOfDepartment->delay = $delay;
             $empOfDepartment->overTime = $overTime;
             $empOfDepartment->countabsence = $countabsence;
+            $empOfDepartment->countattend = $countattend;
+
+            
 
             
         }

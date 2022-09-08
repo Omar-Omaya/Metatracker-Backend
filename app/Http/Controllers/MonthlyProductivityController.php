@@ -17,6 +17,8 @@ class MonthlyProductivityController extends Controller
         $employee->paid = 0;
         $employee->update();
 
+        // $count_history = History::where('employee_id',$request->employee_id)->whereMonthly()->count();  
+
         $history= History::where('employee_id',$request->employee_id)->whereNotNull('End_time')->delete();
 
         $absence= Absence::where('employee_id',$request->employee_id)->where('pending', 0)->delete();

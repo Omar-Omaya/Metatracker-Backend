@@ -16,6 +16,7 @@ class MonthlyProductivity extends Model
         'delay_hours',
         'overtime_hours',
         'absent_days',
+        'attend_days',
         'salary',
         
     ];
