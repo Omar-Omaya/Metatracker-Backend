@@ -92,17 +92,17 @@ class StatisticsHourController extends Controller
 
         // return $sum;
     }
+    
 
-    public function payroll(Request $request,$company_id)
+    public function payroll(Request $request)
     {
 
         $empOfDepartments = DB::table('departments')
 
             ->join('employees', 'employees.department_id', '=', 'departments.id')
-            ->where('employees.company_id','=', $company_id)
             ->select('departments.*', 'employees.*', 'employees.id as employee_id')
             ->get();
-               
+
         foreach ($empOfDepartments as $empOfDepartment) {
 
             $totalwork = $this->getTotalWorkingHours($empOfDepartment->employee_id);
@@ -116,31 +116,41 @@ class StatisticsHourController extends Controller
             $attendance = History::where('employee_id', $empOfDepartment->employee_id)->whereNotNull('Start_time')->get();
             $countattend= $attendance->count();
 
-
-
             $overTime = 0;
 
             $delay = 0;
 
 
             $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time : $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time + 24;
+            $dep_time_arrival=[
+                'hour' =>$empOfDepartment->const_Arrival_time,
+                'min'=>0
+            ];
+            $dep_time_leave=[
+                'hour' =>$empOfDepartment->const_Leave_time,
+                'min'=>0
+            ];
+            $diffShift= $this->getDiffHours($dep_time_arrival,$dep_time_leave);
 
             foreach ($Histories as $History) {
 
                 $start_time = $this->formatTimeString($History->Start_time);
                 $end_time = $this->formatTimeString($History->End_time);
+                $firstDelay= $this->getDiffHours($dep_time_arrival,$start_time);
+                $secondDelay= $this->getDiffHours($end_time,$dep_time_leave);
+                $delay += ($firstDelay> 0 ? $firstDelay: 0) + ($secondDelay> 0 ? $secondDelay: 0)  ;
 
+                // if ($start_time['hour'] > $empOfDepartment->const_Arrival_time) {
+                //     $delay = $delay + ($start_time['hour'] - $empOfDepartment->const_Arrival_time);
+                // }
+                // if ($end_time['hour'] < $empOfDepartment->const_Leave_time)
+                //     $delay = $delay - ($end_time['hour'] - $empOfDepartment->const_Leave_time);
 
-                if ($start_time['hour'] > $empOfDepartment->const_Arrival_time) {
-                    $delay = $delay + ($start_time['hour'] - $empOfDepartment->const_Arrival_time);
-                }
-                if ($end_time['hour'] < $empOfDepartment->const_Leave_time)
-                    $delay = $delay - ($end_time['hour'] - $empOfDepartment->const_Leave_time);
+                // $diffShift = $end_time['hour'] < $start_time['hour'] ? $end_time['hour'] + 24 - $start_time['hour'] : $end_time['hour'] - $start_time['hour'];
+                $totalShiftHours= $this->getDiffHours($start_time,$end_time);
 
-                $diffShift = $end_time['hour'] < $start_time['hour'] ? $end_time['hour'] + 24 - $start_time['hour'] : $end_time['hour'] - $start_time['hour'];
-
-                if ($diffShift > $diffConstDep) {
-                    $overTime += $diffShift - $diffConstDep;
+                if ($totalShiftHours> $diffShift) {
+                    $overTime += $totalShiftHours - $diffShift;
                 }
             }
 
@@ -151,13 +161,14 @@ class StatisticsHourController extends Controller
             $empOfDepartment->countabsence = $countabsence;
             $empOfDepartment->countattend = $countattend;
 
-            
+
 
             
         }
 
         return $empOfDepartments;
     }
+
 
 
 
