@@ -156,7 +156,7 @@ Route::get('/payroll/{company_id}', [StatisticsHourController::class , 'payroll'
 
 
 Route::Post('/transfersalary', [MonthlyProductivityController::class , 'transferSalary']);
-Route::get('/getMonthlyProductivity/{id}', [MonthlyProductivityController::class , 'transferSalary']);
+Route::get('/getMonthlyProductivity/{id}', [MonthlyProductivityController::class , 'getMonthlyProductivity']);
 
 
 
