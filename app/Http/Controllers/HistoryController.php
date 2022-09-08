@@ -92,9 +92,9 @@ class HistoryController extends Controller
             // return $test;
         }
         else{
-            History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
-            History::create($content);
-            return response([ "History exists previous row deleted"], 201);
+            // History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
+            // History::create($content);
+            return response([ "History exists previous row deleted"], 402);
         }
 
         // if($history->Out_of_zone==true){
