@@ -86,7 +86,7 @@ class HistoryController extends Controller
             ]);
         
         }
-        return ["is_created" =>$is_inzone ? "true": "false"];
+        return ["is_created" =>$is_inzone ? true: false];
 
 
             // return $test;
