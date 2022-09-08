@@ -231,7 +231,7 @@ class HistoryController extends Controller
             ]
         );
 
-        return ["is_inzone" =>$is_inzone ? "true": "false"];
+        return ["is_inzone" =>$is_inzone ? true: false];
 
     }
 
@@ -256,7 +256,7 @@ class HistoryController extends Controller
 
 
         $response =[
-           'update' => $is_inzone ? "true": "false"
+           'update' => $is_inzone ? true: false
 
         ];
 
