@@ -26,9 +26,9 @@ class MonthlyProductivityController extends Controller
 
     }
 
-    public function getTransferSalary(Request $request){
+    public function getMonthlyProductivity(Request $request,$id){
 
-        return MonthlyProductivity::get();
+        return MonthlyProductivity::where('employee_id',$id)->get();
 
 
     }
