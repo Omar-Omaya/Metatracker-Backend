@@ -90,15 +90,14 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
 
-        $company_id =auth('sanctum')->user()->company_id;
+        // $company_id =auth('sanctum')->user()->company_id;
         $employee = Employee::find($id);
         $fields= $request->validate([
 
             'dep_name' =>'required',
         ]);
         if(empty($fields['dep_name'])){
-            $department_id = Department::where('dep_name',$fields['dep_name'])->where('company_id',
-            $company_id)->first();
+            $department_id = Department::where('dep_name',$fields['dep_name'])->first();
             
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
