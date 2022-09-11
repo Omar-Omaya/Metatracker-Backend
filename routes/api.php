@@ -120,7 +120,7 @@ Route::post('/msg', [MessageController::class , 'store']);
 Route::get('/msg', [MessageController::class , 'index']);
 
 Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
-Route::get('/getmsgemp', [MessageController::class , 'getMessageEmp']);
+Route::get('/getmsgemp/{id}', [MessageController::class , 'getMessageEmp']);
 
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
 
