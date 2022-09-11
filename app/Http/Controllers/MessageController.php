@@ -99,10 +99,10 @@ class MessageController extends Controller
 
     }
 
-    public function getMessageEmp(Request $request,$id){
+    public function getMessageEmp(Request $request){
 
     //    return ($request->getContent());
-        // $id = (int)explode("=", $request->getContent())[1] ;
+        $id = (int)explode("=", $request->getContent())[1] ;
         $msgemp = DB::table('employee_message')
         ->join('messages','messages.id', '=' ,'employee_message.message_id')
         ->where('employee_message.employee_id' ,$id)
