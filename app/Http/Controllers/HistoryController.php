@@ -88,8 +88,6 @@ class HistoryController extends Controller
         }
         return ["is_created" =>$is_inzone ? true: false];
 
-
-            // return $test;
         }
         else{
             // History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();

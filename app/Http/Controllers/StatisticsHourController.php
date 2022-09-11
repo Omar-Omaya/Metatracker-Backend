@@ -94,14 +94,15 @@ class StatisticsHourController extends Controller
     }
     
 
-    public function payroll(Request $request)
+    public function payroll(Request $request,$company_id)
     {
 
-        $empOfDepartments = DB::table('departments')
+        $empOfDepartments = $empOfDepartments = DB::table('departments')
 
-            ->join('employees', 'employees.department_id', '=', 'departments.id')
-            ->select('departments.*', 'employees.*', 'employees.id as employee_id')
-            ->get();
+        ->join('employees', 'employees.department_id', '=', 'departments.id')
+        ->where('employees.company_id','=', $company_id)
+        ->select('departments.*', 'employees.*', 'employees.id as employee_id')
+        ->get();
 
         foreach ($empOfDepartments as $empOfDepartment) {
 
