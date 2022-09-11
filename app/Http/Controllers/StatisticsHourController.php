@@ -50,20 +50,19 @@ class StatisticsHourController extends Controller
     public function getTotalWorkingHours($id)
     {
         $employee =  Employee::where('id', $id)->first();
+
         $countPaid = $employee->paid;
         $countRowHistory = History::where('employee_id', $id)->count();
         $countRowAbsence = Absence::where('employee_id', $id)->count();
 
-        // $countRowAbsence = Absence::where('employee_id',$id)->where('pending',true)->count();
-
         $totalWorkingHours = $countPaid + $countRowHistory + $countRowAbsence;
 
         $depworkingHour = Department::where('id', $employee->department_id)->first();
+
         $arrival = $depworkingHour->const_Arrival_time;
         $leave = $depworkingHour->const_Leave_time;
         $leave = $leave < $arrival ? $leave + 24 : $leave;
 
-        // return $depworkingHour;
         return ($leave - $arrival) * $totalWorkingHours;
     }
 
@@ -72,12 +71,6 @@ class StatisticsHourController extends Controller
         $Historys = History::where('employee_id', $id)->whereNotNull('End_time')->get();
 
         $sum = 0;
-
-        // if(isEmpty($Historys))
-        //     return 0;
-        // $start = array();
-        // $end = array();
-
 
         foreach ($Historys as $History) {
 
@@ -97,7 +90,7 @@ class StatisticsHourController extends Controller
     public function payroll(Request $request,$company_id)
     {
 
-        $empOfDepartments = $empOfDepartments = DB::table('departments')
+        $empOfDepartments = DB::table('departments')
 
         ->join('employees', 'employees.department_id', '=', 'departments.id')
         ->where('employees.company_id','=', $company_id)

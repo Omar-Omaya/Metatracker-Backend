@@ -111,11 +111,7 @@ class HistoryController extends Controller
 
     public function getAbsenceToday()
     {
-
         return ["count" =>Absence::whereDate('created_at',Carbon::today())->count()];
- 
-        // return ["count" =>History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count()];
-        // return History::where('is_absence','=',true)->whereDate('created_at',Carbon::today())->count();
     }
 
     public function countAttendanceDay($id)

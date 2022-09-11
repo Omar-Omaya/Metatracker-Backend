@@ -67,10 +67,6 @@ Route::post('/storeimage/{id}', [PhotoController::class, 'storeImage']);
 
 Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
                              
-
-
-
-
 // Public Route Histroy
 
 Route::get('/histories', [HistoryController::class , 'index']);
@@ -124,7 +120,7 @@ Route::post('/msg', [MessageController::class , 'store']);
 Route::get('/msg', [MessageController::class , 'index']);
 
 Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
-Route::get('/getmsgemp/{id}', [MessageController::class , 'getMessageEmp']);
+Route::get('/getmsgemp', [MessageController::class , 'getMessageEmp']);
 
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
 
@@ -158,11 +154,6 @@ Route::get('/payroll/{company_id}', [StatisticsHourController::class , 'payroll'
 Route::Post('/transfersalary', [MonthlyProductivityController::class , 'transferSalary']);
 Route::get('/getMonthlyProductivity/{id}', [MonthlyProductivityController::class , 'getMonthlyProductivity']);
 
-
-
-
-
-
 // public Route Holiday
 
 Route::post('/store-holi', [HolidayController::class , 'store']);
@@ -174,10 +165,8 @@ Route::post('/week', [WeekEndController::class , 'setHolidayToEmployee']);
 
 // public Rout Working Hour
 
-// Route::get('/hour/{id}', [StatisticsHourController::class , 'getTotalWorkingHours']);
 Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHours']);
-// Route::get('/delay/{id}', [StatisticsHourController::class , 'delayHours']);
-// Route::get('/pay', [StatisticsHourController::class , 'payroll']);
+
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -192,12 +181,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::get('/calcOutEmp/{id}', [StatsController::class , 'calcgetOutOfZoneMonthPerEmp']);
     Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
-
-
-
-
-
-
 
 
 

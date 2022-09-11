@@ -30,7 +30,11 @@ class MonthlyProductivityController extends Controller
 
         return MonthlyProductivity::where('employee_id',$id)->get();
 
-
     }
+
+   
+
+
+
 
 }
