@@ -125,7 +125,7 @@ Route::get('/getmsgemp', [MessageController::class , 'getMessageEmp']);
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
 
 Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
-Route::get('/getmegs/{id}', [MessageController::class , 'getMessages']);
+Route::get('/getmegs', [MessageController::class , 'getMessages']);
 
 
 
