@@ -148,19 +148,19 @@ class MessageController extends Controller
         return response()->json($response);
     }
 
-    public function getAllMessageEmp(Request $request){
+    public function getAllMessageEmp(Request $request,$admin_id){
 
         $msgemp = DB::table('employee_message')
         ->join('messages','messages.id', '=' ,'employee_message.message_id')
-        ->join('admins','admins.id','=','messages.admin_id')
+        ->where('messages.admin_id','=',$admin_id)
         ->select('messages.*','employee_message.*')
-
         ->get();
-
         return $msgemp;
 
         
     }
+
+    // public function
 
     
     // public function getMessage(){
