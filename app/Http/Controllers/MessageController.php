@@ -99,7 +99,10 @@ class MessageController extends Controller
 
     }
 
-    public function getMessageEmp(Request $request,$id){
+    public function getMessageEmp(Request $request){
+        
+        $id = $request->id;
+        
 
     //    return ($request->getContent());
         // $id = (int)explode("=", $request->getContent())[1] ;
