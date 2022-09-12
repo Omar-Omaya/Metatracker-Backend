@@ -140,7 +140,8 @@ class MessageController extends Controller
 
         $announc = DB::table('announcements')
         ->join('messages','messages.id', '=' ,'announcements.message_id')
-        ->select('announcements.*', 'messages.*')
+        ->join('admins','admins.id','=','messages.admin_id')
+        ->select('admins.name', 'messages.text')
         ->get();
 
         $response = [
