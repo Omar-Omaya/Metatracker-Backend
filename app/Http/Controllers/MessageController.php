@@ -111,7 +111,7 @@ class MessageController extends Controller
         ->join('admins','admins.id','=','messages.admin_id')
 
         ->where('employee_message.employee_id' ,$id)
-        ->select('employee_message.*','messages.*','admins.name')
+        ->select('messages.text','admins.name')
 
         ->first();
 
