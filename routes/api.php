@@ -120,12 +120,14 @@ Route::post('/msg', [MessageController::class , 'store']);
 Route::get('/msg', [MessageController::class , 'index']);
 
 Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
-Route::get('/getmsgemp', [MessageController::class , 'getMessageEmp']);
+Route::get('/getmsgemp', [MessageController::class , 'getMessageEmpMobile']);
+Route::get('/getmsgemp', [MessageController::class , 'getAllMessageEmp']);
+
 
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
 
 Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
-Route::get('/getmegs', [MessageController::class , 'getMessages']);
+Route::get('/getmegs', [MessageController::class , 'getMessagesMobile']);
 
 
 

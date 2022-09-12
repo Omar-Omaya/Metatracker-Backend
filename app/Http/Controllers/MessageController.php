@@ -95,11 +95,9 @@ class MessageController extends Controller
         // $message->announcements()->attach($announc);
 
         return 'add message announcmenet';
-
-
     }
 
-    public function getMessageEmp(Request $request){
+    public function getMessageEmpMobile(Request $request){
 
         $id = $request->id;
         
@@ -109,7 +107,6 @@ class MessageController extends Controller
         $msgemp = DB::table('employee_message')
         ->join('messages','messages.id', '=' ,'employee_message.message_id')
         ->join('admins','admins.id','=','messages.admin_id')
-
         ->where('employee_message.employee_id' ,$id)
         ->select('messages.text','admins.name')
 
@@ -124,10 +121,9 @@ class MessageController extends Controller
 
    
 
-    public function getMessages(Request $request){
+    public function getMessagesMobile(Request $request){
 
         $id = $request->id;
-
 
         $msgdep = DB::table('department_message')
         ->join('messages','messages.id', '=' ,'department_message.message_id')
@@ -150,6 +146,20 @@ class MessageController extends Controller
         ];
 
         return response()->json($response);
+    }
+
+    public function getAllMessageEmp(Request $request){
+
+        $msgemp = DB::table('employee_message')
+        ->join('messages','messages.id', '=' ,'employee_message.message_id')
+        ->join('admins','admins.id','=','messages.admin_id')
+        // ->select('messages.*','admins.*','employee_message.*')
+
+        ->get();
+
+        return $msgemp;
+
+        
     }
 
     
