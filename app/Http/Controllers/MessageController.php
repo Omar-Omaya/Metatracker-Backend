@@ -155,12 +155,21 @@ class MessageController extends Controller
         ->where('messages.admin_id','=',$admin_id)
         ->select('messages.*','employee_message.*')
         ->get();
-        return $msgemp;
 
-        
+        return $msgemp;      
     }
 
-    // public function
+    public function getAllMessageDep(Request $request,$admin_id){
+
+        $msgdep = DB::table('department_message')
+        ->join('messages','messages.id', '=' ,'department_message.message_id')
+        ->where('messages.admin_id','=',$admin_id)
+        ->select('messages.*','department_message.*')
+        ->get();
+
+        return $msgdep;
+        
+    }
 
     
     // public function getMessage(){

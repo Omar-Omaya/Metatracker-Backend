@@ -125,9 +125,11 @@ Route::get('/getallmsgemp/{admin_id}', [MessageController::class , 'getAllMessag
 
 
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
-
 Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
 Route::get('/getmegs', [MessageController::class , 'getMessagesMobile']);
+
+Route::get('/getallmsgdep/{admin_id}', [MessageController::class , 'getAllMessageDep']);
+
 
 
 
