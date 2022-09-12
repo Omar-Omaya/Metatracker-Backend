@@ -100,7 +100,7 @@ class MessageController extends Controller
     }
 
     public function getMessageEmp(Request $request){
-        
+
         $id = $request->id;
         
 
@@ -111,11 +111,11 @@ class MessageController extends Controller
         ->where('employee_message.employee_id' ,$id)
         ->first();
 
-        $response = [
-            'message'=>$msgemp
-        ];
+        // $response = [
+        //     'message'=>$msgemp
+        // ];
 
-        return response($response, 201);
+        return response($msgemp, 201);
     }
 
    
