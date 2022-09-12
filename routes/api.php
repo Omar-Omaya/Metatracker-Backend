@@ -87,8 +87,8 @@ Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
 Route::get('/attend/{id}', [HistoryController::class, 'countAttendanceDay']);
 Route::get('/absence/{id}', [HistoryController::class , 'getAbsenceDay']);
 
-Route::get('/count-out', [HistoryController::class , 'getOutOfZoneToday']);
-Route::get('/count-in', [HistoryController::class , 'getInOfZoneToday']);
+Route::get('/count-out/{company_id}', [HistoryController::class , 'getOutOfZoneToday']);
+Route::get('/count-in/{company_id}', [HistoryController::class , 'getInOfZoneToday']);
 Route::get('/currentlocation/{id}', [HistoryController::class , 'getCurrentLocation']);
 Route::get('/absence_today', [HistoryController::class , 'getAbsenceToday']);
 Route::get('/attend_today', [HistoryController::class , 'getAttendanceToday']);
