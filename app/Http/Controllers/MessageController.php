@@ -178,6 +178,8 @@ class MessageController extends Controller
         ->where('messages.admin_id','=',$admin_id)
         ->select('announcements.*', 'messages.*')
         ->get();
+
+        return $announc;
     }
 
 
