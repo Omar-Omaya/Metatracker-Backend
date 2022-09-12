@@ -121,7 +121,7 @@ Route::get('/msg', [MessageController::class , 'index']);
 
 Route::post('/msgemp/{id}', [MessageController::class , 'messageEmployee']);
 Route::get('/getmsgemp', [MessageController::class , 'getMessageEmpMobile']);
-Route::get('/getmsgemp', [MessageController::class , 'getAllMessageEmp']);
+Route::get('/getallmsgemp', [MessageController::class , 'getAllMessageEmp']);
 
 
 Route::post('/msgdep/{id}', [MessageController::class , 'messageDepartment']);
