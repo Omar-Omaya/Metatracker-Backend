@@ -177,7 +177,7 @@ class LogCron extends Command
 
     public function handle()
     {
-        // $this->notification($token, "test", "test");
+        $this->notification($token, "test", "test");
         $this->distance();
         // $this->time();
         // $this->manageShiftStart();

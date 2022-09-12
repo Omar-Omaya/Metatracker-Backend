@@ -171,6 +171,16 @@ class MessageController extends Controller
         
     }
 
+    public function getAllMessageAnnounc(Request $request,$admin_id){
+
+        $announc = DB::table('announcements')
+        ->join('messages','messages.id', '=' ,'announcements.message_id')
+        ->where('messages.admin_id','=',$admin_id)
+        ->select('announcements.*', 'messages.*')
+        ->get();
+
+
+
     
     // public function getMessage(){
     //     // $category = Message::find([3, 4]);

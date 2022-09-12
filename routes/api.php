@@ -129,6 +129,9 @@ Route::post('/announc', [MessageController::class , 'messageAnnouncement']);
 Route::get('/getmegs', [MessageController::class , 'getMessagesMobile']);
 
 Route::get('/getallmsgdep/{admin_id}', [MessageController::class , 'getAllMessageDep']);
+Route::get('/getannounc/{admin_id}', [MessageController::class , 'getAllMessageAnnounc']);
+
+
 
 
 
