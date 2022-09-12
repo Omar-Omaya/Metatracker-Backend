@@ -103,9 +103,9 @@ class HistoryController extends Controller
 
     }
 
-    public function getAbsenceDay($id)
+    public function getAbsenceDay(Request $request)
     {
-        
+        $id = $request->id;
         return ["count" => Absence::where('employee_id',$id)->count()];
     }
 
@@ -114,10 +114,11 @@ class HistoryController extends Controller
         return ["count" =>Absence::whereDate('created_at',Carbon::today())->count()];
     }
 
-    public function countAttendanceDay($id)
+    public function countAttendanceDay(Request $request)
     {
-        return ["count" => Absence::where('employee_id',$id)->count()];
-        // return History::where('is_absence','=',false)->where('employee_id',$id)->count();
+        $id = $request->id;
+
+        return ["count" => History::where('employee_id',$id)->count()];
     }
 
     public function getAttendanceToday()

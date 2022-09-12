@@ -134,13 +134,7 @@ class StatisticsHourController extends Controller
                 $secondDelay= $end_time['hour'] < $dep_time_leave['hour'] ? $this->getDiffHours($end_time,$dep_time_leave): 0;
                 $delay += ($firstDelay> 0 ? $firstDelay: 0) + ($secondDelay> 0 ? $secondDelay: 0)  ;
 
-                // if ($start_time['hour'] > $empOfDepartment->const_Arrival_time) {
-                //     $delay = $delay + ($start_time['hour'] - $empOfDepartment->const_Arrival_time);
-                // }
-                // if ($end_time['hour'] < $empOfDepartment->const_Leave_time)
-                //     $delay = $delay - ($end_time['hour'] - $empOfDepartment->const_Leave_time);
-
-                // $diffShift = $end_time['hour'] < $start_time['hour'] ? $end_time['hour'] + 24 - $start_time['hour'] : $end_time['hour'] - $start_time['hour'];
+                
                 $totalShiftHours= $this->getDiffHours($start_time,$end_time);
 
                 if ($totalShiftHours> $diffShift) {
@@ -155,9 +149,6 @@ class StatisticsHourController extends Controller
             $empOfDepartment->countabsence = $countabsence;
             $empOfDepartment->countattend = $countattend;
 
-
-
-            
         }
 
         return $empOfDepartments;

@@ -84,8 +84,8 @@ Route::put('/latlng', [HistoryController::class , 'updateLatLong']);
 
 Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
 Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
-Route::get('/attend/{id}', [HistoryController::class, 'countAttendanceDay']);
-Route::get('/absence/{id}', [HistoryController::class , 'getAbsenceDay']);
+Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
+Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
 
 Route::get('/count-out/{company_id}', [HistoryController::class , 'getOutOfZoneToday']);
 Route::get('/count-in/{company_id}', [HistoryController::class , 'getInOfZoneToday']);
