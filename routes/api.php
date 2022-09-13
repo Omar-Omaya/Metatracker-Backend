@@ -59,7 +59,7 @@ Route::post('/employees', [EmployeeController::class , 'store']);
 Route::put('/employees/{id}', [EmployeeController::class , 'update']);
 Route::get('/employees/search/{name}', [EmployeeController::class , 'search']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
-Route::put('/mob_token/{id}', [EmployeeController::class, 'mobile_token']);
+Route::put('/mob_token', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
 Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
 

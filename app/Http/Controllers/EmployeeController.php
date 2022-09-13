@@ -108,6 +108,9 @@ class EmployeeController extends Controller
 
     public function mobile_token(Request $request, $id)
     {
+
+        $id = $request->id;
+        
         $fields = $request->validate([
             'mobile_token' => 'required|string',
         ]);

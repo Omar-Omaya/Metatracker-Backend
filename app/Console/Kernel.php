@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Log;
             $schedule->command('abs:days')
                      ->everyMinute();
             $schedule->command('manage:shift')
-            ->everyMinute();
+                    ->everyMinute();
 
             // $schedule->call(function (){
             //     $history = DB::table('histories')->get();
