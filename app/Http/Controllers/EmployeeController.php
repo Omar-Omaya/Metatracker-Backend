@@ -106,7 +106,7 @@ class EmployeeController extends Controller
         return $employee;
     }
 
-    public function mobile_token(Request $request, $id)
+    public function mobile_token(Request $request)
     {
 
         $id = $request->id;
