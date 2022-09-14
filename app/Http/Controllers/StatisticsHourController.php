@@ -142,11 +142,18 @@ class StatisticsHourController extends Controller
     }
 
     private function calculateDelay($departmentTimeData, $start_time, $end_time){
-        $firstDelay= min($this->getDiffHours($departmentTimeData['arrive_time'],$start_time),$this->getDiffHours($start_time,$departmentTimeData['arrive_time']));
-        $secondDelay= min($this->getDiffHours($end_time,$departmentTimeData['leave_time']),$this->getDiffHours($departmentTimeData['leave_time'],$end_time)) ;
-        return $firstDelay+ $secondDelay;       
-}
+        $arriveEarly=$this->getDiffHours($start_time,$departmentTimeData['arrive_time']);
+        $arriveAfter= $this->getDiffHours($departmentTimeData['arrive_time'],$start_time);
+        $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;
+        $firstEarly= $arriveEarly < $arriveAfter ? $arriveEarly : 0;
 
+        $leftEarly= $this->getDiffHours($end_time,$departmentTimeData['leave_time']);
+        $leftLate= $this->getDiffHours($departmentTimeData['leave_time'],$end_time);
+        $secondDelay= $leftEarly < $leftLate ? $leftEarly : 0;
+        $secondLate= $leftEarly > $leftLate ? $leftLate : 0;
+       $result=($firstDelay+ $secondDelay) - ($firstEarly+ $secondLate);
+       return ($result>0) ? $result :  0;       
+}
 
     private function getDepartmentTotalShiftHours($department){
         $dep_time_arrival=[
