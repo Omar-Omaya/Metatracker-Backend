@@ -8,6 +8,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\History;
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -42,9 +43,10 @@ class StatisticsHourController extends Controller
                       $end = new Carbon('2018-05-12 ' . $end['hour'] . ':' . $end['min'] . ':00');
               else
                       $end = new Carbon('2018-05-13 ' . $end['hour'] . ':' . $end['min'] . ':00');
-        $start = new Carbon('2018-05-12 ' . $start['hour'] . ':' . $start['min'] . ':00');
-              
-              return $start->diff($end)->format('%H');;
+        $start = new Carbon('2018-05-12 ' . $start['hour'] . ':' . $start['min'] . ':00'); 
+        // echo  $start->diff($end)->format('%H')."/n"; 
+        // echo   $start->diff($end)->format('%i') / 60.0;   
+        return $start->diff($end)->format('%H') + $start->diff($end)->format('%i') / 60.0 ;
     }
 
     public function getTotalWorkingHours($id)
@@ -58,12 +60,7 @@ class StatisticsHourController extends Controller
         $totalWorkingHours = $countPaid + $countRowHistory + $countRowAbsence;
 
         $depworkingHour = Department::where('id', $employee->department_id)->first();
-
-        $arrival = $depworkingHour->const_Arrival_time;
-        $leave = $depworkingHour->const_Leave_time;
-        $leave = $leave < $arrival ? $leave + 24 : $leave;
-
-        return ($leave - $arrival) * $totalWorkingHours;
+        return $this->getDepartmentTotalShiftHours($depworkingHour)['shift_duration'] * $totalWorkingHours;
     }
 
     public function getTotalActualHours($id)
@@ -115,30 +112,22 @@ class StatisticsHourController extends Controller
             $delay = 0;
 
 
-            $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time : $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time + 24;
-            $dep_time_arrival=[
-                'hour' =>$empOfDepartment->const_Arrival_time,
-                'min'=>0
-            ];
-            $dep_time_leave=[
-                'hour' =>$empOfDepartment->const_Leave_time,
-                'min'=>0
-            ];
-            $diffShift= $this->getDiffHours($dep_time_arrival,$dep_time_leave);
+            // $diffConstDep = $empOfDepartment->const_Arrival_time < $empOfDepartment->const_Leave_time ? $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time : $empOfDepartment->const_Leave_time - $empOfDepartment->const_Arrival_time + 24;
+            $departmentTimeData= $this->getDepartmentTotalShiftHours($empOfDepartment);
 
             foreach ($Histories as $History) {
 
                 $start_time = $this->formatTimeString($History->Start_time);
                 $end_time = $this->formatTimeString($History->End_time);
-                $firstDelay= $start_time['hour']> $dep_time_arrival['hour'] ? $this->getDiffHours($dep_time_arrival,$start_time): 0;
-                $secondDelay= $end_time['hour'] < $dep_time_leave['hour'] ? $this->getDiffHours($end_time,$dep_time_leave): 0;
+                $firstDelay= $start_time['hour']> $departmentTimeData['arrive_time']['hour'] ? $this->getDiffHours($departmentTimeData['arrive_time'],$start_time): 0;
+                $secondDelay= $end_time['hour'] < $departmentTimeData['leave_time']['hour'] ? $this->getDiffHours($end_time,$departmentTimeData['leave_time']): 0;
                 $delay += ($firstDelay> 0 ? $firstDelay: 0) + ($secondDelay> 0 ? $secondDelay: 0)  ;
 
                 
                 $totalShiftHours= $this->getDiffHours($start_time,$end_time);
 
-                if ($totalShiftHours> $diffShift) {
-                    $overTime += $totalShiftHours - $diffShift;
+                if ($totalShiftHours> $departmentTimeData['shift_duration']) {
+                    $overTime += $totalShiftHours - $departmentTimeData['shift_duration'];
                 }
             }
 
@@ -155,6 +144,23 @@ class StatisticsHourController extends Controller
     }
 
 
+    private function getDepartmentTotalShiftHours($department){
+        $dep_time_arrival=[
+            'hour' =>$department->const_Arrival_time,
+            'min'=>0
+        ];
+        $dep_time_leave=[
+            'hour' =>$department->const_Leave_time,
+            'min'=>0
+        ];
+        $diffShift= $this->getDiffHours($dep_time_arrival,$dep_time_leave);
+
+        return [
+            'arrive_time' => $dep_time_arrival,
+            'leave_time' => $dep_time_leave,
+            'shift_duration' =>$diffShift
+        ];
+    }
 
 
 
