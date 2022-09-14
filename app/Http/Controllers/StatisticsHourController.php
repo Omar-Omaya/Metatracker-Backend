@@ -76,7 +76,7 @@ class StatisticsHourController extends Controller
             $end_time = $this->formatTimeString($History->End_time);          
 
             $diff = $this->getDiffHours($start_time, $end_time);
-            $sum = $sum + (int)$diff;
+            $sum = $sum + $diff;
         }
         return $sum;
 
@@ -119,10 +119,8 @@ class StatisticsHourController extends Controller
 
                 $start_time = $this->formatTimeString($History->Start_time);
                 $end_time = $this->formatTimeString($History->End_time);
-                $firstDelay= $start_time['hour']> $departmentTimeData['arrive_time']['hour'] ? $this->getDiffHours($departmentTimeData['arrive_time'],$start_time): 0;
-                $secondDelay= $end_time['hour'] < $departmentTimeData['leave_time']['hour'] ? $this->getDiffHours($end_time,$departmentTimeData['leave_time']): 0;
-                $delay += ($firstDelay> 0 ? $firstDelay: 0) + ($secondDelay> 0 ? $secondDelay: 0)  ;
-
+                
+                $delay += $this->calculateDelay($departmentTimeData ,$start_time, $end_time) ;
                 
                 $totalShiftHours= $this->getDiffHours($start_time,$end_time);
 
@@ -142,6 +140,12 @@ class StatisticsHourController extends Controller
 
         return $empOfDepartments;
     }
+
+    private function calculateDelay($departmentTimeData, $start_time, $end_time){
+        $firstDelay= min($this->getDiffHours($departmentTimeData['arrive_time'],$start_time),$this->getDiffHours($start_time,$departmentTimeData['arrive_time']));
+        $secondDelay= min($this->getDiffHours($end_time,$departmentTimeData['leave_time']),$this->getDiffHours($departmentTimeData['leave_time'],$end_time)) ;
+        return $firstDelay+ $secondDelay;       
+}
 
 
     private function getDepartmentTotalShiftHours($department){
