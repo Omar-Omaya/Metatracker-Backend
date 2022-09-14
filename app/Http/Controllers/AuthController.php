@@ -131,6 +131,7 @@ class AuthController extends Controller
         $fields = $request->validate([
             'email' =>'required|string',
             'password' =>'required|string',
+            'mobile_token' =>'required|string'
 
         ]);
 
