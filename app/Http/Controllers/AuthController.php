@@ -140,6 +140,8 @@ class AuthController extends Controller
         $token = $user->createToken('myapptoken')->plainTextToken;
         $token= substr($token , -40,40);
         Employee::where('id', $user->id)->update(['api_token'=>$token]);
+        $mob_token = Employee::where('id' , $user->id)->first()->update(array('mobile_token'=>$fields['mobile_token']));
+
         $employee= Employee::where('email',$fields['email'])->first();
         
         $department= Department::where('id',$employee->department_id)->first();
@@ -165,7 +167,9 @@ class AuthController extends Controller
                 // 'user' =>$user,
                 'token' => $token,
                 'employee'=> $employee,
+                'mobile_token' => $mob_token,
                 'department'=> $department
+                
             ];
             return response()->json($response);
         }else{

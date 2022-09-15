@@ -40,7 +40,7 @@ class CreateEmployeesTable extends Migration
             // ->onDelete('cascade');
             // $table->foreign('department_id')
             //         ->references('id')
-            //         ->on('department');
+            //         ->on('department');             
             $table->timestamps();
 
            
