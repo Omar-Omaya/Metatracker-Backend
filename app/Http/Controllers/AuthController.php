@@ -167,7 +167,6 @@ class AuthController extends Controller
                 // 'user' =>$user,
                 'token' => $token,
                 'employee'=> $employee,
-                'mobile_token' => $mob_token,
                 'department'=> $department
                 
             ];
