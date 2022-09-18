@@ -133,7 +133,7 @@ class LogCron extends Command
 
     public function notification( $mobile_token,$title , $body){
 
-    $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
+    // $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
     // $tokens =Employee::select('mobile_token')->get();
         $data = [
             "registration_ids" => [$mobile_token],
@@ -147,7 +147,7 @@ class LogCron extends Command
     
         $headers = [
     
-            'Authorization: key=' . $SERVER_API_KEY,
+            // 'Authorization: key=' . $SERVER_API_KEY,
     
             'Content-Type: application/json',
     
