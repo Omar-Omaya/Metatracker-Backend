@@ -104,7 +104,6 @@ class EmployeeController extends Controller
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
         
-       
         $employee->update($request->all());
         return $employee;
     }

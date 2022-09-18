@@ -152,34 +152,45 @@ class LogCron extends Command
             'Content-Type: application/json',
     
         ];
-    
+
         $ch = curl_init();
+      
         curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-    
-        // $response = curl_exec($ch);
-        // $response = json_decode($response, true);
-        
-        $result = curl_exec($ch);
-        Log::info("Response is ".$result);
-        if ($result === FALSE) {
-            Log::info('Curl failed: ' . curl_error($ch));
-        }        
-        // Close connection
+               
+        $response = curl_exec($ch);
+      
         curl_close($ch);
-        // FCM response
-        // dd($result);    
-    
-
+      
+        return $response;
     }
-
-
-
-
+    
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+    //     curl_setopt($ch, CURLOPT_POST, true);
+    //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+    
+    //     // $response = curl_exec($ch);
+    //     // $response = json_decode($response, true);
+        
+    //     $result = curl_exec($ch);
+    //     Log::info("Response is ".$result);
+    //     if ($result === FALSE) {
+    //         Log::info('Curl failed: ' . curl_error($ch));
+    //     }        
+    //     // Close connection
+    //     curl_close($ch);
+    //     // FCM response
+    //     // dd($result);    
+    
+    // }
 
     public function handle()
     {
