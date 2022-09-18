@@ -6,7 +6,7 @@ use App\Models\Absence;
 use App\Models\Employee;
 use App\Models\History;
 use App\Models\Department;
-use App\Models\Holiday;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -66,67 +66,19 @@ class LogCron extends Command
                                 History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
                                 $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , $department->message);
-
+                                
                                 Log::info("In zone");
                             }
+                        }
                     }
-                  }
-              }
-          }
+                }
+            }
         }else{
-                Log::info("Empty Array");
-
+            Log::info("Empty Array");
+            
         }
     }
-
-    // public function getAbsenceDay($id)
-    // {
-    //     $employee = Employee::select('absence_day')->where('id',$id)->first();
-    //     return $employee;
-    // }
-
-
-        
-
-
-    public function notification($token_1 , $title , $body){
-
-    $SERVER_API_KEY = 'AAAAIcuTN7M:APA91bE7BypbrcpQyq4Quxt8inZF4-yeOcpGQUU5I1cXd_5jEO7t2EfA-jNKUUbZlKarVOWAt5iVjTxM2Fubh85BA6qE3rCZY9Zwx1fmPJK1fza5xKZfpIJpPmEQ7v-10WMiBldCHl7a';
-    $data = [
-        "registration_ids" => [
-            $token_1
-        ],
-            "notification" => [
-            "title" => $title,
-            "body" => $body,
-            "sound"=> "default" // required for sound on ios
-        ],
-    ];
-
-    $dataString = json_encode($data);
-
-    $headers = [
-
-        'Authorization: key=' . $SERVER_API_KEY,
-
-        'Content-Type: application/json',
-
-    ];
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-
-    $response = curl_exec($ch);
-    $response = json_decode($response, true);
-
-        Log::info($response);
-    }
-
+    
     public function time(){
 
         $ch = curl_init();
@@ -171,14 +123,68 @@ class LogCron extends Command
 
 
     }                                                                                                                                                                                                                                                                            
+    // public function getAbsenceDay($id)
+    // {
+    //     $employee = Employee::select('absence_day')->where('id',$id)->first();
+    //     return $employee;
+    // }
+
+
+        
+
+
+    public function notification( $title , $body){
+
+    $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
+    $tokens =Employee::select('mobile_token')->get();
+    foreach($tokens as $x){
+
+        $data = [
+            "registration_ids" => 
+                $x
+            ,
+                "notification" => [
+                "title" => $title,
+                "body" => $body,
+                "sound"=> "default" // required for sound on ios
+            ],
+        ];
+        $dataString = json_encode($data);
+    
+        $headers = [
+    
+            'Authorization: key=' . $SERVER_API_KEY,
+    
+            'Content-Type: application/json',
+    
+        ];
+    
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+    
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+    
+            Log::info($response);
+    }
+
+    }
+
 
 
 
 
     public function handle()
     {
-        $this->notification($token_1, "test", "test");
-        $this->distance();
+    // $mobile_token =Employee::select('mobile_token')->get();
+
+        $this->notification( "test", "test");
+        // $this->distance();
         // $this->time();
         // $this->manageShiftStart();
         // $this->manageShiftEnd();

@@ -17,7 +17,7 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        $department =  Department::create($request->all());
+        return Department::create($request->all());
        
     //     DB::statement("
     //     DROP EVENT  AddEventDep".$department->id.";

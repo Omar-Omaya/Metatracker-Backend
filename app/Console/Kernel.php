@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Log;
         protected $commands = [
             Commands\LogCron::class,
             Commands\AbsenceDays::class,
+            Commands\ManageShift::class,
+
 
         ];
           
