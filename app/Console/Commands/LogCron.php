@@ -56,17 +56,15 @@ class LogCron extends Command
               foreach($historiesOfEmployees as $historiesOfEmployee){
                   if($department->id == $historiesOfEmployee->Employee->department_id){
                         if(is_null($historiesOfEmployee->End_time)){
-                            $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
-                            if($distance > 0){
-
-                                History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
+                            // $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
+                            if($historiesOfEmployee['Out_of_zone'] ==1){
+                                // History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
                                 $this->notification($historiesOfEmployee->Employee->mobile_token, 'Warning' , 'You are out of zone !');
                                 Log::info("Out of zone");
                             }else{
-                                History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
+                                // History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
                                 $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , $department->message);
-                                
                                 Log::info("In zone");
                             }
                         }
@@ -133,16 +131,12 @@ class LogCron extends Command
         
 
 
-    public function notification( $title , $body){
+    public function notification( $mobile_token,$title , $body){
 
     $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
-    $tokens =Employee::select('mobile_token')->get();
-    foreach($tokens as $x){
-
+    // $tokens =Employee::select('mobile_token')->get();
         $data = [
-            "registration_ids" => 
-                $x
-            ,
+            "registration_ids" => [$mobile_token],
                 "notification" => [
                 "title" => $title,
                 "body" => $body,
@@ -167,11 +161,19 @@ class LogCron extends Command
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
     
-        $response = curl_exec($ch);
-        $response = json_decode($response, true);
+        // $response = curl_exec($ch);
+        // $response = json_decode($response, true);
+        
+        $result = curl_exec($ch);
+        Log::info("Response is ".$result);
+        if ($result === FALSE) {
+            Log::info('Curl failed: ' . curl_error($ch));
+        }        
+        // Close connection
+        curl_close($ch);
+        // FCM response
+        // dd($result);    
     
-            Log::info($response);
-    }
 
     }
 
@@ -183,8 +185,8 @@ class LogCron extends Command
     {
     // $mobile_token =Employee::select('mobile_token')->get();
 
-        $this->notification( "test", "test");
-        // $this->distance();
+        // $this->notification( "test", "test");
+        $this->distance();
         // $this->time();
         // $this->manageShiftStart();
         // $this->manageShiftEnd();

@@ -101,6 +101,9 @@ class EmployeeController extends Controller
             
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
+        if(array_key_exists("password",$request)){
+            $request->password = bcrypt($request->password );
+        }
 
         $employee->update($request->all());
         return $employee;
