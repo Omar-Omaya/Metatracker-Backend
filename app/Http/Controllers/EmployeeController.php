@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -96,15 +97,17 @@ class EmployeeController extends Controller
 
             'dep_name' =>'required',
         ]);
+        if($request->exists("password")){
+            $request['password'] = bcrypt($request->password );
+            echo $request->password;
+        }
         if(empty($fields['dep_name'])){
             $department_id = Department::where('dep_name',$fields['dep_name'])->first();
             
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
-        if($request->exists("password")){
-            $request->password = bcrypt($request->password );
-        }
-
+        
+        print_r($request->all());
         $employee->update($request->all());
         return $employee;
     }
@@ -140,4 +143,3 @@ class EmployeeController extends Controller
 
 
 }
-
