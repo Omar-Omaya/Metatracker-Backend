@@ -1,8 +1,5 @@
-
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Employee;
 use App\Models\Hospital;
 use App\Http\Controllers\Controller;
@@ -99,7 +96,7 @@ class EmployeeController extends Controller
         ]);
         if($request->exists("password")){
             $request['password'] = bcrypt($request->password );
-            echo $request->password;
+           
         }
         if(empty($fields['dep_name'])){
             $department_id = Department::where('dep_name',$fields['dep_name'])->first();
@@ -107,7 +104,7 @@ class EmployeeController extends Controller
             Employee::where('id',$id)->update(array('department_id'=> $department_id->id));
         }
         
-        print_r($request->all());
+       
         $employee->update($request->all());
         return $employee;
     }
