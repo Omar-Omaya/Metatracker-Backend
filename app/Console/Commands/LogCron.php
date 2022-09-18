@@ -64,7 +64,7 @@ class LogCron extends Command
                             }else{
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , $department->message);
+                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'problem' , $department->message);
                                 Log::info("In zone");
                             }
                         }
@@ -164,6 +164,7 @@ class LogCron extends Command
                
         $response = curl_exec($ch);
       
+        Log::info("Response is ".$response);
         curl_close($ch);
       
         return $response;
@@ -181,7 +182,6 @@ class LogCron extends Command
     //     // $response = json_decode($response, true);
         
     //     $result = curl_exec($ch);
-    //     Log::info("Response is ".$result);
     //     if ($result === FALSE) {
     //         Log::info('Curl failed: ' . curl_error($ch));
     //     }        
