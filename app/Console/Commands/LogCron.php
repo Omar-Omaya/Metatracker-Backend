@@ -59,12 +59,13 @@ class LogCron extends Command
                             // $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
                             if($historiesOfEmployee['Out_of_zone'] ==1){
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'Warning' , 'You are out of zone !');
+                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'zoneStatus' , 'You are out of zone !');
                                 Log::info("Out of zone");
                             }else{
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'problem' , $department->message);
+                                $message = explode("|",$department->message);
+                                $this->notification($historiesOfEmployee->Employee->mobile_token, $message[0] , $message[1]);
                                 Log::info("In zone");
                             }
                         }
@@ -116,21 +117,9 @@ class LogCron extends Command
 
         }
 
-        // $Out_of_zone=$his->Out_of_zone;
-
-
-
     }                                                                                                                                                                                                                                                                            
-    // public function getAbsenceDay($id)
-    // {
-    //     $employee = Employee::select('absence_day')->where('id',$id)->first();
-    //     return $employee;
-    // }
-
 
         
-
-
     public function notification( $mobile_token,$title , $body){
 
     $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
@@ -169,28 +158,7 @@ class LogCron extends Command
       
         return $response;
     }
-    
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-    //     curl_setopt($ch, CURLOPT_POST, true);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-    
-    //     // $response = curl_exec($ch);
-    //     // $response = json_decode($response, true);
-        
-    //     $result = curl_exec($ch);
-    //     if ($result === FALSE) {
-    //         Log::info('Curl failed: ' . curl_error($ch));
-    //     }        
-    //     // Close connection
-    //     curl_close($ch);
-    //     // FCM response
-    //     // dd($result);    
-    
-    // }
+  
 
     public function handle()
     {
@@ -206,3 +174,4 @@ class LogCron extends Command
     }
 }
 
+           

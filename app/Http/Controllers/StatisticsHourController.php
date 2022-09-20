@@ -40,10 +40,10 @@ class StatisticsHourController extends Controller
     private function getDiffHours($start, $end)
     {
         if($end['hour']> $start['hour'])
-                      $end = new Carbon('2018-05-12 ' . $end['hour'] . ':' . $end['min'] . ':00');
+                $end = new Carbon('2018-05-12 ' . $end['hour'] . ':' . $end['min'] . ':00');
               else
-                      $end = new Carbon('2018-05-13 ' . $end['hour'] . ':' . $end['min'] . ':00');
-        $start = new Carbon('2018-05-12 ' . $start['hour'] . ':' . $start['min'] . ':00'); 
+                $end = new Carbon('2018-05-13 ' . $end['hour'] . ':' . $end['min'] . ':00');
+                $start = new Carbon('2018-05-12 ' . $start['hour'] . ':' . $start['min'] . ':00'); 
         // echo  $start->diff($end)->format('%H')."/n"; 
         // echo   $start->diff($end)->format('%i') / 60.0;   
         return $start->diff($end)->format('%H') + $start->diff($end)->format('%i') / 60.0 ;
