@@ -79,9 +79,13 @@ class ManageShift extends Command
             ->where('const_Arrival_time',$timeInHour)
             ->get();
 
+
+
             $today="20".$current_time->format('y-m-d');
             // Log::info($empofdepartments);
             foreach($empofdepartments as $empofdepartment){
+                if( $this->isEmployeeCheckedIn($empofdepartment->empID))
+                    continue;
                 if($empofdepartment->day == 1 ){
                     $this->updatePaidEmployee($empofdepartment->empID);
                     continue;
@@ -132,7 +136,11 @@ class ManageShift extends Command
 
     }
 
+    private function isEmployeeCheckedIn($empID){
+        $endTime=History::where('employee_id', $empID)->whereNull('End_time')->count();
+        return $endTime>0;
 
+    }
     public function handle()
     {
          // $this->time();
