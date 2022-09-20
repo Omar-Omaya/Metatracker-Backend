@@ -60,13 +60,13 @@ class LogCron extends Command
                             if($historiesOfEmployee['Out_of_zone'] ==1){
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
                                 $this->notification($historiesOfEmployee->Employee->mobile_token, 'zoneStatus' , 'You are out of zone !');
-                                Log::info("Out of zone");
+                                // Log::info("Out of zone");
                             }else{
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
                                 $message = explode("|",$department->message);
                                 $this->notification($historiesOfEmployee->Employee->mobile_token, $message[0] , $message[1]);
-                                Log::info("In zone");
+                                // Log::info("In zone");
                             }
                         }
                     }
@@ -76,6 +76,23 @@ class LogCron extends Command
             Log::info("Empty Array");
             
         }
+    }
+
+    public function lateNotify(){
+
+        $absentEmployees = DB::table('absences')
+        ->join('employees','employees.id' ,'=','absences.employee_id')
+        ->where('absences.pending','=',1)
+        ->get();
+
+        foreach($absentEmployees as $absentEmployee){
+            $this->notification($absentEmployee->mobile_token,'Late','You are late');
+
+        }
+
+        
+
+
     }
     
     public function time(){
@@ -164,7 +181,7 @@ class LogCron extends Command
     {
     // $mobile_token =Employee::select('mobile_token')->get();
 
-        // $this->notification( "test", "test");
+        $this->lateNotify();
         $this->distance();
         // $this->time();
         // $this->manageShiftStart();
