@@ -41,7 +41,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class , 'register']);
 
-Route::post('/login', [AuthController::class , 'login']);
 
 
 
@@ -77,15 +76,10 @@ Route::get('/latlngemp/{id}', [HistoryController::class , 'latlngEmp']);
 
 
 Route::get('/histories/{id}', [HistoryController::class , 'show']);
-Route::post('/histories', [HistoryController::class , 'store']);
-Route::put('/histories', [HistoryController::class , 'update']);
-Route::put('/latlng', [HistoryController::class , 'updateLatLong']);
 
 
 Route::get('/histories/search/{name}', [HistoryController::class , 'search']);
 Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
-Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
-Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
 
 Route::get('/count-out/{company_id}', [HistoryController::class , 'getOutOfZoneToday']);
 Route::get('/count-in/{company_id}', [HistoryController::class , 'getInOfZoneToday']);
@@ -148,7 +142,7 @@ Route::get('/getannounc/{admin_id}', [MessageController::class , 'getAllMessageA
 // Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
 
-    Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
+Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
 //Public Route Notification
 Route::get('/notification', [NotificationController::class, 'notificationTesting']);
@@ -177,19 +171,25 @@ Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHou
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/login', [AuthController::class , 'login']);
+    Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
+    Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
     Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     // Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
     Route::get('/number-of-employees', [EmployeeController::class , 'index']);
-
+    
     Route::get('/calcOut', [StatsController::class , 'calcgetOutOfZoneMonth']);
     Route::get('/calcIn', [StatsController::class , 'calcgetInOfZoneMonth']);
     
     Route::get('/calcOutEmp/{id}', [StatsController::class , 'calcgetOutOfZoneMonthPerEmp']);
     Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
 
-
+    
+    Route::post('/histories', [HistoryController::class , 'store']);
+    Route::put('/histories', [HistoryController::class , 'update']);
+    Route::put('/latlng', [HistoryController::class , 'updateLatLong']);
 
 });
 

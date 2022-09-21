@@ -89,10 +89,6 @@ class LogCron extends Command
             $this->notification($absentEmployee->mobile_token,'Late','You are late');
 
         }
-
-        
-
-
     }
     
     public function time(){
