@@ -149,8 +149,10 @@ class StatisticsHourController extends Controller
 
         $leftEarly= StatisticsHourController::getDiffHours($end_time,$departmentTimeData['leave_time']);
         $leftLate= StatisticsHourController::getDiffHours($departmentTimeData['leave_time'],$end_time);
+
         $secondDelay= $leftEarly < $leftLate ? $leftEarly : 0;
         $secondLate= $leftEarly > $leftLate ? $leftLate : 0;
+
        $result=($firstDelay+ $secondDelay) - ($firstEarly+ $secondLate);
        return ($result>0) ? $result :  0;       
 }
@@ -160,10 +162,12 @@ class StatisticsHourController extends Controller
             'hour' =>$department->const_Arrival_time,
             'min'=>0
         ];
+        
         $dep_time_leave=[
             'hour' =>$department->const_Leave_time,
             'min'=>0
         ];
+
         $diffShift= StatisticsHourController::getDiffHours($dep_time_arrival,$dep_time_leave);
 
         return [

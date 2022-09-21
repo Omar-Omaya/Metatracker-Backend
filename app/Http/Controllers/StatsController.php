@@ -31,11 +31,16 @@ class StatsController extends Controller
         
             $count= 0;
             foreach($empofdepofhistories as $data){
-            $departmentData= StatisticsHourController::getDepartmentTotalShiftHours($empofdepofhistories);
-            $startTime=StatisticsHourController::formatTimeString($data->Start_time);
+            // $departmentData= StatisticsHourController::getDepartmentTotalShiftHours($empofdepofhistories);
+            // print_r($departmentData);
+            $arriveTime= $data->const_Arrival_time.":00";
+            
+            $arriveTime=StatisticsHourController::formatTimeString($arriveTime);
 
-            $arriveEarly=StatisticsHourController::getDiffHours($startTime,$departmentData['arrive_time']);
-            $arriveAfter= StatisticsHourController::getDiffHours($departmentData['arrive_time'],$startTime);
+            $startTime=StatisticsHourController::formatTimeString($data->Start_time);
+            
+            $arriveEarly=StatisticsHourController::getDiffHours($startTime,$arriveTime);
+            $arriveAfter= StatisticsHourController::getDiffHours($arriveTime,$startTime);
             $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;    
             // $start_hours= intval(explode(":",$data->Start_time)[0]);
             if($firstDelay != 0)
