@@ -80,7 +80,7 @@ class HistoryController extends Controller
         if($is_inzone){
 
             History::create([
-                'employee_id' => $employee_id,
+                'employee_id' => $fields['employee_id'],
                 'Start_time' => $current_time,
                 'Out_of_zone' => 0,
                 'lat' => $fields['lat'],
