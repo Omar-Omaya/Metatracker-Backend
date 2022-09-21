@@ -169,9 +169,9 @@ Route::post('/week', [WeekEndController::class , 'setHolidayToEmployee']);
 Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHours']);
 
 
+Route::post('/login', [AuthController::class , 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/login', [AuthController::class , 'login']);
     Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
     Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
