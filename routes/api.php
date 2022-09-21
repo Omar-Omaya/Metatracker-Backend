@@ -172,6 +172,7 @@ Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHou
 Route::post('/login', [AuthController::class , 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    
     Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
     Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);

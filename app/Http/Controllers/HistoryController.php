@@ -70,6 +70,9 @@ class HistoryController extends Controller
 
         $content['Start_time'] = $current_time;
 
+        $employee_id =auth('sanctum')->user()->id;
+        
+
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
         //  return History::create($content);
         $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
@@ -77,7 +80,7 @@ class HistoryController extends Controller
         if($is_inzone){
 
             History::create([
-                'employee_id' => $fields['employee_id'],
+                'employee_id' => $employee_id,
                 'Start_time' => $current_time,
                 'Out_of_zone' => 0,
                 'lat' => $fields['lat'],
@@ -222,6 +225,8 @@ class HistoryController extends Controller
         $current_time= $current_time->format('H:i');
 
         $content['End_time'] = $current_time;
+        
+        $employee_id =auth('sanctum')->user()->id;
 
         $history = History::where('employee_id',$fields['employee_id'])->get()->last();
 
@@ -229,7 +234,7 @@ class HistoryController extends Controller
 
 
         $history->update([
-            'employee_id' => $fields['employee_id'],
+            'employee_id' => $employee_id,
             'lat' => $fields['lat'],
             'lng' => $fields['lng'],
             'End_time' => $current_time,
@@ -249,11 +254,14 @@ class HistoryController extends Controller
             'lng' => 'required'
         ]);
 
+        $employee_id =auth('sanctum')->user()->id;
+
         $history = History::where('employee_id',$fields['employee_id'])->get()->last();
 
         $is_inzone = $this->distance($request->employee_id,$request->lat,$request->lng);
+
         $update = $history->update([
-            
+            'employee_id' => $employee_id,
             'lat' => $fields['lat'],
             'lng' => $fields['lng'],
             'Out_of_zone' =>!$is_inzone,
