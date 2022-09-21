@@ -23,7 +23,7 @@ class StatisticsHourController extends Controller
      */
 
 
-    private function formatTimeString($time)
+    public static function formatTimeString($time)
     {
         $time = explode(":", $time);
         if(count($time) ==1)
@@ -37,7 +37,7 @@ class StatisticsHourController extends Controller
         return $time;
     }
 
-    private function getDiffHours($start, $end)
+    public static function getDiffHours($start, $end)
     {
         if($end['hour']> $start['hour'])
                 $end = new Carbon('2018-05-12 ' . $end['hour'] . ':' . $end['min'] . ':00');
@@ -141,21 +141,21 @@ class StatisticsHourController extends Controller
         return $empOfDepartments;
     }
 
-    private function calculateDelay($departmentTimeData, $start_time, $end_time){
-        $arriveEarly=$this->getDiffHours($start_time,$departmentTimeData['arrive_time']);
-        $arriveAfter= $this->getDiffHours($departmentTimeData['arrive_time'],$start_time);
+    public static function calculateDelay($departmentTimeData, $start_time, $end_time){
+        $arriveEarly=StatisticsHourController::getDiffHours($start_time,$departmentTimeData['arrive_time']);
+        $arriveAfter= StatisticsHourController::getDiffHours($departmentTimeData['arrive_time'],$start_time);
         $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;
         $firstEarly= $arriveEarly < $arriveAfter ? $arriveEarly : 0;
 
-        $leftEarly= $this->getDiffHours($end_time,$departmentTimeData['leave_time']);
-        $leftLate= $this->getDiffHours($departmentTimeData['leave_time'],$end_time);
+        $leftEarly= StatisticsHourController::getDiffHours($end_time,$departmentTimeData['leave_time']);
+        $leftLate= StatisticsHourController::getDiffHours($departmentTimeData['leave_time'],$end_time);
         $secondDelay= $leftEarly < $leftLate ? $leftEarly : 0;
         $secondLate= $leftEarly > $leftLate ? $leftLate : 0;
        $result=($firstDelay+ $secondDelay) - ($firstEarly+ $secondLate);
        return ($result>0) ? $result :  0;       
 }
 
-    private function getDepartmentTotalShiftHours($department){
+    public static function getDepartmentTotalShiftHours($department){
         $dep_time_arrival=[
             'hour' =>$department->const_Arrival_time,
             'min'=>0
@@ -164,7 +164,7 @@ class StatisticsHourController extends Controller
             'hour' =>$department->const_Leave_time,
             'min'=>0
         ];
-        $diffShift= $this->getDiffHours($dep_time_arrival,$dep_time_leave);
+        $diffShift= StatisticsHourController::getDiffHours($dep_time_arrival,$dep_time_leave);
 
         return [
             'arrive_time' => $dep_time_arrival,

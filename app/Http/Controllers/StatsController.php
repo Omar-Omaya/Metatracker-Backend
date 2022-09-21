@@ -28,15 +28,21 @@ class StatsController extends Controller
             ->join('histories','histories.employee_id','=','employees.id')
             ->whereDate('histories.created_at',Carbon::today())
             ->get();
-
+        
             $count= 0;
             foreach($empofdepofhistories as $data){
-                $start_hours= intval(explode(":",$data->Start_time)[0]);
-                if($start_hours > $data->const_Arrival_time)
-                    $count++;
+            $departmentData= StatisticsHourController::getDepartmentTotalShiftHours($empofdepofhistories);
+            $startTime=StatisticsHourController::formatTimeString($data->Start_time);
 
-            }
-            return $count;
+            $arriveEarly=StatisticsHourController::getDiffHours($startTime,$departmentData['arrive_time']);
+            $arriveAfter= StatisticsHourController::getDiffHours($departmentData['arrive_time'],$startTime);
+            $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;    
+            // $start_hours= intval(explode(":",$data->Start_time)[0]);
+            if($firstDelay != 0)
+                $count++;
+
+        }
+        return $count;
 
     }
 
