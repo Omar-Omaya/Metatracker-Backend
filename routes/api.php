@@ -97,12 +97,6 @@ Route::get('/outZoneholiday', [StatsController::class , 'outZoneholiday']);
 
 
 
-
-
-
-
-
-
 // Public Route Message
 Route::get('/msg/{id}', [MessageController::class , 'show']);
 Route::get('/msgs', [MessageController::class , 'getMessage']);
@@ -168,13 +162,17 @@ Route::post('/week', [WeekEndController::class , 'setHolidayToEmployee']);
 
 Route::get('/Actual/{id}', [StatisticsHourController::class , 'getTotalActualHours']);
 
+// Mobile api
 
 Route::post('/login', [AuthController::class , 'login']);
+Route::post('/histories', [HistoryController::class , 'store']);
+Route::put('/histories', [HistoryController::class , 'update']);
+Route::put('/latlng', [HistoryController::class , 'updateLatLong']);
+Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
+Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    
-    Route::get('/attend', [HistoryController::class, 'countAttendanceDay']);
-    Route::get('/absence', [HistoryController::class , 'getAbsenceDay']);
+
     Route::get('/count-dep', [DepartmentController::class , 'countAllDepartment']);
     Route::get('/get-deps', [DepartmentController::class , 'readAllDepartment']);
     Route::get('/get-employees', [EmployeeController::class , 'getAllEmployees']);
@@ -188,9 +186,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/calcInEmp/{id}', [StatsController::class , 'calcgetInOfZoneMonthPerEmp']);
 
     
-    Route::post('/histories', [HistoryController::class , 'store']);
-    Route::put('/histories', [HistoryController::class , 'update']);
-    Route::put('/latlng', [HistoryController::class , 'updateLatLong']);
 
 });
 
