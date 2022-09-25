@@ -70,7 +70,9 @@ class HistoryController extends Controller
 
         $content['Start_time'] = $current_time;
 
-        $employee_id =auth('sanctum')->user()->id;
+        // $employee_id =auth('sanctum')->user()->id;
+
+        $employee_id= $fields['employee_id'];
         
 
         if(!History::where('employee_id', $request->employee_id )->whereDate('created_at', '=', Carbon::today())->exists()){
@@ -227,8 +229,11 @@ class HistoryController extends Controller
         $current_time= $current_time->format('H:i');
 
         $content['End_time'] = $current_time;
+
+        $employee_id= $fields['employee_id'];
+
         
-        $employee_id =auth('sanctum')->user()->id;
+        // $employee_id =auth('sanctum')->user()->id;
 
         $history = History::where('employee_id',$fields['employee_id'])->get()->last();
 
@@ -256,7 +261,8 @@ class HistoryController extends Controller
             'lng' => 'required'
         ]);
 
-        $employee_id =auth('sanctum')->user()->id;
+        // $employee_id =auth('sanctum')->user()->id;
+        $employee_id= $fields['employee_id'];
 
         $history = History::where('employee_id',$fields['employee_id'])->get()->last();
 
