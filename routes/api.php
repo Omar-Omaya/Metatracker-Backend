@@ -21,7 +21,7 @@ use App\Http\Controllers\MonthlyProductivityController;
 
 
 use App\Http\Controllers\MessageEmployeeController;
-
+use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -92,7 +92,7 @@ Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
 
 // dashboard
 Route::get('/inZoneLate', [StatsController::class , 'inZoneLate']);
-Route::get('/inZoneLateEmp/{id}', [StatsController::class , 'inZoneLateEmp']);
+Route::get('/inZoneLateEmp/{id}', [HistoryController::class , 'inZoneLateEmp']);
 
 
 Route::get('/outZoneNoexcuse', [StatsController::class , 'outZoneNoexcuse']);
