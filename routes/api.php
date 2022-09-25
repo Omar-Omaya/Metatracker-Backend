@@ -92,6 +92,9 @@ Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
 
 // dashboard
 Route::get('/inZoneLate', [StatsController::class , 'inZoneLate']);
+Route::get('/inZoneLateEmp/{id}', [StatsController::class , 'inZoneLateEmp']);
+
+
 Route::get('/outZoneNoexcuse', [StatsController::class , 'outZoneNoexcuse']);
 Route::get('/outZoneholiday', [StatsController::class , 'outZoneholiday']);
 

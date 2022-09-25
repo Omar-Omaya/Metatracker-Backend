@@ -313,4 +313,35 @@ class HistoryController extends Controller
         $outZone=$history->Out_of_zone_time+ $time_diff;
         return $outZone;
 }
+
+public function inZoneLateEmp(Request $request,$id){
+        
+      
+    $empofdepofhistories = DB::table('departments')
+        ->join('employees','employees.department_id', '=' ,'departments.id')
+        ->join('histories','histories.employee_id','=','employees.id')
+        ->where('employees.id',$id)
+        ->whereNull('histories.End_time')
+        ->first();
+    
+     
+        // foreach($empofdepofhistories as $data){
+       
+        $arriveTime= $empofdepofhistories->const_Arrival_time.":00";
+        
+        $arriveTime=StatisticsHourController::formatTimeString($arriveTime);
+
+        $startTime=StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
+        
+        $arriveEarly=StatisticsHourController::getDiffHours($startTime,$arriveTime);
+        $arriveAfter= StatisticsHourController::getDiffHours($arriveTime,$startTime);
+        $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;    
+        // $start_hours= intval(explode(":",$data->Start_time)[0]);
+        return $firstDelay;
+        
+        
+    }
+    
+
+
 }
