@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-// use App\Http\Controllers\Stat
+
+use App\Http\Controllers\StatisticsHourController;
 
 use App\Models\Absence;
 use App\Models\Employee;
@@ -308,11 +309,14 @@ class HistoryController extends Controller
     }
 
     private function compute_out_zone_time(History $history){
+
         if(!$history->Out_of_zone)
-                return $history->Out_of_zone_time;
+        return $history->Out_of_zone_time;
+
         $current_time= $this->getCurrentTime();
         $time_diff= $current_time->diffInMinutes($history->updated_at);  
         $outZone=$history->Out_of_zone_time+ $time_diff;
+
         return $outZone;
 }
 
@@ -327,29 +331,30 @@ class HistoryController extends Controller
      }
 
         
-     public function inZoneLateEmp(Request $request,$id){
-                    
-
-            $empofdepofhistories = DB::table('departments')
-                    ->join('employees','employees.department_id', '=' ,'departments.id')
-                    ->join('histories','histories.employee_id','=','employees.id')
-                    ->where('employees.id',$id)
-                    ->whereNull('histories.End_time')
-                    ->first();
-            
-                    $arriveTime= $empofdepofhistories->const_Arrival_time.":00";               
-                    $arriveTime=StatisticsHourController::formatTimeString($arriveTime);
-                    $startTime=StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
-                    $delay=$this->computeDelay($arriveTime,$startTime);
-                    $out_zone_time= $empofdepofhistories->Out_of_zone_time;
-                    $currentTime= StatisticsHourController::formatTimeString(Carbon::now()->format("H:i"));
-                    $total_time_till_now=StatisticsHourController::getDiffHours($startTime,$currentTime);
-                    return [
-                            'delay' => $delay,
-                            'out_zone_time' => $out_zone_time,
-                            'total_time' => $total_time_till_now
-                    ];
-            }
+     public function inZoneLateEmp(Request $request){
+        
+        $id = $request->id;
+    
+        $empofdepofhistories = DB::table('departments')
+                ->join('employees','employees.department_id', '=' ,'departments.id')
+                ->join('histories','histories.employee_id','=','employees.id')
+                ->where('employees.id',$id)
+                ->whereNull('histories.End_time')
+                ->first();
+        
+                $arriveTime= $empofdepofhistories->const_Arrival_time.":00";               
+                $arriveTime= StatisticsHourController::formatTimeString($arriveTime);
+                $startTime= StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
+                $delay=$this->computeDelay($arriveTime,$startTime);
+                $out_zone_time= $empofdepofhistories->Out_of_zone_time;
+                $currentTime= StatisticsHourController::formatTimeString(Carbon::now()->format("H:i"));
+                $total_time_till_now=StatisticsHourController::getDiffHours($startTime,$currentTime);
+                return [
+                        'delay' => $delay,
+                        'out_zone_time' => $out_zone_time,
+                        'total_time' => $total_time_till_now
+                ];
+        }
 
             
 

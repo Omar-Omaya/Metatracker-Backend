@@ -18,7 +18,9 @@ class NotificationController extends Controller
         $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
         // $tokens =Employee::select('mobile_token')->get();
             $data = [
-                "registration_ids" => [$mobile_token],
+                "registration_ids" => [
+                    $mobile_token
+                ],
                     "notification" => [
                     "title" => $title,
                     "body" => $body,
