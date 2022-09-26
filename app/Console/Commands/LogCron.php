@@ -87,7 +87,7 @@ class LogCron extends Command
         ->get();
 
         foreach($absentEmployees as $absentEmployee){
-            $this->notification($absentEmployee->mobile_token,'Late','You are late');
+            NotificationController::notification($absentEmployee->mobile_token,'Late','You are late',-1);
 
         }
     }
