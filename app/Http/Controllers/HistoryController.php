@@ -319,12 +319,14 @@ class HistoryController extends Controller
     private function computeDelay($arriveTime,$startTime){       
         $arriveEarly=StatisticsHourController::getDiffHours($startTime,$arriveTime);
         $arriveAfter= StatisticsHourController::getDiffHours($arriveTime,$startTime);
-        $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;     
+        $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0; 
+        return $firstDelay;    
 
-            }
-        public function inZoneLateEmp(Request $request,$id){
+     }
+
+        
+     public function inZoneLateEmp(Request $request,$id){
                     
-                
             $empofdepofhistories = DB::table('departments')
                     ->join('employees','employees.department_id', '=' ,'departments.id')
                     ->join('histories','histories.employee_id','=','employees.id')
