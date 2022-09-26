@@ -12,6 +12,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Salman\GeoFence\Service\GeoFenceCalculator;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\NotificationController;
 
 class LogCron extends Command
 {
@@ -59,13 +60,13 @@ class LogCron extends Command
                             // $distance = $d_calculator->CalculateDistance($department->lat, $department->lng, $historiesOfEmployee->lat, $historiesOfEmployee->lng);
                             if($historiesOfEmployee['Out_of_zone'] ==1){
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(array('Out_of_zone' => true ,'Out_of_zone_time' => Carbon::now()->toDateTimeString()));
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, 'zoneStatus' , 'You are out of zone !');
+                                NotificationController::notification($historiesOfEmployee->Employee->mobile_token, 'zoneStatus' , 'You are out of zone !', -1);
                                 // Log::info("Out of zone");
                             }else{
                                 // History::where('employee_id', $historiesOfEmployee->employee_id)->update(['Out_of_zone' => false]);
                                 // $this->notification($historiesOfEmployee->Employee->mobile_token, 'Notification' , 'Any problem ?');
                                 $message = explode("|",$department->message);
-                                $this->notification($historiesOfEmployee->Employee->mobile_token, $message[0] , $message[1]);
+                                NotificationController::notification($historiesOfEmployee->Employee->mobile_token, $message[0] , $message[1] , $historiesOfEmployee->id);
                                 // Log::info("In zone");
                             }
                         }
@@ -133,45 +134,7 @@ class LogCron extends Command
     }                                                                                                                                                                                                                                                                            
 
         
-    public function notification( $mobile_token,$title , $body){
-
-    $SERVER_API_KEY = 'AAAA8o82R9Y:APA91bEcTVT3LDwhIQfiCaPEjAzBnXjZLC75-OGAKxmBt2UZAs2RhvAmqBcPRIDmqaxuIu2_RaKNgvArviKasMPAyWxZJChpRPzvlRvOI63lshiezuYcxyDQNMdbglfnqpSuEX4wwcWH';
-    // $tokens =Employee::select('mobile_token')->get();
-        $data = [
-            "registration_ids" => [$mobile_token],
-                "notification" => [
-                "title" => $title,
-                "body" => $body,
-                "sound"=> "default" // required for sound on ios
-            ],
-        ];
-        $dataString = json_encode($data);
     
-        $headers = [
-    
-            'Authorization: key=' . $SERVER_API_KEY,
-    
-            'Content-Type: application/json',
-    
-        ];
-
-        $ch = curl_init();
-      
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-               
-        $response = curl_exec($ch);
-      
-        Log::info("Response is ".$response);
-        curl_close($ch);
-      
-        return $response;
-    }
-  
 
     public function handle()
     {

@@ -34,4 +34,9 @@ class History extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

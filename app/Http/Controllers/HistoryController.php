@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+// use App\Http\Controllers\Stat
+
 use App\Models\Absence;
 use App\Models\Employee;
 use App\Models\History;
@@ -327,6 +329,7 @@ class HistoryController extends Controller
         
      public function inZoneLateEmp(Request $request,$id){
                     
+
             $empofdepofhistories = DB::table('departments')
                     ->join('employees','employees.department_id', '=' ,'departments.id')
                     ->join('histories','histories.employee_id','=','employees.id')
