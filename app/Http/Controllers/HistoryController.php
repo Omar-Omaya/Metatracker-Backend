@@ -314,34 +314,39 @@ class HistoryController extends Controller
         return $outZone;
 }
 
-public function inZoneLateEmp(Request $request,$id){
-        
-      
-    $empofdepofhistories = DB::table('departments')
-        ->join('employees','employees.department_id', '=' ,'departments.id')
-        ->join('histories','histories.employee_id','=','employees.id')
-        ->where('employees.id',$id)
-        ->whereNull('histories.End_time')
-        ->first();
-    
-     
-        // foreach($empofdepofhistories as $data){
-       
-        $arriveTime= $empofdepofhistories->const_Arrival_time.":00";
-        
-        $arriveTime=StatisticsHourController::formatTimeString($arriveTime);
 
-        $startTime=StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
-        
+
+    private function computeDelay($arriveTime,$startTime){       
         $arriveEarly=StatisticsHourController::getDiffHours($startTime,$arriveTime);
         $arriveAfter= StatisticsHourController::getDiffHours($arriveTime,$startTime);
-        $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;    
-        // $start_hours= intval(explode(":",$data->Start_time)[0]);
-        return $firstDelay;
-        
-        
-    }
-    
+        $firstDelay= $arriveEarly > $arriveAfter ? $arriveAfter : 0;     
+
+            }
+        public function inZoneLateEmp(Request $request,$id){
+                    
+                
+            $empofdepofhistories = DB::table('departments')
+                    ->join('employees','employees.department_id', '=' ,'departments.id')
+                    ->join('histories','histories.employee_id','=','employees.id')
+                    ->where('employees.id',$id)
+                    ->whereNull('histories.End_time')
+                    ->first();
+            
+                    $arriveTime= $empofdepofhistories->const_Arrival_time.":00";               
+                    $arriveTime=StatisticsHourController::formatTimeString($arriveTime);
+                    $startTime=StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
+                    $delay=$this->computeDelay($arriveTime,$startTime);
+                    $out_zone_time= $empofdepofhistories->Out_of_zone_time;
+                    $currentTime= StatisticsHourController::formatTimeString(Carbon::now()->format("H:i"));
+                    $total_time_till_now=StatisticsHourController::getDiffHours($startTime,$currentTime);
+                    return [
+                            'delay' => $delay,
+                            'out_zone_time' => $out_zone_time,
+                            'total_time' => $total_time_till_now
+                    ];
+            }
+
+            
 
 
 }
