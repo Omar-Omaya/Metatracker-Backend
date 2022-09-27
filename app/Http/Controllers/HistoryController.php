@@ -331,9 +331,9 @@ class HistoryController extends Controller
      }
 
         
-     public function inZoneLateEmp(Request $request){
+     public function inZoneLateEmp(Request $request,$id){
         
-        $id = $request->id;
+        // $id = $request->id;
     
         $empofdepofhistories = DB::table('departments')
                 ->join('employees','employees.department_id', '=' ,'departments.id')
