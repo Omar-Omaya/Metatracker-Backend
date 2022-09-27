@@ -92,7 +92,7 @@ Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
 
 // dashboard
 Route::get('/inZoneLate', [StatsController::class , 'inZoneLate']);
-Route::get('/inZoneLateEmp/{id}', [HistoryController::class , 'inZoneLateEmp']);
+Route::get('/inZoneLateEmp', [HistoryController::class , 'inZoneLateEmp']);
 
 
 Route::get('/outZoneNoexcuse', [StatsController::class , 'outZoneNoexcuse']);
