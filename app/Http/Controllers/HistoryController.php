@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Controllers\StatisticsHourController;
 
 use App\Models\Absence;
@@ -345,7 +344,7 @@ class HistoryController extends Controller
                 $arriveTime= $empofdepofhistories->const_Arrival_time.":00";               
                 $arriveTime= StatisticsHourController::formatTimeString($arriveTime);
                 $startTime= StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
-                $delay=$this->computeDelay($arriveTime,$startTime);
+                $delay = (double) $this->computeDelay($arriveTime,$startTime);
                 $out_zone_time= $empofdepofhistories->Out_of_zone_time;
                 $currentTime= StatisticsHourController::formatTimeString(Carbon::now()->format("H:i"));
                 $total_time_till_now=StatisticsHourController::getDiffHours($startTime,$currentTime);
