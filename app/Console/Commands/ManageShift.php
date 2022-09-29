@@ -49,12 +49,12 @@ class ManageShift extends Command
 
     private function getCurrentTime(){
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://worldtimeapi.org/api/timezone/Africa/Cairo');
+        curl_setopt($ch, CURLOPT_URL, 'https://timeapi.io/api/TimeZone/zone?timeZone=Africa/Cairo');
         curl_setopt($ch, CURLOPT_HTTPGET, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $response = curl_exec($ch);
         $response = json_decode($response, true);
-        $current_time = Carbon::parse($response['datetime']);
+        $current_time = Carbon::parse($response['currentLocalTime']);
         return $current_time;
     }
 
