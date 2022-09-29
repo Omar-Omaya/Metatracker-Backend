@@ -67,7 +67,7 @@ class HistoryController extends Controller
 
         $response = curl_exec($ch);
         $response = json_decode($response, true);
-        $current_time = Carbon::parse($response['datetime']);
+        $current_time = Carbon::parse($response['currentLocalTime']);
         $current_time= $current_time->format('H:i');
 
 
