@@ -67,11 +67,11 @@ class HistoryController extends Controller
 
         $response = curl_exec($ch);
         $response = json_decode($response, true);
-        // $current_time = Carbon::parse($response['datetime']);
-        // $current_time= $current_time->format('H:i');
+        $current_time = Carbon::parse($response['datetime']);
+        $current_time= $current_time->format('H:i');
 
 
-        // $content['Start_time'] = $current_time;
+        $content['Start_time'] = $current_time;
 
         // $employee_id =auth('sanctum')->user()->id;
 
@@ -86,7 +86,7 @@ class HistoryController extends Controller
 
             History::create([
                 'employee_id' => $fields['employee_id'],
-                'Start_time' => "3",
+                'Start_time' => $current_time,
                 'Out_of_zone' => 0,
                 'lat' => $fields['lat'],
                 'lng' => $fields['lng']
@@ -100,7 +100,7 @@ class HistoryController extends Controller
         else{
             // History::where('employee_id',$request->employee_id)->whereDate('created_at', '=', Carbon::today())->delete();
             // History::create($content);
-            return response([ "alaa History exists previous row deleted"], 402);
+            return response([ "History exists previous row deleted"], 402);
         }
 
         // if($history->Out_of_zone==true){
