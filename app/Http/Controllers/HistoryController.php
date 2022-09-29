@@ -67,11 +67,11 @@ class HistoryController extends Controller
 
         $response = curl_exec($ch);
         $response = json_decode($response, true);
-        $current_time = Carbon::parse($response['datetime']);
-        $current_time= $current_time->format('H:i');
+        // $current_time = Carbon::parse($response['datetime']);
+        // $current_time= $current_time->format('H:i');
 
 
-        $content['Start_time'] = $current_time;
+        // $content['Start_time'] = $current_time;
 
         // $employee_id =auth('sanctum')->user()->id;
 
@@ -86,7 +86,7 @@ class HistoryController extends Controller
 
             History::create([
                 'employee_id' => $fields['employee_id'],
-                'Start_time' => $current_time,
+                'Start_time' => "3",
                 'Out_of_zone' => 0,
                 'lat' => $fields['lat'],
                 'lng' => $fields['lng']
