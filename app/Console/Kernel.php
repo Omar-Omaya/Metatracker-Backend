@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Log;
             Commands\AbsenceDays::class,
             Commands\ManageShift::class,
 
-
         ];
           
         /**
