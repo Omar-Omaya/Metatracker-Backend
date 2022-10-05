@@ -21,10 +21,10 @@ class NotificationController extends Controller
                 "registration_ids" => [
                     $mobile_token
                 ],
+                "id" => $id,
                     "notification" => [
                     "title" => $title,
                     "body" => $body,
-                    "id" => $id,
                     "sound"=> "default" // required for sound on ios
                 ],
             ];
