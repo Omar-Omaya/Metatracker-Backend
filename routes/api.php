@@ -12,6 +12,8 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\WeekEndController;
 use App\Http\Controllers\StatisticsHourController;
 use App\Http\Controllers\MonthlyProductivityController;
+use App\Http\Controllers\CompanyController;
+
 
 
 
