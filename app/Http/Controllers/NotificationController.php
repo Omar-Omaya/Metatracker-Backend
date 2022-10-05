@@ -78,8 +78,7 @@ class NotificationController extends Controller
             // echo $history_id; 
             DB::table('notifications')
             ->where('history_id', $history_id)->whereNull('reply')->limit(1)
-            ->update(['reply' => $request->response,
-                        'updated_at', Carbon::now()]);         
+            ->update(['reply' => $request->response,'updated_at' => Carbon::now()]);         
         }
     
 
