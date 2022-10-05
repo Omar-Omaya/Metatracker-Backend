@@ -3,30 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+   
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +17,16 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'company_name' => 'required|string'
+        ]);
+
+        $company = Company::create([
+            'company_name' =>$fields['company_name']
+        ]);
+
+        return $company;
+
     }
 
     /**
