@@ -20,12 +20,13 @@ class StatsController extends Controller
 {
 // dashboard
 
-    public function inZoneLate(Request $request){
+    public function inZoneLate(Request $request,$company_id){
         
       
         $empofdepofhistories = DB::table('departments')
             ->join('employees','employees.department_id', '=' ,'departments.id')
             ->join('histories','histories.employee_id','=','employees.id')
+            ->where('employees.company_id',$company_id )
             ->whereDate('histories.created_at',Carbon::today())
             ->get();
         

@@ -117,11 +117,17 @@ class HistoryController extends Controller
         return ["count" => Absence::where('employee_id',$id)->count()];
     }
 
-    public function getAbsenceToday()
+    public function getAbsenceToday($company_id)
     {
         $employee_id =auth('sanctum')->user()->id;
 
-        return ["count" =>Absence::whereDate('created_at',Carbon::today())->count()];
+        return [ "count" =>DB::table('absences')
+        ->join('employees','employees.id','absences.employee_id')
+        ->whereDate('absences.created_at',Carbon::today())
+        ->where('employees.company_id',$company_id )
+        ->count()
+    ];
+
     }
 
     public function countAttendanceDay(Request $request)
