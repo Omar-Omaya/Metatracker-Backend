@@ -72,7 +72,8 @@ class NotificationController extends Controller
         }
 
         public function addResponse(Request $request){
-            $history_id=History::where('employee_id'.$request->employee_id)->select('id')->latest(); 
+            $history_id=History::where('employee_id'.$request->employee_id)->select('id')->last();
+            echo $history_id; 
             DB::table('notifications')
             ->where('history_id', $history_id)->limit(1)
             ->update(['response' => $request->response]);         
