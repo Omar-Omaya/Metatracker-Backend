@@ -77,7 +77,7 @@ class NotificationController extends Controller
             echo $history_id; 
             DB::table('notifications')
             ->where('history_id', $history_id)->limit(1)
-            ->update(['response' => $request->response]);         
+            ->update(['reply' => $request->response]);         
         }
     
 
