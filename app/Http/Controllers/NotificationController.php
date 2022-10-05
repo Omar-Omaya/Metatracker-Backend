@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -21,10 +22,10 @@ class NotificationController extends Controller
                 "registration_ids" => [
                     $mobile_token
                 ],
-                "id" => $id,
                     "notification" => [
                     "title" => $title,
                     "body" => $body,
+                    "id" => $id,
                     "sound"=> "default" // required for sound on ios
                 ],
             ];
@@ -65,6 +66,18 @@ class NotificationController extends Controller
             ]);
 
             return $notification->id;
+
+        }
+
+        public function getNotification(Request $request,$id){
+            $history = DB::table('notifications')
+            ->join('histories','histories.id','=','notifications.history_id')
+            ->whereNull('histories.End_time')
+            ->where('histories.employee_id', $id)
+            ->select('notifications.*')
+            ->get();
+
+            return $history;
 
         }
       

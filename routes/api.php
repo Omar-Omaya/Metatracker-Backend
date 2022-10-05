@@ -142,7 +142,7 @@ Route::get('/getannounc/{admin_id}', [MessageController::class , 'getAllMessageA
 Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 
 //Public Route Notification
-Route::get('/notification', [NotificationController::class, 'notificationTesting']);
+Route::get('/getNotification/{id}', [NotificationController::class, 'getNotification']);
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);
