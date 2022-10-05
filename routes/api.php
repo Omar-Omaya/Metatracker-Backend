@@ -144,7 +144,7 @@ Route::get('/emp-dep', [DepartmentController::class , 'empOfDepartments']);
 //Public Route Notification
 Route::get('/getNotification/{id}', [NotificationController::class, 'getNotification']);
 
-Route::post('/addResponse', [NotificationController::class, 'addResponse']);
+Route::post('/addReply', [NotificationController::class, 'addReply']);
 
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
