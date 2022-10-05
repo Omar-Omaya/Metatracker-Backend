@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\History;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification as NotificationsNotification;
 use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
@@ -68,6 +70,16 @@ class NotificationController extends Controller
             return $notification->id;
 
         }
+
+        public function addResponse(Request $request){
+            $history_id=History::where('employee_id'.$request->employee_id)->select('id')->latest(); 
+            DB::table('notifications')
+            ->where('history_id', $history_id)->limit(1)
+            ->update(['response' => $request->response]);         
+        }
+    
+
+        
 
         public function getNotification(Request $request,$id){
             $history = DB::table('notifications')

@@ -346,7 +346,8 @@ class HistoryController extends Controller
                 $arriveTime= StatisticsHourController::formatTimeString($arriveTime);
                 $startTime= StatisticsHourController::formatTimeString($empofdepofhistories->Start_time);
                 $delay = (double) $this->computeDelay($arriveTime,$startTime);
-                $out_zone_time= $empofdepofhistories->Out_of_zone_time;
+                $out_zone_time= $empofdepofhistories->
+                ;
                 $currentTime= StatisticsHourController::formatTimeString(Carbon::now()->format("H:i"));
                 $total_time_till_now=StatisticsHourController::getDiffHours($startTime,$currentTime);
                 return [
