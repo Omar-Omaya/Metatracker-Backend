@@ -86,14 +86,14 @@ Route::delete('/histories/{id}', [HistoryController::class, 'destroy']);
 Route::get('/count-out/{company_id}', [HistoryController::class , 'getOutOfZoneToday']);
 Route::get('/count-in/{company_id}', [HistoryController::class , 'getInOfZoneToday']);
 Route::get('/currentlocation/{id}', [HistoryController::class , 'getCurrentLocation']);
-Route::get('/absence_today', [HistoryController::class , 'getAbsenceToday']);
+Route::get('/absence_today/{company_id}', [HistoryController::class , 'getAbsenceToday']);
 Route::get('/attend_today', [HistoryController::class , 'getAttendanceToday']);
 Route::get('/totalHour/{id}', [HistoryController::class , 'totalHour']);
 Route::get('/calcYear/{id}', [StatsController::class , 'calculateYearly']);
 
 
 // dashboard
-Route::get('/inZoneLate', [StatsController::class , 'inZoneLate']);
+Route::get('/inZoneLate/{company_id}', [StatsController::class , 'inZoneLate']);
 Route::get('/inZoneLateEmp', [HistoryController::class , 'inZoneLateEmp']);
 
 
