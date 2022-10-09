@@ -97,7 +97,7 @@ Route::get('/inZoneLate/{company_id}', [StatsController::class , 'inZoneLate']);
 Route::get('/inZoneLateEmp', [HistoryController::class , 'inZoneLateEmp']);
 
 
-Route::get('/outZoneNoexcuse', [StatsController::class , 'outZoneNoexcuse']);
+Route::get('/outZoneNoexcuse/{company_id}', [StatsController::class , 'outZoneNoexcuse']);
 Route::get('/outZoneholiday', [StatsController::class , 'outZoneholiday']);
 
 
