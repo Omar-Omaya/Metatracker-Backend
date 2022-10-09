@@ -52,9 +52,17 @@ class StatsController extends Controller
 
     }
 
-    public function outZoneNoexcuse(Request $request){
-        $absence= Absence::where('pending', 1)->whereDate('created_at',Carbon::today())->get();
+    public function outZoneNoexcuse(Request $request,$company_id){
+        $absence= DB::table('absences')
+        ->join('employees','employees.id','absences.employee_id')
+        ->where('absences.pending',1)
+        ->whereDate('absences.created_at',Carbon::today())
+        ->where('employees.company_id',$company_id )
+        ->get();
         return $absence->count();
+
+        // Absence::where('pending', 1)->whereDate('created_at',Carbon::today())->get();
+        // return $absence->count();
 
     }
 
