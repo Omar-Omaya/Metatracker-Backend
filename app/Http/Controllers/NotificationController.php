@@ -75,9 +75,11 @@ class NotificationController extends Controller
         public function addReply(Request $request){
             $history_id=History::where('employee_id',$request->employee_id)->latest()->first()->id;
 
-            echo $history_id; 
+            // echo $history_id; 
             DB::table('notifications')
-            ->where('history_id', $history_id)->whereNull('reply')->limit(1)
+            ->where('history_id', $history_id)->whereNull('reply')
+            // ->where('history_id', $history_id)->whereNull('reply')->limit(1)
+
             ->update(['reply' => $request->reply,'updated_at' => Carbon::now()]);         
         }
     
