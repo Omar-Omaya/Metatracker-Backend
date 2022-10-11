@@ -291,7 +291,7 @@ class HistoryController extends Controller
 
         $response =[
            'update' => $is_inzone ? true: false,
-           'Is__checkedIn'=> $history->End_time==null
+           'Is_checkedIn'=> $history->End_time==null
 
         ];
 
