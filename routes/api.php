@@ -148,6 +148,10 @@ Route::get('/getNotification/{id}', [NotificationController::class, 'getNotifica
 
 Route::post('/addReply', [NotificationController::class, 'addReply']);
 
+Route::delete('/deleteNotify/{id}', [NotificationController::class, 'deleteNotification']);
+
+
+
 
 Route::post('/list-of-employees', [AuthController::class , 'excel']);
 Route::post('/store-dep', [DepartmentController::class , 'store']);

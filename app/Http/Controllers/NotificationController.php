@@ -97,5 +97,14 @@ class NotificationController extends Controller
             return $history;
 
         }
+
+        public function deleteNotification(Request $request,$id){
+            $history = DB::table('notifications')
+            ->join('histories','histories.id','=','notifications.history_id')
+            ->whereNotNull('histories.End_time')
+            ->where('histories.id', $id)
+            ->whereDate('histories.created_at',Carbon::today())
+            ->delete();
+        }
       
 }
