@@ -39,4 +39,10 @@ class History extends Model
     {
         return $this->hasMany(Notification::class);
     }
+
+    public static function forceCheckout($id, $end_time){
+        $record=History::find($id);
+        $record->End_time= $end_time;
+        $record->update();
+    }
 }
