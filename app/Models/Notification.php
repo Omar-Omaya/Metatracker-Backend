@@ -26,7 +26,7 @@ class Notification extends Model
     }
 
     public static function isLastResponseAdded($history_id){
-        return ! Notification::where('history_id','=',$history_id)->whereIsNull('reply')->exists();
+        return ! Notification::where('history_id','=',$history_id)->whereNull('reply')->exists();
     }
 
     public static function getLastResponseTime($history_id){
