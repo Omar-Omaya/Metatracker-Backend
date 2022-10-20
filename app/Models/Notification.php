@@ -30,7 +30,9 @@ class Notification extends Model
     }
 
     public static function getLastResponseTime($history_id){
-        $record= Notification::where('history_id','=',$history_id)->whereNotNull('reply')->latest()->first()->updated_at;
-        return $record;
+        $record= Notification::where('history_id','=',$history_id)->whereNotNull('reply')->latest()->first();
+        if($record == null)
+            return null;
+        return $record->updated_at;;
     }
 }

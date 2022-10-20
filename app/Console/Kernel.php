@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Log;
         protected function schedule(Schedule $schedule)
         {
             $schedule->command('log:cron')
-                     ->everyMinute();
+                     ->hourly();
             $schedule->command('abs:days')
                      ->everyMinute();
             $schedule->command('manage:shift')

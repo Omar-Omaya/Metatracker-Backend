@@ -31,7 +31,7 @@ class MessageController extends Controller
             'admin_id'=> 'required'
         ]);
 
-        $message =  Message::create($request->all());
+        $message =    Message::create($request->all());
 
         return $message;
     }

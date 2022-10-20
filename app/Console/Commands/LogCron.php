@@ -77,18 +77,22 @@ class LogCron extends Command
         if($time_passed > $dep_data['shift_duration']){
             if(!Notification::isLastResponseAdded($historiesOfEmployee['id'])){
                 $last_response_time= Notification::getLastResponseTime($historiesOfEmployee['id']);
-                $last_response_time= new Carbon($last_response_time);
-                $last_response_time= $last_response_time->format('H:i');
-                History::forceCheckout($historiesOfEmployee['id'],$last_response_time);
-                //Force Checkout.
-                return;
+                if($last_response_time != null){
+                    $last_response_time= new Carbon($last_response_time);
+                    $last_response_time= $last_response_time->format('H:i');
+                    History::forceCheckout($historiesOfEmployee['id'],$last_response_time);
+                    //Force Checkout.
+                    Log::info('Checking Out '.$historiesOfEmployee);
+                    return;
+                }
             }
         }
         if($historiesOfEmployee['Out_of_zone'] ==1){
             NotificationController::notification($historiesOfEmployee->Employee->mobile_token, 'zoneStatus' , 'You are out of zone !', -1);
         }else{
             $message = explode("|",$department->message);
-            NotificationController::notification($historiesOfEmployee->Employee->mobile_token, $message[0] , $message[1] , $historiesOfEmployee->id);
+            Log::info($message);
+            NotificationController::notification($historiesOfEmployee->employee->mobile_token, $message[0] , $message[1] , $historiesOfEmployee->id);
         }
 
     }
@@ -103,6 +107,11 @@ class LogCron extends Command
         foreach($absentEmployees as $absentEmployee){
             NotificationController::notification($absentEmployee->mobile_token,'Late','You are late',-1);
         }
+
+
+        
+
+
     }
     
     public function time(){
