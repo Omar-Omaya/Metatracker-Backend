@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Response;
 class PhotoController extends Controller
 {
 
-    public function storeImage(Request $request,$id){
+    public function storeImage(Request $request){
+
+        $id = $request->id;
         // Employee::
 
         if(!$request->hasFile('image')) {

@@ -64,7 +64,7 @@ Route::put('/mob_token', [EmployeeController::class, 'mobile_token']);
 Route::get('/dis', [EmployeeController::class, 'distance']);
 Route::put('/is_here/{id}', [EmployeeController::class, 'is_Here']);
 
-Route::post('/storeimage/{id}', [PhotoController::class, 'storeImage']);
+Route::post('/storeimage', [PhotoController::class, 'storeImage']);
 
 Route::get('/getimage/{id}', [PhotoController::class, 'getImage']);
                              
