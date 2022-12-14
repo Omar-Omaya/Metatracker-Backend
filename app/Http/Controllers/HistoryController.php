@@ -119,7 +119,7 @@ class HistoryController extends Controller
 
     public function getAbsenceToday($company_id)
     {
-        $employee_id =auth('sanctum')->user()->id;
+        // $employee_id =auth('sanctum')->user()->id;
 
         return [ "count" =>DB::table('absences')
         ->join('employees','employees.id','absences.employee_id')
